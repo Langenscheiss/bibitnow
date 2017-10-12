@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE urlSpecificAdjustorList
+[
+<!ELEMENT adjustorList (adjustor)>
+<!ELEMENT adjustor (#PCDATA)>
+]>
+<adjustorList>
+<adjustor id="pubs-acs-org" prefselector="acs" preformatter="acs"></adjustor>
+<adjustor id="dl-acm-org" prefselector="acm" preformatter="acm"></adjustor>
+<adjustor id="aip-scitation-org" prefselector="aip" preformatter="aip"></adjustor>
+<adjustor id="agris-fao-org" prefselector="agris"></adjustor>
+<adjustor id="ajas-info" prefselector="ajas"></adjustor>
+<adjustor id="ascopubs-org" prefselector="ascopubs" preformatter="ascopubs"></adjustor>
+<adjustor id="amazon-com" prefselector="amazon" preformatter="amazon-com"></adjustor>
+<adjustor id="amazon-de" prefselector="amazon" preformatter="amazon-de"></adjustor>
+<adjustor id="amazon-it" prefselector="amazon" preformatter="amazon-it"></adjustor>
+<adjustor id="amazon-fr" prefselector="amazon" preformatter="amazon-fr"></adjustor>
+<adjustor id="annualreviews-org" prefselector="annualreviews" preformatter="annualreviews"></adjustor>
+<adjustor id="journals-aps-org" prefselector="aps" preformatter="aps"></adjustor>
+<adjustor id="arxiv-org" preformatter="arxiv"></adjustor>
+<adjustor id="bioone-org" preformatter="bioone" prefselector="bioone"></adjustor>
+<adjustor id="degruyter-com" prefselector="degruyter" preformatter="degruyter"></adjustor>
+<adjustor id="elsevier-com-books" prefselector="elsevier-book" preformatter="elsevier-book"></adjustor>
+<adjustor id="goodreads-com" prefselector="goodreads" preformatter="goodreads"></adjustor>
+<adjustor id="books-google" prefselector="google-book" preformatter="google-book"></adjustor>
+<adjustor id="books-google-co" prefselector="google-book" preformatter="google-book"></adjustor>
+<adjustor id="ingentaconnect-com" prefselector="ingentaconnect" preformatter="ingentaconnect"></adjustor>
+<adjustor id="iopscience-iop-org" prefselector="iop" preformatter="iop"></adjustor>
+<adjustor id="mdpi-com" prefselector="mdpi" preformatter="mdpi"></adjustor>
+<adjustor id="ojs-darwin-edu-ar" preformatter="darwiniana" prefselector="darwiniana"></adjustor>
+<adjustor id="global-oup-com" preformatter="oup" prefselector="oup"></adjustor>
+<adjustor id="nature-com" preformatter="nature" prefselector="nature"></adjustor>
+<adjustor id="ncbi-nlm-nih-gov-pubmed" prefselector="pubmed" preformatter="pubmed"></adjustor>
+<adjustor id="publications-lib-chalmers-se" prefselector="cpl" preformatter="cpl"></adjustor>
+<adjustor id="journals-sagepub-com" prefselector="sagepub" preformatter="sagepub"></adjustor>
+<adjustor id="sciencedirect-com-science-book" prefselector="sciencedirect-book" preformatter="sciencedirect-book"></adjustor>
+<adjustor id="sciencedirect-com-science-article" prefselector="sciencedirect" preformatter="sciencedirect"></adjustor>
+<adjustor id="scopus-com" prefselector="scopus" preformatter="scopus"></adjustor>
+<adjustor id="link-springer-com-article" prefselector="springer"></adjustor>
+<adjustor id="link-springer-com-book" prefselector="springer-link-book" preformatter="springer-link-book"></adjustor>
+<adjustor id="search-proquest-com" prefselector="proquest" preformatter="proquest"></adjustor>
+<adjustor id="springer-com" prefselector="springer-book" preformatter="springer-book"></adjustor>
+<adjustor id="sciencemag-org" prefselector="science" preformatter="science"></adjustor>
+<adjustor id="tandfonline-com" prefselector="taylorandfrancis" preformatter="taylorandfrancis"></adjustor>
+<adjustor id="onlinelibrary-wiley-com-book" prefselector="wiley-book" preformatter="wiley-book"></adjustor>
+<adjustor id="onlinelibrary-wiley-com-doi" prefselector="wiley" preformatter="wiley"></adjustor>
+<adjustor id="onlinelibrary-wiley-com-wol1-doi" prefselector="wiley" preformatter="wiley"></adjustor>
+<adjustor id="worldscientific-com-doi" prefselector="worldscientific" preformatter="worldscientific"></adjustor>
+<adjustor id="worldscientific-com-worldscibooks" prefselector="worldscientific-book" preformatter="worldscientific-book"></adjustor>
+</adjustorList>

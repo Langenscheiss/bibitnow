@@ -1,0 +1,30 @@
+var BINPrefselector = ( function () {
+
+	// a shadow as a "promise not to touch global data and variables". Must be included to be accepted!
+	var BINData = null;
+	var BINInteraction = null;
+	var BINParser =  null;
+	var window = null;
+	var document = null;
+	
+	// this function is called by the background script in order to return a properly formatted citation download link
+	function formatCitationLink(metaData, link) {
+		var returnString = "http://iopscience.iop.org";
+		returnString += link;
+		return returnString;
+	}
+	
+	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
+	var prefselectorMsg = { 
+		citation_author: [ ['meta[name="citation_author"]','content'] , ['span[data-authors=""] span[itemprop="author"] span[itemprop="name"]','innerText'] , ['span[itemprop="author"] span[itemprop="name"]','innerText'] ],
+		citation_type: [ ['span#wd-book-print-isbn','innerText'] , ['span#wd-book-online-isbn','innerText'] ],
+		citation_title: [ ['div#wd-pub-name h1[itemref="book"]','innerText'] ],
+		citation_misc: [ ['div#wd-pub-name div.publication-sub-title','innerText'] ],
+		citation_date: [ ['span#wd-book-pub-date span[itemprop="datePublished"]','innerText'] ],
+ 		citation_download: [ ['a.btn.btn-primary.wd-btn-cit-abs-ris','href'] ] // the download citation button on iop seems to be crap! You have to throw away a lot!
+	};
+
+	// finally expose selector message and link formatter
+	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink };
+
+}());

@@ -1,0 +1,27 @@
+var BINPrefselector = ( function () {
+
+	// a shadow as a "promise not to touch global data and variables". Must be included to be accepted!
+	var BINData = null;
+	var BINInteraction = null;
+	var BINParser =  null;
+	var window = null;
+	var document = null;
+
+	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
+	var prefselectorMsg = { 
+		citation_title: [ ['div.art_title a','innerText'] ],
+		citation_journal_title: [ ['div.articleList span.journalName','innerText'] ],
+		citation_volume: [ ['div.articleList span.volume','innerText'] ],
+		citation_issue: [ ['div.articleList span.issue','innerText'] ],
+		citation_firstpage: [ ['div.articleList span.page','innerText'] ],
+		citation_misc: [ ['div.Article.information > div:first-of-type','innerText'] ],
+		citation_author: [ ['div.articleList div.art_authors span.NLM_string_name','innerText'] ],
+		citation_date: [ ['span.publicationContentEpubDate.dates','innerText'] , ['div.recommendCitationVolumeDate > p','innerText'] , ['div.articleList span.year','innerText'] ],
+		citation_doi: [ ['div.publicationContentDoi a','href'] ],
+		citation_issn: [ ['div.issnFooter span:nth-of-type(2)','innerText'] , ['div.issnFooter span','innerText'] ]
+	};
+
+	// finally expose selector message
+	return { prefselectorMsg: prefselectorMsg };
+
+}());
