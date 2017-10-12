@@ -14,4 +14,5 @@ All this functionality is implemented in 2 different javascript files per websit
 1.) nameResources/urlSpecificAdjustorList.xml -- links url to selectors and preformatters. URLs are always matched without the http(s)://scheme and without the "www" subdomain. The rest is processed in the following order:
 full domain without subpaths, full domain with first sudomain removed and without subpaths, full domain with first and second (if available) subdomain removed and without subpaths, ..., full domain with all but the last remaining subdomain removed and without subpaths, full domain with first subpath, full domain with first subpath and with the first subdomain removed, ... . Matching stops as soon as the first match is encountered.
 2.) Preferred selectors and Preformatters TODO
+
 Please refer to the sample files in each subfolder for further instructions.
