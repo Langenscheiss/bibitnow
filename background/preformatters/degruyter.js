@@ -7,12 +7,22 @@ var BINPreformatter = ( function () {
 	var window = null;
 	var document = null;
 	
+	// preformat raw data including raw RIS
+	function preformatRawData(metaData, parser) {
+		//fix author
+		var temp = metaData["citation_download"];
+		if (metaData["query_summary"]["citation_authors"] != 2) temp = temp.replace(/(?:AU|A1)[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
+		//fix issn if journal
+		if (metaData["query_summary"]["citation_issn"] == 2) temp = temp.replace(/SN[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
+		metaData["citation_download"] = temp;
+	}
+	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
 		//fix author list
 		var temp = metaData["citation_authors"];
-		if(metaData["query_summary"][14] == -1) temp = temp.replace(/^.*[\s]by[\s]/i,"");
+		if(metaData["query_summary"]["citation_authors"] == 1) temp = temp.replace(/^.*[\s]by[\s]/i,"");
 		temp = temp.replace(/[\ ]*\/[\ ]*/g," ; ").replace(/;[\ ]*$/,"");
 		metaData["citation_authors"] = temp.trim();
 		
@@ -26,6 +36,6 @@ var BINPreformatter = ( function () {
 	}
 	
 	// expose preformatting function
-	return { preformatData : preformatData };
+	return { preformatData : preformatData , preformatRawData: preformatRawData };
 
 }());

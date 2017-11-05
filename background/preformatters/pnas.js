@@ -9,9 +9,9 @@ var BINPreformatter = ( function () {
 	
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
-		//fix title, year and journal abbreviation. Do not use title from citation download, due to latex characters
+		//fix author and journal
 		var temp = metaData["citation_download"];
-		temp = temp.replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").replace(/ID[\t\ ]+[\-]+[\t\ ]+/,"DO - ").trim();
+		temp = temp.replace(/A1[\t\ ]+[\-]+[\t\ ]+/,"AU - ").replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JF - ").trim();
 		metaData["citation_download"] = temp;
 	}
 	
@@ -19,15 +19,8 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//fix issn
-		var temp = metaData["citation_issn"];
-		temp = temp.match(/ISSN[0-9X\-\ ]+/);
-		if (temp != null && temp.length > 0) {
-			temp = temp[0].trim();
-			metaData["citation_issn"] = temp;
-		} else {
-			metaData["citation_issn"] = "";
-		}
+		//fix journal abbreviation
+		metaData["citation_journal_abbrev"] = "Proc. Natl. Acad. Sci. U.S.A.";
 	}
 	
 	// expose preformatting function and raw preformatting function

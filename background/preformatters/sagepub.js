@@ -7,6 +7,14 @@ var BINPreformatter = ( function () {
 	var window = null;
 	var document = null;
 	
+	//preformat raw data including raw RIS
+	function preformatRawData(metaData, parser) {
+		//fix abbreviation
+		var temp = metaData["citation_download"];
+		temp = temp.replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").trim();
+		metaData["citation_download"] = temp;
+	}
+	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
@@ -18,7 +26,7 @@ var BINPreformatter = ( function () {
 		//separate pages if available
 		temp = metaData["citation_firstpage"];
 		temp = temp.split(/[\-]+/);
-		if (temp != null && temp.length > 1) {
+		if (temp != null && temp.length > 1 && metaData["citation_lastpage"] == "") {
 			metaData["citation_firstpage"] = temp[0].trim();
 			metaData["citation_lastpage"] = temp[1].trim();
 		}
@@ -34,6 +42,6 @@ var BINPreformatter = ( function () {
 	}
 	
 	// expose preformatting function
-	return { preformatData : preformatData };
+	return { preformatData : preformatData , preformatRawData: preformatRawData };
 
 }());

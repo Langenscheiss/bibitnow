@@ -6,6 +6,7 @@
 ]>
 <adjustorList>
 <adjustor id="pubs-acs-org" prefselector="acs" preformatter="acs"></adjustor>
+<adjustor id="aappublications-org" prefselector="aap" preformatter="aap"></adjustor>
 <adjustor id="dl-acm-org" prefselector="acm" preformatter="acm"></adjustor>
 <adjustor id="aip-scitation-org" prefselector="aip" preformatter="aip"></adjustor>
 <adjustor id="agris-fao-org" prefselector="agris"></adjustor>
@@ -16,6 +17,7 @@
 <adjustor id="amazon-it" prefselector="amazon" preformatter="amazon-it"></adjustor>
 <adjustor id="amazon-fr" prefselector="amazon" preformatter="amazon-fr"></adjustor>
 <adjustor id="annualreviews-org" prefselector="annualreviews" preformatter="annualreviews"></adjustor>
+<adjustor id="bmj-com-content" prefselector="bmj" preformatter="bmj"></adjustor>
 <adjustor id="journals-aps-org" prefselector="aps" preformatter="aps"></adjustor>
 <adjustor id="arxiv-org" preformatter="arxiv"></adjustor>
 <adjustor id="bioone-org" preformatter="bioone" prefselector="bioone"></adjustor>
@@ -29,7 +31,9 @@
 <adjustor id="mdpi-com" prefselector="mdpi" preformatter="mdpi"></adjustor>
 <adjustor id="ojs-darwin-edu-ar" preformatter="darwiniana" prefselector="darwiniana"></adjustor>
 <adjustor id="global-oup-com" preformatter="oup" prefselector="oup"></adjustor>
+<adjustor id="jps-jp-doi" preformatter="jps" prefselector="jps"></adjustor>
 <adjustor id="nature-com" preformatter="nature" prefselector="nature"></adjustor>
+<adjustor id="nejm-org" preformatter="nejm" prefselector="nejm"></adjustor>
 <adjustor id="ncbi-nlm-nih-gov-pubmed" prefselector="pubmed" preformatter="pubmed"></adjustor>
 <adjustor id="publications-lib-chalmers-se" prefselector="cpl" preformatter="cpl"></adjustor>
 <adjustor id="journals-sagepub-com" prefselector="sagepub" preformatter="sagepub"></adjustor>
@@ -38,8 +42,10 @@
 <adjustor id="scopus-com" prefselector="scopus" preformatter="scopus"></adjustor>
 <adjustor id="link-springer-com-article" prefselector="springer"></adjustor>
 <adjustor id="link-springer-com-book" prefselector="springer-link-book" preformatter="springer-link-book"></adjustor>
+<adjustor id="pnas-org" prefselector="pnas" preformatter="pnas"></adjustor>
+<adjustor id="press-princeton-edu" prefselector="princeton" preformatter="princeton"></adjustor>
 <adjustor id="search-proquest-com" prefselector="proquest" preformatter="proquest"></adjustor>
-<adjustor id="springer-com" prefselector="springer-book" preformatter="springer-book"></adjustor>
+<adjustor id="springer-com-gp" prefselector="springer-book" preformatter="springer-book"></adjustor>
 <adjustor id="sciencemag-org" prefselector="science" preformatter="science"></adjustor>
 <adjustor id="tandfonline-com" prefselector="taylorandfrancis" preformatter="taylorandfrancis"></adjustor>
 <adjustor id="onlinelibrary-wiley-com-book" prefselector="wiley-book" preformatter="wiley-book"></adjustor>

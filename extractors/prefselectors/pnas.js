@@ -9,26 +9,19 @@ var BINPrefselector = ( function () {
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		var returnString = metaData["citation_download"]; 
-		//if download link found, use it. Otherwise, make an educated guess for aps
-		if (metaData["query_summary"]["citation_download"] == 1) {
-			returnString = 'https://journals.aps.org' + returnString;
-			returnString += '?type=ris&download=false';
-		} else if (metaData["query_summary"]["citation_download"] == 2) {
-			returnString = metaData["citation_url"].match(/(^http[s]?:\/\/[^\/]*\/[^\/]*\/)[^\/]*(.*$)/);
-			if (returnString != null && returnString.length > 2) {
-				returnString = "" + returnString[1] + 'export' + returnString[2] +  '?type=ris&download=false';
-			} else {
-				returnString = "";
-			}
+		var returnString  = metaData["citation_url"].match(/(^http[s]?:\/\/[^\/]*)\/.*$/);
+		if (returnString != null && returnString.length > 1) {
+			returnString = "" + returnString[1] + link.replace(/citmgr\?/,"citmgr?type=mendeley&");
+		} else {
+			returnString = "";
 		}
 		return returnString;
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = { 
-		citation_issn: [ ['p.legal','innerText'] ],
-		citation_download: [ ['a#export-article-link','href'] , ['BINURL','']]
+		citation_publisher: [ ['meta[name="DC.Publisher"]','content'] ],
+		citation_download: [ ['div#cb-art-mgr li a','href'] ]
 	};
 
 	// finally expose selector message and link formatter

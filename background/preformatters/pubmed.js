@@ -13,10 +13,11 @@ var BINPreformatter = ( function () {
 		var temp = metaData["citation_download"].replace(/[\n]/g," <> ").replace(/\&lt;/g,"<").replace(/\&gt;/g,">");
 		metaData["citation_download"] = "";
 		
-		function extractTag(string,tag,all) {
+		function extractTag(string,tag,prop,all) {
 			var returnString = "";
 			var temp = '<';
 			temp += tag;
+			if (prop != null && prop != "") temp += " " + prop;
 			temp += '[^>]*>.*?(?:<\\/';
 			temp += tag;
 			temp += '>?)';
@@ -45,9 +46,9 @@ var BINPreformatter = ( function () {
 		
 		//extract journal info
 		var parsedString = "";
-		var tempTwo = extractTag(temp,'Journal',false);
+		var tempTwo = extractTag(temp,'Journal','',false);
 		var tempThree = tempTwo;
-		var tempFour = extractTag(temp,'ArticleDate',false);// scan for most date fields
+		var tempFour = extractTag(temp,'ArticleDate','',false);// scan for most date fields
 		if (tempTwo == null || tempTwo == "") {
 			tempThree = tempFour;
 		} else if (tempFour != null && tempFour != "") {
@@ -65,64 +66,64 @@ var BINPreformatter = ( function () {
 		if (tempTwo != null && tempTwo != "") {
 			
 			//extract publication date
-			tempFour = extractTag(tempThree,'Year',false);
+			tempFour = extractTag(tempThree,'Year','',false);
 			if (tempFour != null && tempFour != "") {
 				parsedString += tempFour.replace(/[^0-9]/g,"");
 			}
-			tempFour = extractTag(tempThree,'Month',false);
+			tempFour = extractTag(tempThree,'Month','',false);
 			if (tempFour != null && tempFour != "") {
 				parsedString += " ";
 				parsedString += tempFour.replace(/\&lt;[\/]*Month\&gt;/g,"");
 			}
-			tempFour = extractTag(tempThree,'Day',false);
+			tempFour = extractTag(tempThree,'Day','',false);
 			if (tempFour != null && tempFour != "") {
 				parsedString += " ";
 				parsedString += tempFour.replace(/[^0-9]/g,"");
 			}
 			if (parsedString != "") {
 				metaData["citation_date"] = parsedString;
-				metaData["query_summary"][12] = -10;
+				metaData["query_summary"]["citation_date"] = 10;
 			}
 			
 			//extract journal title
-			parsedString = extractTag(tempTwo,'Title',false);
+			parsedString = extractTag(tempTwo,'Title','',false);
 			if (parsedString != null && parsedString != "") {
 				metaData["citation_journal_title"] = parsedString;
-				metaData["query_summary"][7] = -10;
+				metaData["query_summary"]["citation_journal_title"] = 10;
 			}
 			
 			//extract journal abbreviation
-			parsedString = extractTag(tempTwo,'ISOAbbreviation',false);
+			parsedString = extractTag(tempTwo,'ISOAbbreviation','',false);
 			if (parsedString != null && parsedString != "") {
 				metaData["citation_journal_abbrev"] = parsedString;
-				metaData["query_summary"][8] = -10;
+				metaData["query_summary"]["citation_journal_abbrev"] = 10;
 			}
 			
 			//extract issn
-			parsedString = extractTag(tempTwo,'ISSN',false);
+			parsedString = extractTag(tempTwo,'ISSN','',false);
 			if (parsedString != null && parsedString != "") {
 				metaData["citation_issn"] = parsedString;
-				metaData["query_summary"][3] = -10;
+				metaData["query_summary"]["citation_issn"] = 10;
 			}
 			
 			//extract volume
-			parsedString = extractTag(tempTwo,'Volume',false);
+			parsedString = extractTag(tempTwo,'Volume','',false);
 			if (parsedString != null && parsedString != "") {
 				metaData["citation_volume"] = parsedString;
-				metaData["query_summary"][2] = -10;
+				metaData["query_summary"]["citation_volume"] = 10;
 			}
 			
 			//extract issue
-			parsedString = extractTag(tempTwo,'Issue',false);
+			parsedString = extractTag(tempTwo,'Issue','',false);
 			if (parsedString != null && parsedString != "") {
 				metaData["citation_issue"] = parsedString;
-				metaData["query_summary"][1] = -10;
+				metaData["query_summary"]["citation_issue"] = 10;
 			}
 		}
 		
 		//extract pages
 		var length;
-		tempTwo = extractTag(temp,'MedlinePgn',false);
+		tempTwo = extractTag(temp,'MedlinePgn','',false);
 		if (tempTwo != null && tempTwo != "") {
 			tempTwo = tempTwo.replace(/[-]+/,"--");
 			if (tempTwo.search("--") != -1) {
@@ -136,37 +137,43 @@ var BINPreformatter = ( function () {
 				tempTwo = "" + tempTwo[0] + "--" + tempTwo[1];
 			}
 			metaData["citation_firstpage"] = tempTwo;
-			metaData["query_summary"][5] = -10;
+			metaData["query_summary"]["citation_firstpage"] = 10;
 		}
 		
 		//extract doi
-		parsedString = extractTag(temp,'ELocationID',false);
+		parsedString = extractTag(temp,'ELocationID','EIdType=\"doi\"',false);
 		if (parsedString != null && parsedString != "") {
 			metaData["citation_doi"] = parsedString;
-			metaData["query_summary"][4] = -10;
+			metaData["query_summary"]["citation_doi"] = 10;
+		} else {
+			parsedString = extractTag(temp,'ELocationID','',false);
+			if (parsedString != null && parsedString != "") {
+				metaData["citation_doi"] = parsedString;
+				metaData["query_summary"]["citation_doi"] = 10;
+			}
 		}
 		
 		//extract publisher
-		parsedString = extractTag(temp,'CopyrightInformation',false);
+		parsedString = extractTag(temp,'CopyrightInformation','',false);
 		if (parsedString != null && parsedString != "") {
 			metaData["citation_publisher"] = parsedString;
-			metaData["query_summary"][11] = -10;
+			metaData["query_summary"]["citation_publisher"] = 10;
 		}
 		
 		//extract article title
-		parsedString = extractTag(temp,'ArticleTitle',false);
+		parsedString = extractTag(temp,'ArticleTitle','',false);
 		if (parsedString != null && parsedString != "") {
-			metaData["citation_titler"] = parsedString;
-			metaData["query_summary"][0] = -10;
+			metaData["citation_title"] = parsedString;
+			metaData["query_summary"]["citation_title"] = 10;
 		}
 		
 		//extract authors
-		tempTwo = extractTag(temp,'AuthorList',false);
+		tempTwo = extractTag(temp,'AuthorList','',false);
 		tempThree = "";
 		parsedString = "";
 		if (tempTwo != null && tempTwo != "") {
 			
-			tempTwo = extractTag(tempTwo,'Author',true);
+			tempTwo = extractTag(tempTwo,'Author','',true);
 			if (tempTwo != null && (length = tempTwo.length) > 0) {
 			
 				var lengthTwo;
@@ -174,7 +181,7 @@ var BINPreformatter = ( function () {
 				for (var i = 0; i<length; ++i) {
 					
 					//extract all surnames
-					tempThree = extractTag(tempTwo[i],'LastName',true);
+					tempThree = extractTag(tempTwo[i],'LastName','',true);
 					if (tempThree != null && (lengthTwo = tempThree.length) > 0) {
 						for (var j = 0; j<lengthTwo; ++j) {
 							parsedString += tempThree[j];
@@ -184,7 +191,7 @@ var BINPreformatter = ( function () {
 					parsedString += ", ";
 					
 					//extract all forenames
-					tempThree = extractTag(tempTwo[i],'ForeName',true);
+					tempThree = extractTag(tempTwo[i],'ForeName','',true);
 					if (tempThree != null && (lengthTwo = tempThree.length) > 0) {
 						for (var j = 0; j<lengthTwo; ++j) {
 							parsedString += tempThree[j];
@@ -196,10 +203,14 @@ var BINPreformatter = ( function () {
 				parsedString = parsedString.replace(/[\;\ \,]*$/,"");
 			}
 		}
+		
 		if (parsedString != "") {
 			metaData["citation_authors"] = parsedString;
-			metaData["query_summary"][14] = -10;
+			metaData["query_summary"]["citation_authors"] = 10;
 		}
+		
+		//dummy string in citation_download to suggest successful data retreival
+		metaData["citation_download"] = "TY - JOUR\nER -";
 	}
 	
 	//preformatting function
@@ -214,10 +225,10 @@ var BINPreformatter = ( function () {
 		
 		var numSuffixes = surnameSuffixes.length;
 		var length;
-		
+
 		//preformat author list if obtained from HTML source
 		var authorList = "";
-		if (metaData["query_summary"][14] != -10) {
+		if (metaData["query_summary"]["citation_authors"] != 10) {
 			temp = metaData["citation_authors"];
 			if (temp != "") {
 				temp = temp.split(" ; ");
@@ -267,7 +278,7 @@ var BINPreformatter = ( function () {
 		metaData["citation_title"] = temp;
 		
 		//fix publisher
-		temp = metaData["query_summary"][11]; 
+		temp = metaData["query_summary"]["citation_publisher"]; 
 		if(temp == -2 || temp == -10) metaData["citation_publisher"] = metaData["citation_publisher"].replace(/^©[0-9\ \,]*/,"").replace(/^by/,"").replace(/\.$/,"").trim();
 		
 		
@@ -276,7 +287,7 @@ var BINPreformatter = ( function () {
 		metaData["citation_misc"] = "";
 		
 		//get journal abbreviation from first part of misc string if not obtained dynamically
-		if (metaData["query_summary"][8] != -10) {
+		if (metaData["query_summary"]["citation_journal_abbrev"] != 10) {
 			tempTwo = temp.match(/^[^\.]+\./i);
 			if (tempTwo != null && tempTwo.length > 0) {
 				metaData["citation_journal_abbrev"] = tempTwo[0].replace(/[\.]+$/,"").trim();
@@ -286,7 +297,7 @@ var BINPreformatter = ( function () {
 		temp = temp.replace(/[\.\ ]*(doi|pii).*$/,"");
 		
 		//get date string if not obtained dynamically
-		if (metaData["query_summary"][12] != -10) {
+		if (metaData["query_summary"]["citation_date"] != 10) {
 			metaData["citation_date"] = temp.replace(/^[^\.]*\./,"").replace(/[^\ A-Za-z0-9].*$/).trim();
 		}
 		

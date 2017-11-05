@@ -7,6 +7,15 @@ var BINPreformatter = ( function () {
 	var window = null;
 	var document = null;
 	
+	//preformat raw data including raw RIS
+	function preformatRawData(metaData, parser) {
+		//fix title and journal
+		var temp = metaData["citation_download"];
+		temp = temp.replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JF - ").replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").trim();
+		console.log(temp);
+		metaData["citation_download"] = temp;
+	}
+	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
@@ -28,12 +37,13 @@ var BINPreformatter = ( function () {
 		//fix publisher
 		if ((temp = metaData["citation_publisher"]) == "") {
 			metaData["citation_publisher"] = "Wiley";
-		} else if (metaData["query_summary"][11] <= -1) {
+		} else if (metaData["query_summary"]["citation_publisher"] >= 1) {
 			metaData["citation_publisher"] = temp.replace(/^[^0-9]*[0-9]+\ /,"");
 		}
+		
 	}
 	
 	// expose preformatting function
-	return { preformatData : preformatData };
+	return { preformatData : preformatData, preformatRawData: preformatRawData };
 
 }());

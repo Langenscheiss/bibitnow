@@ -29,10 +29,10 @@ var BINPreformatter = ( function () {
 			}
 		}
 		
-		//if not available, choose online date
+		//if not available, choose online date	
 		if (temp != "") {
 			metaData["citation_date"] = temp;
-		} else if (metaData["query_summary"][12] <= -2) {
+		} else if ((temp = metaData["query_summary"]["citation_date"]) <= 2 && temp > 0) {
 			metaData["citation_date"] = metaData["citation_date"].replace(/^.*published[^0-9]+/i,"");
 		}
 		
@@ -48,8 +48,9 @@ var BINPreformatter = ( function () {
 			metaData["citation_publisher"] = "Taylor & Francis";
 		}
 		
-		//fix type (only journals!)
+		//fix type and issn (only journals!)
 		metaData["citation_type"] = "article";
+		metaData["citation_issn"] = metaData["citation_issn"].slice(0,9);
 	}
 	
 	// expose preformatting function

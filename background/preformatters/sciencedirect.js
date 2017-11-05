@@ -30,10 +30,10 @@ var BINPreformatter = ( function () {
 		//reformat author names to account for science direct specific formatting
 		temp = metaData["citation_authors"];
 		if (temp != "") {
-			var queryCode = metaData["query_summary"][14];
+			var queryCode = metaData["query_summary"]["citation_authors"];
 			var authorString = "";
 			var length;
-			if (queryCode == -2) {
+			if (queryCode == 1) {
 				temp = temp.replace(/;[\ ]*$/,"").split(";");
 				length = temp.length;
 				if (temp != null && length > 0) {
@@ -52,7 +52,7 @@ var BINPreformatter = ( function () {
 						}
 					}
 				}
-			} else if (queryCode == -1) {
+			} else if (queryCode == 2) {
 				temp = temp.split(/[\ ]*;[\ ]*/);
 				if (temp != null && (length = temp.length-1) > 0) {
 					if (length % 2 == 0) {

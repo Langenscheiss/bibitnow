@@ -6,15 +6,14 @@ var BINPrefselector = ( function () {
 	var BINParser =  null;
 	var window = null;
 	var document = null;
-	
+
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = { 
-		citation_author: [ ['div#metaData p:first-of-type','innerText'] ],
-		citation_title: [ ['h1#productTitle','innerText'] ],
-		citation_doi: [ ['span.doi','innerText'] ],
-		citation_issn: [ ['span.printIsbn','innerText'] , ['span.onlineIsbn','innerText'] ],
-		citation_date: [ ['span.onlinePublicationDate','innerText'] ],
-		citation_publisher: [ ['p.copyright','innerText'] ]
+		citation_author: [ ['div.views-field-field-contributor','innerText'] ],
+		citation_issn: [ ['meta[name="isbn13"]','content'] , ['meta[property="books:isbn"]','content'] ],
+		citation_date: [ ['div.field.field--name-field-year-copyright','innerText'] ],
+		citation_publisher: [ ['meta[property="og:site_name"]','content'] ],
+		citation_misc: [ ['span.sub-title-heading','innerText'] ]
 	};
 
 	// finally expose selector message

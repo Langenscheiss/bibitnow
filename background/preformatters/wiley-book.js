@@ -28,7 +28,7 @@ var BINPreformatter = ( function () {
 		//fix publisher
 		if ((temp = metaData["citation_publisher"]) == "") {
 			metaData["citation_publisher"] = "Wiley";
-		} else if (metaData["query_summary"][11] <= -1) {
+		} else if (metaData["query_summary"]["citation_publisher"] >= 1) {
 			metaData["citation_publisher"] = temp.replace(/^[^0-9]*[0-9]+[\ ]*/,"").replace(/^by[\ ]*/i,"");
 		}
 		

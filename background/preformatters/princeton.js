@@ -9,11 +9,22 @@ var BINPreformatter = ( function () {
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
-				
-		//fix authors if necessary
-		if (metaData["query_summary"]["citation_authors"] == 1) {
-			metaData["citation_authors"] = metaData["citation_authors"].replace(/\ [^\ ]*\.[\ ]*\;/g," ;");
+		
+		// add subtitle if available
+		var temp = metaData["citation_misc"].trim();
+		
+		if (temp != "") {
+			metaData["citation_title"] = metaData["citation_title"] + " -- " + temp;
 		}
+		
+		//clear journal
+		metaData["citation_journal_title"] = "";
+		
+		//fix isbn, include only last
+		metaData["citation_issn"] = metaData["citation_issn"].replace(/^.*,[\ ]*/,"").trim();
+		
+		// clear misc
+		metaData["citation_misc"] = "";
 	}
 	
 	// expose preformatting function

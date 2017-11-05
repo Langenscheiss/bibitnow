@@ -10,7 +10,6 @@ var BINPrefselector = ( function () {
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
 		var returnString; 
-		
 		//get base url
 		var temp = metaData["citation_url"].match(/^[^\/]*\/\/[^\/]*\//i);
 		if (temp != null && temp.length > 0) temp = temp[0].slice(0,temp[0].length-1);

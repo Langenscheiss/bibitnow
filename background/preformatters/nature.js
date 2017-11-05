@@ -11,7 +11,7 @@ var BINPreformatter = ( function () {
 	function preformatRawData(metaData, parser) {
 		//fix title, year, publisher and journal abbreviation
 		var temp = metaData["citation_download"];
-		if (metaData["query_summary"][16] != -3) temp = temp.replace(/JA[\t\ ]+[\-]+[\t\ ]+/,"BIT - ");
+		if (metaData["query_summary"]["citation_download"] != 3) temp = temp.replace(/JA[\t\ ]+[\-]+[\t\ ]+/,"BIT - ");
 		temp = temp.replace(/T[0-9I][\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/PB[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
 		metaData["citation_download"] = temp;
 	}

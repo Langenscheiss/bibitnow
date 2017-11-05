@@ -11,23 +11,27 @@ var BINPrefselector = ( function () {
 	function formatCitationLink(metaData, link) {
 		
 		//get base url
-		var returnString = metaData["citation_url"].replace(/\.gov\/.*$/,".gov/pubmed/");
-		
-		//modify
-		returnString += link;
-		returnString += "?report=xml&format=text"
+		var returnString = "";
+		if (metaData["query_summary"]["citation_download"] == 1) {
+			returnString = metaData["citation_url"].replace(/\.gov\/.*$/,".gov/pubmed/");
+			returnString += link;
+			returnString += "?report=xml&format=text"
+		} else {
+			returnString = link.replace(/&format=.*$/,"").replace(/&report=.*$/,"");
+			returnString += "&report=xml&format=text"
+		}
 		return returnString;
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = { 
-		citation_author: [ ['div.auths a','innerText'] ],
+		citation_authors: [ ['div.auths a','innerText'] ],
 		citation_title: [ ['div.rprt_all div.rprt.abstract h1','innerText'] ],
 		citation_journal_title: [ ['div.rprt_all div.rprt.abstract div.cit a','title'] ],
 		citation_doi: [ ['div.resc a[ref="aid_type=doi"]','innerText'] ],
 		citation_publisher: [ ['p.copyright','innerText'] , ['div.linkoutlist a[title="Full text at publisher\'s site"]','innerText'] ],
 		citation_misc: [ ['meta[name="description"]','content'] ],
-		citation_download: [ ['meta[name="ncbi_uidlist"]','content'] ]
+		citation_download: [ ['meta[name="ncbi_uidlist"]','content'] , [ 'BINURL' ,'' ] ]
 	};
 
 	// finally expose selector message
