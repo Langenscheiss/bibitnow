@@ -11,13 +11,16 @@ To achieve its goal, BibItNow relies on a combination of a meta data extractor w
 - extract and format website specific citation download link from which the plugin can dynamically download citation data (essentially carrying out the action of the website's export button)
 - preformat extracted data before it is passed on to the main parser, and control how the static data is merged with any dynamically downloaded data.
 
-All this functionality is implemented in 2 different javascript files per website, and a single xml file linking these files to a specific url. More precisely, 
+All this functionality is implemented in 2 different javascript files per website, and a single xml file linking these files to a specific url. More precisely,
+
 1.) nameResources/urlSpecificAdjustorList.xml -- links url to selectors and preformatters. URLs are always matched without the http(s)://scheme and without the "www" subdomain. The rest is processed in the following order:
 full domain without subpaths, full domain with first sudomain removed and without subpaths, full domain with first and second (if available) subdomain removed and without subpaths, ..., full domain with all but the last remaining subdomain removed and without subpaths, full domain with first subpath, full domain with first subpath and with the first subdomain removed, ... . Matching stops as soon as the first match is encountered.
+
 2.) Preferred selectors and Preformatters
 The functions defined and exposed in these files allow you to define custom search queries via css selectors, extract and format a link for dynamic citation downloads, and to preformat extracted data before being sent to the main parser. Please refer to the example files in
-extractors/prefselectors/
-background/preformatters/
+- extractors/prefselectors/
+- background/preformatters/
+
 for more information.
 
 Thanks!
