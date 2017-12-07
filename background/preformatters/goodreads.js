@@ -11,10 +11,9 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//fix publisher and date
-		var temp = metaData["citation_misc"];
-		temp = temp.replace(/^.*Published[\s]*/,"");
-		metaData["citation_date"] = temp.replace(/[\s]*by.*$/i,"");
-		metaData["citation_publisher"] = temp.replace(/^.*[\s]+by[\s]*/i,"").replace(/\([^\(\)]*\)$/,"").trim();
+		let misc = metaData["citation_misc"].replace(/^.*Published[\s]*/,"");
+		metaData["citation_date"] = misc.replace(/[\s]*by.*$/i,"");
+		metaData["citation_publisher"] = misc.replace(/^.*[\s]+by[\s]*/i,"").replace(/\([^\(\)]*\)$/,"").trim();
 		
 		//fix ISBN
 		metaData["citation_issn"] = metaData["citation_issn"].replace(/^978/,"978-").replace(/^979/,"979-").replace(/[\-]+/g,"-");

@@ -10,33 +10,31 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title, year and journal abbreviation
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = metaData["citation_download"].replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
 		//downloaded
-		var downloaded = metaData["citation_download"];
+		let downloaded = metaData["citation_download"];
 		
 		//fix publisher and date
-		var temp;
-		if ((temp = metaData["citation_publisher"]) != "") {
-			metaData["citation_publisher"] = temp.replace(/\,.*$/,"");
+		let bibField;
+		if ((bibField = metaData["citation_publisher"]) != "") {
+			metaData["citation_publisher"] = bibField.replace(/\,.*$/,"");
 		} else if (downloaded != null) {
 			metaData["citation_publisher"] = downloaded["citation_publisher"];
 		}
-		if ((temp = metaData["citation_date"]) != "") {
-			metaData["citation_date"] = temp.replace(/^[^\,]*\,[\s]*/,"").replace(/[\s]*\-.*$/,"");
+		if ((bibField = metaData["citation_date"]) != "") {
+			metaData["citation_date"] = bibField.replace(/^[^\,]*\,[\s]*/,"").replace(/[\s]*\-.*$/,"");
 		} else if (downloaded != null) {
 			metaData["citation_date"] = downloaded["citation_date"];
 		}
 		
 		//fix ISBN
-		if ((temp = metaData["citation_misc"]) != "") {
-			metaData["citation_issn"] = temp.replace(/^.*\;[\s]*ISBN[\s]*/,"").replace(/^[^\,]*\,[\s]*/,"").replace(/[^0-9X]+.*$/,"").replace(/^978/,"978-").replace(/^979/,"979-").replace(/[\-]+/g,"-");
+		if ((bibField = metaData["citation_misc"]) != "") {
+			metaData["citation_issn"] = bibField.replace(/^.*\;[\s]*ISBN[\s]*/,"").replace(/^[^\,]*\,[\s]*/,"").replace(/[^0-9X]+.*$/,"").replace(/^978/,"978-").replace(/^979/,"979-").replace(/[\-]+/g,"-");
 		} else if (downloaded != null) {
 			metaData["citation_issn"] = downloaded["citation_issn"].replace(/^978/,"978-").replace(/^979/,"979-");
 		}

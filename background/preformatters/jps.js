@@ -11,16 +11,15 @@ var BINPreformatter = ( function () {
 	function preformatRawData(metaData, parser) {
 		
 		//fix journal abbreviation
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").trim();
+		let downloaded = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").trim();
 		
 		//find whether it's a book, and then correct metaData
-		if (temp.search(/TY[\ ]*\-[\ ]*BOOK/i) != -1) {
+		if (downloaded.search(/TY[\ ]*\-[\ ]*BOOK/i) != -1) {
 			metaData["citation_type"] = "book";
 			metaData["citation_firstpage"] = "";
 		}
 		
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = downloaded;
 	}
 	
 	

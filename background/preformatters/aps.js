@@ -10,9 +10,7 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title, year and journal abbreviation. Do not use title from citation download, due to latex characters
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").replace(/ID[\t\ ]+[\-]+[\t\ ]+/,"DO - ").trim();
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = metaData["citation_download"].replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").replace(/ID[\t\ ]+[\-]+[\t\ ]+/,"DO - ").trim();
 	}
 	
 	
@@ -20,11 +18,9 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//fix issn
-		var temp = metaData["citation_issn"];
-		temp = temp.match(/ISSN[0-9X\-\ ]+/);
-		if (temp != null && temp.length > 0) {
-			temp = temp[0].trim();
-			metaData["citation_issn"] = temp;
+		let issn = metaData["citation_issn"].match(/ISSN[0-9X\-\ ]+/);
+		if (issn != null && issn.length > 0) {
+			metaData["citation_issn"] = issn[0].trim();
 		} else {
 			metaData["citation_issn"] = "";
 		}

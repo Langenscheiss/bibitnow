@@ -9,15 +9,14 @@ var BINPreformatter = ( function () {
 	
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
-		//fix title, year and journal abbreviation
-		metaData["citation_download"] = metaData["citation_download"].replace(/LP[\t\ ]+[\-]+[\t\ ]+/,"EP - ").replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/M3[\t\ ]+[\-]+[\t\ ]+/,"DO - ").trim();
+		//fix title, journal title, date
+		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\--]+[\t\ ]+/,"JF - ").replace(/TI[\t\ ]+[\--]+[\t\ ]+/,"T1 - ").replace(/DA[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").trim();
 	}
-	
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//fix nothing so far
+		//nothing to do yet
 	}
 	
 	// expose preformatting function and raw preformatting function

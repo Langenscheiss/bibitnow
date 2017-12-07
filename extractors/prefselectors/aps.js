@@ -9,11 +9,10 @@ var BINPrefselector = ( function () {
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		var returnString = metaData["citation_download"]; 
+		let returnString = metaData["citation_download"]; 
 		//if download link found, use it. Otherwise, make an educated guess for aps
 		if (metaData["query_summary"]["citation_download"] == 1) {
-			returnString = 'https://journals.aps.org' + returnString;
-			returnString += '?type=ris&download=false';
+			returnString = 'https://journals.aps.org' + returnString + '?type=ris&download=false';
 		} else if (metaData["query_summary"]["citation_download"] == 2) {
 			returnString = metaData["citation_url"].match(/(^http[s]?:\/\/[^\/]*\/[^\/]*\/)[^\/]*(.*$)/);
 			if (returnString != null && returnString.length > 2) {

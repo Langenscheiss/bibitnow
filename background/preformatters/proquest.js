@@ -10,18 +10,16 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		//GOD, THIS IS A TERRIBLE DATABASE!!!!
+		
 		//temporaries for volume, issue etc
-		var vol = "";
-		var iss = "";
-		var date = "";
-		var pages = "";
-		var tempTwo = "";
+		let vol = "", iss = "", date = "", pages = "", tempTwo = "";
 		
-		
-		var temp = metaData["citation_misc"].trim();
+		//misc field
+		let temp = metaData["citation_misc"].trim();
 		
 		//first check whether citation summary from abstract page is available.
-		var citationSummary = temp.replace(/^[^\ ]*/i,""); //summary
+		let citationSummary = temp.replace(/^[^\ ]*/i,""); //summary
 		temp = decodeURIComponent(temp.replace(/\ .*$/i,"")).replace(/\+/g," "); //link
 		
 		if (citationSummary != null && citationSummary != "") {

@@ -11,18 +11,17 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//split authors properly
-		var temp = metaData["citation_authors"];
-		temp = temp.replace(/;/g," ;").replace(/[\ ]+/g," ");
-		metaData["citation_authors"] = temp;
+		metaData["citation_authors"] = metaData["citation_authors"].replace(/;/g," ;").replace(/[\ ]+/g," ");
 		
-		temp = metaData["citation_firstpage"];
+		//fix pages	
+		let page = metaData["citation_firstpage"];
 		if (metaData["citation_lastpage"] != "") {
-			metaData["citation_firstpage"] = temp.replace(/\-.*$/,"").trim();
+			metaData["citation_firstpage"] = page.replace(/\-.*$/,"").trim();
 		} else {
-			temp = temp.split("-");
-			if (temp != null && temp.length > 0) {
-				metaData["citation_firstpage"] = temp[0];
-				if (temp.length > 1) metaData["citation_lastpage"] = temp[1];
+			page = page.split("-");
+			if (page != null && page.length > 0) {
+				metaData["citation_firstpage"] = page[0];
+				if (page.length > 1) metaData["citation_lastpage"] = page[1];
 			}
 		}
 	}

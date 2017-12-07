@@ -10,36 +10,38 @@ var BINPreformatter = ( function () {
 	// preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title, year, publisher and journal abbreviation
-		var temp = metaData["citation_download"];
-		if (metaData["query_summary"]["citation_download"] != 3) temp = temp.replace(/JA[\t\ ]+[\-]+[\t\ ]+/,"BIT - ");
-		temp = temp.replace(/T[0-9I][\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/PB[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
-		metaData["citation_download"] = temp;
+		let downloaded = metaData["citation_download"];
+		if (metaData["query_summary"]["citation_download"] != 3) downloaded = downloaded.replace(/JA[\t\ ]+[\-]+[\t\ ]+/,"BIT - ");
+		metaData["citation_download"] = downloaded.replace(/(?:T[0-9I]|PY|PB)[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
 	}
 	
 	// preformatting function
 	function preformatData(metaData, parser) {
 		
 		//fix first page from misc if possible, otherwise fix what is possible to fix
-		var temp = metaData["citation_misc"];
+		let bibField = metaData["citation_misc"];
 		if (metaData["citation_firstpage"] == "" || metaData["citation_firstpage"].search(/[a-z]/i) != -1) {
-			temp = temp.match(/Article.?number:[\ ]*([^\ \(]+)/i);
-			if (temp != null && temp.length > 1) {
-				metaData["citation_firstpage"] = temp[1];
-			}
+			bibField = bibField.match(/Article.?number:[\ ]*([^\ \(]+)/i);
+			if (bibField != null && bibField.length > 1) metaData["citation_firstpage"] = bibField[1];
 		}
 		
-		//fix article number on nature communications
-		temp = metaData["citation_firstpage"];
-		temp = temp.replace(/ncomms/g,"");
-		metaData["citation_firstpage"] = temp;
-		
+		//clear misc
 		metaData["citation_misc"] = "";
 		
+		//fix article number on nature communications
+		metaData["citation_firstpage"] = metaData["citation_firstpage"].replace(/ncomms/g,"");
+		
 		//fix title
-		temp = metaData["citation_title"];
-		temp = temp.replace(/\[quest\]/,"?");
-		metaData["citation_title"] = temp;
-
+		metaData["citation_title"] = metaData["citation_title"].replace(/\[quest\]/,"?");
+		
+		//fix doi
+		metaData["citation_doi"] = metaData["citation_doi"].replace(/^.*doi/,"").trim().replace(/[\ ]+[^\ ]*$/,"");
+		
+		//fix volume and issue and doi
+		bibField = metaData["citation_volume"];
+		metaData["citation_volume"] = bibField.replace(/^.*volumeNum=/,"").replace(/[^0-9]+.*$/g,"").trim();
+		metaData["citation_issue"] = bibField.replace(/^.*issueNum=/,"").replace(/[^0-9]+.*$/g,"").trim();
+		if (metaData["citation_doi"] == "") metaData["citation_doi"] = decodeURIComponent(bibField).replace(/^.*contentID=/,"").replace(/\&.*$/g,"").trim();
 	}
 	
 	// expose preformatting function and raw preformatting function

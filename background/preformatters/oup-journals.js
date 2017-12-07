@@ -7,17 +7,17 @@ var BINPreformatter = ( function () {
 	var window = null;
 	var document = null;
 	
-	//preformat raw data including raw RIS
+	//preformatting function
 	function preformatRawData(metaData, parser) {
-		//fix title, year and journal abbreviation
-		metaData["citation_download"] = metaData["citation_download"].replace(/LP[\t\ ]+[\-]+[\t\ ]+/,"EP - ").replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/M3[\t\ ]+[\-]+[\t\ ]+/,"DO - ").trim();
+		//fix doi
+		metaData["citation_download"] = metaData["citation_download"].replace(/N1[\t\ ]+[\-]+[\t\ ]+/,"DO - ").replace(/T1[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
 	}
 	
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//fix nothing so far
+		//do nothing
 	}
 	
 	// expose preformatting function and raw preformatting function

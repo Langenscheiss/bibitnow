@@ -10,42 +10,42 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title, year and journal abbreviation
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/J(A|O)[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = metaData["citation_download"].replace(/(?:JA|JO|PY)[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
 		//preformat misc for journal, volume, issue and pages
-		var temp = metaData["citation_misc"];
-		if (temp != "") {
+		let misc = metaData["citation_misc"];
+		if (misc != "") {
 			
 			//get volume
-			temp = temp.replace(/^[^0-9]*/,"").trim();
-			metaData["citation_volume"] = temp.replace(/([\(:]|,[\s]*issue).*$/i,"").trim();
+			misc = misc.replace(/^[^0-9]*/,"").trim();
+			metaData["citation_volume"] = misc.replace(/(?:[\(:]|,[\s]*issue).*$/i,"").trim();
 			
 			//get issue if available
-			var tempTwo = temp.match(/issue[^\,:]*[\,:]/i);
-			if (tempTwo != null && tempTwo.length > 0) {
-				metaData["citation_issue"] = tempTwo[0].replace(/issue/gi,"").replace(/[\,:]$/,"").trim();
-				temp = temp.replace(/^[^\(:]*/,"").trim();
+			let issue = misc.match(/issue([^\,:]*)[\,:]/i);
+			if (issue != null && issue.length > 1) {
+				metaData["citation_issue"] = issue[1].trim();
+				misc = misc.replace(/^[^\(:]*/,"").trim();
 			} else {
-				temp = temp.replace(/^[^\(:]*/,"").trim();
-				if (temp.charAt(0) != ":") metaData["citation_issue"] = temp.replace(/\).*$/,"").replace(/^\(/,"").trim();
+				misc = misc.replace(/^[^\(:]*/,"").trim();
+				if (misc.charAt(0) != ":") metaData["citation_issue"] = misc.replace(/\).*$/,"").replace(/^\(/,"").trim();
 			}
 			
 			//get pages
-			temp = temp.replace(/^[^:]*:/,"").replace(/\..*$/,"").trim();
-			if (temp != "") {
-				temp = temp.split("-");
-				if (temp != null) {
-					if (temp.length > 0) metaData["citation_firstpage"] = temp[0];
-					if (temp.length > 1) metaData["citation_lastpage"] = temp[1];
+			misc = misc.replace(/^[^:]*:/,"").replace(/\..*$/,"").trim();
+			if (misc != "") {
+				misc = misc.split("-");
+				if (misc != null) {
+					if (misc.length > 0) metaData["citation_firstpage"] = misc[0];
+					if (misc.length > 1) metaData["citation_lastpage"] = misc[1];
 				}
 			}
 		}
+		//clear misc
+		metaData["citation_misc"] = "";
 	}
 	
 	// expose preformatting function

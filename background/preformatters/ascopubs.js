@@ -10,21 +10,19 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title, year and journal abbreviation
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/J[OA][\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = metaData["citation_download"].replace(/(?:J[OA][\t\ ]+[\-]+[\t\ ]+|PY[\t\ ]+[\-]+[\t\ ]+)/g,"BIT - ").trim();
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
 		//preformat misc for journal abbrev, issue and pages
-		var temp = metaData["citation_misc"];
+		let temp = metaData["citation_misc"];
 		metaData["citation_misc"] = "";
 		if (temp != "") {
 			
 			//extract issn
-			var tempTwo = temp.match(/issn%3D([0-9X\-]+)%26/i);
+			let tempTwo = temp.match(/issn%3D([0-9X\-]+)%26/i);
 			if (tempTwo != null && tempTwo.length == 2) {
 				metaData["citation_issn"] = tempTwo[1];
 			}
@@ -63,8 +61,7 @@ var BINPreformatter = ( function () {
 			//extract date
 			tempTwo = temp.match(/publicationDate%3D(.*?)(?:%26|)$/i);
 			if (tempTwo != null && tempTwo.length == 2) {
-				tempTwo = tempTwo[1].replace(/%252F/g,"-");
-				tempTwo = tempTwo.split("-");
+				tempTwo = tempTwo[1].replace(/%252F/g,"-").split("-");
 				if (tempTwo != null && tempTwo.length == 3) {
 					metaData["citation_date"] = tempTwo[1] + "-" + tempTwo[0] + "-" + tempTwo[2];
 				}

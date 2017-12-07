@@ -11,7 +11,7 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//fix ISSN
-		var temp = "";
+		let temp = "";
 		if ((temp = metaData["citation_url"]) != "") {
 			metaData["citation_issn"] = temp.replace(/^.*com\//,"").replace(/\/.*$/,"");
 		}

@@ -15,9 +15,7 @@ var BINPreformatter = ( function () {
 		metaData["citation_journal_abbrev"] = "arXiv";
 		
 		//preformat url
-		var temp = metaData["citation_url"];
-		temp = temp.replace("/pdf/","/abs/");
-		metaData["citation_url"] = temp;
+		metaData["citation_url"] = metaData["citation_url"].replace("/pdf/","/abs/");
 	}
 	
 	// expose preformatting function

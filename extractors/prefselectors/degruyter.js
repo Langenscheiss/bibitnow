@@ -10,7 +10,7 @@ var BINPrefselector = ( function () {
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
 		
-		var returnString  = metaData["citation_url"].match(/(^http[s]?:\/\/[^\/]*)\/.*$/);
+		let returnString  = metaData["citation_url"].match(/(^http[s]?:\/\/[^\/]*)\/.*$/);
 		if (returnString != null && returnString.length > 1) {
 			returnString = "" + returnString[1] + link.replace(/cite\//,"cite:exportcitation/ris?t:ac=").replace(/\?nojs.*$/,"/$N");
 		} else {

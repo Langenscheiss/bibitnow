@@ -11,14 +11,10 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//set doi
-		var temp = metaData["citation_misc"].replace(/;.*$/,"").trim();
-		var tempTwo = metaData["citation_doi"].replace(/\/.*$/,"").trim();
+		let temp = metaData["citation_misc"].replace(/;.*$/,"").trim();
+		let tempTwo = metaData["citation_doi"].replace(/\/.*$/,"").trim();
 		if (temp != "") {
-			if (tempTwo != "") {
-				metaData["citation_doi"] = "" + tempTwo + "/" + temp;
-			} else {
-				metaData["citation_doi"] = "";
-			}
+			metaData["citation_doi"] = "" + tempTwo + "/" + temp;
 		} else if (tempTwo != "") {
 			metaData["citation_doi"] = metaData["citation_doi"].replace(/\_[0-9]+$/,"").trim();
 		}

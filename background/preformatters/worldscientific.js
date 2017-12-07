@@ -7,21 +7,25 @@ var BINPreformatter = ( function () {
 	var window = null;
 	var document = null;
 	
+	//preformat raw data including raw RIS
+	function preformatRawData(metaData, parser) {
+		//fix journal abbreviation
+		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").trim();
+	}
+	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
 		//check if first page is available, and reformat if yes. Otherwise, reset first page
-		var temp = metaData["citation_firstpage"];
-		temp = temp.match(/\,[^\(\,]+\(/i);
+		let temp = metaData["citation_firstpage"].match(/\,[^\(\,]+\(/i)
 		if (temp != null && temp.length > 0) {
-			temp = temp[0].replace(/[\ \,\(]/g,"").trim();
+			metaData["citation_firstpage"] = temp[0].replace(/[\ \,\(]/g,"").trim();
 		} else {
-			temp = "";
+			metaData["citation_firstpage"] = "";
 		}
-		metaData["citation_firstpage"] = temp;
 	}
 	
-	// expose preformatting function
-	return { preformatData : preformatData };
+	// expose preformatting function and raw preformatting function
+	return { preformatData : preformatData , preformatRawData: preformatRawData };
 
 }());

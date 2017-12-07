@@ -9,22 +9,16 @@ var BINPrefselector = ( function () {
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		var returnString = "";
+		if (link == null) return "";
 		link = link.trim();
-		if (link != null && link != "") {
-			returnString = metaData["citation_url"].match(/^(http[s]?:\/\/[^\/]*).*$/);
-			if (returnString != null && returnString.length > 1) {
-				if (metaData["query_summary"]["citation_download"] == 1) {
-					returnString = returnString[1] + link.replace(/exportCitation/,"getCitation") + "?citation-type=reference";
-				} else if (metaData["query_summary"]["citation_download"] == 2) {
- 					returnString = returnString[1] + link.replace(/documentcitationdownload/,"documentcitationdownloadformsubmit").replace(/publicationDoi[^&]+&/,"").replace(/&type=.*$/,"&fileFormat=PLAIN_TEXT&hasAbstract=CITATION");
-					metaData["citation_download_method"] = "POST";
-				}
-			} else {
-				returnString = "";
-			}
-		}
-		return returnString;
+		if (metaData["query_summary"]["citation_download"] == 1) {
+			link = link.replace(/exportCitation/,"getCitation") + "?citation-type=reference";
+		} else if (metaData["query_summary"]["citation_download"] == 2) {
+			link = link.replace(/documentcitationdownload/,"documentcitationdownloadformsubmit").replace(/publicationDoi[^&]+&/,"").replace(/&type=.*$/,"&fileFormat=PLAIN_TEXT&hasAbstract=CITATION");
+			metaData["citation_download_method"] = "POST";
+		}  
+		if (link == "") return "";
+		return (metaData["citation_url"].replace(/wiley\.com\/.*$/,"wiley.com") + link);		
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>

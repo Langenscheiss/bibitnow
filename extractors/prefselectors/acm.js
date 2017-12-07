@@ -9,12 +9,15 @@ var BINPrefselector = ( function () {
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		var returnString = "http://dl.acm.org/exportformats.cfm?id=";
-		
-		//get id from doi and attach to link
-		returnString += metaData["citation_download"].replace(/^[^\/]*\//,"");
-		returnString += "&expformat=endnotes";
-		return returnString;
+
+		//get id and parent id from url (preferred) or doi (not always working!), and attach to link
+		let idArr = metaData["citation_url"].replace(/^.*id=/,"").split(".")
+		if (idArr == null || idArr.length < 2) idArr = metaData["citation_doi"].replace(/^[^\/]*\//,"").split(".");
+		if (idArr == null || idArr.length < 2) return "";
+		       
+		//get CFID etc from link
+		link = link.replace(/^.*CFID=/i,"");
+		return ("https://dl.acm.org/downformats.cfm?id=" + idArr[1].trim() + "&parent_id=" + idArr[0].trim() + "&expformat=endnotes&CFID=" + link);
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
@@ -22,7 +25,8 @@ var BINPrefselector = ( function () {
 		citation_author: [ ['meta[name="citation_authors"]','content'] ],
 		citation_misc: [ ['meta[name="citation_isbn"]','content'] ],
 		citation_journal_title: [ ['meta[name="citation_journal_title"]','content'] ],
-		citation_download: [ ['meta[name="citation_doi"]', 'content'] ]
+		citation_url: [ ['meta[name=citation_abstract_html_url]','content'] ],
+		citation_download: [ ['form[name="qiksearch"]', 'action'] ]
 	};
 
 	// finally expose selector message and link formatter

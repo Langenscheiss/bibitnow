@@ -11,38 +11,36 @@ var BINPreformatter = ( function () {
 	function preformatRawData(metaData, parser) {
 		
 		//parse from endnote to ris
-		var temp = metaData["citation_download"];
-		temp = parser.EndnoteToRis(temp);
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = parser.EndnoteToRis(metaData["citation_download"]);
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
 		//fix journal title
-		var temp = metaData["citation_journal_title"];
-		var tempTwo = temp.match(/\([^\(\)]*\)$/);
-		if (tempTwo != null && tempTwo.length > 0) {
-			metaData["citation_journal_abbrev"] = "ACM " + tempTwo[0].replace(/[\(\)]/gi,"").trim();
-		}
+		let temp = metaData["citation_journal_title"];
+		let tempTwo = temp.match(/\([^\(\)]*\)$/);
+		if (tempTwo != null && tempTwo.length > 0) metaData["citation_journal_abbrev"] = "ACM " + tempTwo[0].replace(/[\(\)]/gi,"").trim();
 		metaData["citation_journal_title"] = temp.replace(/\([^\(\)]*\)$/,"").trim();
 		
 		//fix author list
 		temp = metaData["citation_authors"];
-		if (temp != "") {
-			metaData["citation_authors"] = temp.replace(/;\ /g, " ; ").replace(/\ ;\ $/,"").trim();
-		}
-		
+		metaData["citation_authors"] = temp != "" ? temp.replace(/;\ /g, " ; ").replace(/\ ;\ $/,"").trim() : "";
+			
 		//fix date format
-		temp = metaData["citation_date"];
-		temp = temp.split("/");
-		if (temp != null && temp.length == 3) {
-			temp = temp[1] + "/" + temp[0] + "/" + temp[2];
-			metaData["citation_date"] = temp;
-		}
-		
+		temp = metaData["citation_date"].split("/");
+		if (temp != null && temp.length == 3) metaData["citation_date"] = temp[1] + "/" + temp[0] + "/" + temp[2];
+
 		//check if book
 		if (metaData["citation_misc"] != "") metaData["citation_type"] = "book";
+		       
+		//fix pages
+		temp = metaData["citation_download"]["citation_firstpage"];
+		if (temp != null) temp = temp.split(/\-/)
+		if (temp != null && temp.length > 0) {
+			metaData["citation_download"]["citation_firstpage"] = temp[0];
+			if (temp.length > 1) metaData["citation_download"]["citation_lastpage"] = temp[1];
+		}
 	}
 	
 	// expose preformatting function and raw preformatting function

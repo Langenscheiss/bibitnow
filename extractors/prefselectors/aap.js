@@ -9,9 +9,9 @@ var BINPrefselector = ( function () {
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		returnString = metaData["citation_url"].match(/(^http[s]?:\/\/[^\/]*)[\/].*$/);
-		if (returnString != null && returnString.length > 1) returnString = "" + returnString[1] + link;
-		return returnString;
+		let returnString = metaData["citation_url"].match(/(^http[s]?:\/\/[^\/]*)[\/].*$/);
+		if (returnString != null && returnString.length > 1) return "" + returnString[1] + link;
+		return "";
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>

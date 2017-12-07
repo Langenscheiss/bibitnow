@@ -8,12 +8,8 @@ var BINPrefselector = ( function () {
 	var document = null;
 	
 	function formatCitationLink(metaData, link) {
-		var returnString = "";
-		if (link != null && link != "") {
-			returnString = 'https://www.scopus.com/onclick/export.uri?oneClickExport=%7b%22Format%22%3a%22RIS%22%2c%22SelectedFields%22%3a%22+Authors++Title++Year++EID++SourceTitle++Volume+Issue+ArtNo+PageStart+PageEnd+PageCount++DocumentType+Source++DOI++ISSN++ISBN++Publisher++AbbreviatedSourceTitle+%22%2c%22View%22%3a%22SpecifyFields%22%7d&origin=recordpage&eid='
-			returnString += link;
-		}
-		return returnString;
+		if (link == null || link == "") return "";
+		return ('https://www.scopus.com/onclick/export.uri?oneClickExport=%7b%22Format%22%3a%22RIS%22%2c%22SelectedFields%22%3a%22+Authors++Title++Year++EID++SourceTitle++Volume+Issue+ArtNo+PageStart+PageEnd+PageCount++DocumentType+Source++DOI++ISSN++ISBN++Publisher++AbbreviatedSourceTitle+%22%2c%22View%22%3a%22SpecifyFields%22%7d&origin=recordpage&eid=' + link);
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>

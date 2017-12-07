@@ -11,38 +11,33 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//get and fix title
-		var temp = metaData["citation_title"].replace(/[\s]*[\-]+[\s]*ScienceDirect/,"").trim();
-		var tempTwo = "";
-		if ((tempTwo = metaData["citation_journal_title"].trim()) != "") tempTwo = " -- " + tempTwo;
+		let temp = metaData["citation_title"].replace(/[\s]*[\-]+[\s]*ScienceDirect/,"").trim(), tempTwo = metaData["citation_journal_title"].trim();
+		if (tempTwo != "") tempTwo = " -- " + tempTwo;
 		metaData["citation_title"] = temp + tempTwo;
 		metaData["citation_journal_title"] = "";
 		
 		
 		//fix authors
-		var tempTwo = metaData["citation_authors"].replace(/^[^\:]*\:[\s]*/,"").replace(/([\s]+and[\s]+|[\s]*\,[\s]*)/g," ; ");
+		tempTwo = metaData["citation_authors"].replace(/^[^\:]*\:[\s]*/,"").replace(/(?:[\s]+and[\s]+|[\s]*\,[\s]*)/g," ; ");
 		if (tempTwo.search(/[^\s\;]/) == -1) {
 			tempTwo = "";
-			temp = "[\s]*" + temp + "[\s]*";
-			temp = new RegExp(temp,"");
-			temp = metaData["citation_misc"].replace(temp,"");
-			temp = temp.split(/[\s]+by[\s]+/);
+			temp = metaData["citation_misc"].replace(new RegExp("[\s]*" + temp + "[\s]*",""),"").split(/[\s]+by[\s]+/);
 			if (temp != null && temp.length > 1) {
-				tempTwo = temp[1].replace(/[\s]+on[\s]+ScienceDirect.*$/,"").replace(/([\s]+and[\s]+|[\s]*\,[\s]*)/g," ; ");
+				tempTwo = temp[1].replace(/[\s]+on[\s]+ScienceDirect.*$/,"").replace(/(?:[\s]+and[\s]+|[\s]*\,[\s]*)/g," ; ");
 			}
 		}
 		metaData["citation_authors"] = tempTwo;
 		
 		//fix date
-		temp = "";
-		if ((temp = metaData["citation_date"]) != "") {
+		temp = metaData["citation_date"];
+		if (temp != "") {
 			temp = temp.match(/[0-9][0-9][0-9][0-9]/);
 			if (temp != null && temp.length > 0) {
-				temp = temp[0];
+				metaData["citation_date"] = temp[0];
 			} else {
-				temp = "";
+				metaData["citation_date"] = "";
 			}
 		}
-		metaData["citation_date"] = temp;
 		
 		//clean misc
 		metaData["citation_misc"] = "";

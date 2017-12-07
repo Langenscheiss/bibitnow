@@ -10,21 +10,19 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title, year and journal abbreviation
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
 		//preformat misc for journal abbrev, issue and pages
-		var temp = metaData["citation_misc"];
+		let temp = metaData["citation_misc"];
 		if (temp != "") {
 			temp = temp.split(",");
 			if (temp != null && temp.length > 0) {
 				metaData["citation_journal_abbrev"] = temp[0].trim();
-				var page = temp[temp.length-1].replace(/[p\ \.]+/g,"").trim();
+				let page = temp[temp.length-1].replace(/[p\ \.]+/g,"").trim();
 				page = page.split(/[\u002D\uFF0D\uFE63\u207B\u208B\u00AD\u058A\u2010\u2013\u2011\u2043]/);
 				
 				if (page.length > 0 && page[0] != "ArticleASAP" && page[0] != "JustAccetedManuscrit") metaData["citation_firstpage"] = page[0].trim();
@@ -37,6 +35,8 @@ var BINPreformatter = ( function () {
 				}
 			}
 		}
+		//reset misc
+		metaData["citation_misc"] = "";
 		
 		//preformat issn link to extract issn
 		temp = metaData["citation_issn"];

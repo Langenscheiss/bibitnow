@@ -11,10 +11,7 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//fix ISBN
-		var temp = "";
-		if ((temp = metaData["citation_issn"]) != "") {
-			metaData["citation_issn"] = temp.replace(/^978/,"978-").replace(/^979/,"979-").replace(/[\-]+/g,"-");
-		}
+		metaData["citation_issn"] = metaData["citation_issn"].replace(/^978/,"978-").replace(/^979/,"979-").replace(/[\-]+/g,"-");
 		
 		//fix type
 		metaData["citation_type"] = "book";

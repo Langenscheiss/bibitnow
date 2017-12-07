@@ -10,47 +10,31 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title, year and journal abbreviation
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JF - ").trim();
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = metaData["citation_download"].replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JF - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").trim();
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		var temp = metaData["citation_misc"];
-		temp = temp.replace(/^Source:/i,"").trim();
+		let misc = metaData["citation_misc"];
+		misc = misc.replace(/^Source:/i,"").trim();
 
 		//get journal title
-		metaData["citation_journal_title"] = temp.replace(/\,.*$/,"").trim();
-		temp = temp.replace(/^[^\,]*\,/,"").trim();
+		metaData["citation_journal_title"] = misc.replace(/\,.*$/,"").trim();
 		
 		//replace pp in misc field with "page" if page not already included, remove number of pages in brackets at the end as well, replace "number" by "issue" and let the rest be done by the misc parser
-		temp = temp.replace(/pp\./i,"page");
-		temp = temp.replace(/number/i,"issue");
-		temp = temp.replace(/\([^\(\)]*\)$/,"").trim();
-		metaData["citation_misc"] = temp;
+		misc = misc.replace(/^[^\,]*\,/,"").trim().replace(/pp\./i,"page").replace(/number/i,"issue").replace(/\([^\(\)]*\)$/,"").trim();
+		metaData["citation_misc"] = misc;
 		
 		//remove volume, issue, page from misc string and send the rest to date
-		temp = temp.replace(/volume[^,;]+[,;\ ]*/i,"");
-		temp = temp.replace(/issue[^,;]+[,;\ ]*/i,"");
-		temp = temp.replace(/page[s]?[^,;]+[,;\ ]*/i,"");
-		temp = temp.replace(/[\ ]+/g," ").trim();
-		metaData["citation_date"] = temp;
+		metaData["citation_date"] = misc.replace(/(?:volume|issue|page[s]?)[^,;]+[,;\ ]*/gi,"").replace(/[\ ]+/g," ").trim();
 		
 		//fix date obtained from RIS
-		temp = metaData["citation_download"];
-		if (temp != null) {
-			temp = temp["citation_date"];
-			if (temp != null && temp.length > 0) {
-				temp = temp.replace(/T.*$/,"");
-			} else {
-				temp = "";
-			}
-		} else {
-			temp = "";
+		misc = metaData["citation_download"];
+		if (misc != null) {
+			misc = misc["citation_date"];
+			if (misc != null) metaData["citation_download"]["citation_date"] = misc.replace(/T.*$/,"");
 		}
-		metaData["citation_download"].citation_date = temp;
 	}
 	
 	// expose preformatting function and raw preformatting function

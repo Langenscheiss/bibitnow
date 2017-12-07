@@ -11,8 +11,7 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		// add subtitle if available
-		var temp = metaData["citation_misc"].trim();
-		
+		let temp = metaData["citation_misc"].trim();
 		if (temp != "") {
 			metaData["citation_title"] = metaData["citation_title"] + " -- " + temp;
 		}

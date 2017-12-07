@@ -9,12 +9,8 @@ var BINPrefselector = ( function () {
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		var returnString = metaData["citation_url"];
-		var temp = returnString.replace(/^.*\/abs\//,"").trim().replace(/\//,"%2F");
-		returnString = returnString.replace(/\.org\/.*$/,"");
-		returnString += ".org/action/downloadCitation?doi=";
-		returnString += temp;
-		return returnString;
+		link = metaData["citation_url"];
+		return (link.replace(/\.org\/.*$/,"") + ".org/action/downloadCitation?doi=" + link.replace(/^.*\/abs\//,"").trim().replace(/\//,"%2F"));
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>

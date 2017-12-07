@@ -11,16 +11,11 @@ var BINPrefselector = ( function () {
 	function formatCitationLink(metaData, link) {
 		
 		//get base url
-		var returnString = "";
 		if (metaData["query_summary"]["citation_download"] == 1) {
-			returnString = metaData["citation_url"].replace(/\.gov\/.*$/,".gov/pubmed/");
-			returnString += link;
-			returnString += "?report=xml&format=text"
+			return (metaData["citation_url"].replace(/\.gov\/.*$/,".gov/pubmed/") + link + "?report=xml&format=text");
 		} else {
-			returnString = link.replace(/&format=.*$/,"").replace(/&report=.*$/,"");
-			returnString += "&report=xml&format=text"
+			return (link.replace(/&format=.*$/,"").replace(/&report=.*$/,"") + "&report=xml&format=text");
 		}
-		return returnString;
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>

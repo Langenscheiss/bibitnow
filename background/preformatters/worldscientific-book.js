@@ -11,7 +11,7 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 			
 		//fix authors
-		var temp = "";
+		let temp = "";
 		if ((temp = metaData["citation_authors"]) != "") {
 			metaData["citation_authors"] = temp.replace(/^[^\:]*\:[\ ]*/,"").replace(/\([^\(\)]*\)/g,"").replace(/[\ ]*\,[\ ]*/g," ; ");
 		}
@@ -20,7 +20,7 @@ var BINPreformatter = ( function () {
 		metaData["citation_type"] = "book";
 		
 		//fix publisher
-		if ((temp = metaData["citation_publisher"]) == "") {
+		if (metaData["citation_publisher"] == "") {
 			if ((temp = metaData["citation_journal_title"]) != "") {
 				metaData["citation_publisher"] = temp;
 			} else {

@@ -10,9 +10,7 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix doi and journal abbreviation
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/M3[\t\ ]+[\-]+[\t\ ]+/,"DO - ").replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").trim();
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = metaData["citation_download"].replace(/M3[\t\ ]+[\-]+[\t\ ]+/,"DO - ").replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").trim();
 	}
 	
 	

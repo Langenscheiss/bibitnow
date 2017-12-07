@@ -10,17 +10,15 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title, year and journal abbreviation
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/(J[AO]|UR)[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = metaData["citation_download"].replace(/(?:PY|J[AO]|UR)[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
 		//extract year from misc
-		var temp = "";
-		if ((temp = metaData["citation_misc"]) != "") {
+		let temp = metaData["citation_misc"];
+		if (temp != "") {
 			temp = temp.replace(/volume[^\,]*\,/,"").match(/[0-9][0-9][0-9][0-9]/);
 			if (temp != null && temp.length > 0) {
 				temp = temp[0];
@@ -44,9 +42,7 @@ var BINPreformatter = ( function () {
 		}
 		
 		//fix publisher
-		if (metaData["citation_publisher"] == "") {
-			metaData["citation_publisher"] = "Taylor & Francis";
-		}
+		if (metaData["citation_publisher"] == "") metaData["citation_publisher"] = "Taylor & Francis";
 		
 		//fix type and issn (only journals!)
 		metaData["citation_type"] = "article";

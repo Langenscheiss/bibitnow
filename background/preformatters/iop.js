@@ -10,30 +10,28 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		
-		//download citation is crap, but supported anyway so
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/A1[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/AU[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
-		metaData["citation_download"] = temp;
+		//downloaded citation is crap on iop journals (books are ok actually)
+		if (metaData["citation_type"].search(/isbn/i) == -1) metaData["citation_download"] = metaData["citation_download"].replace(/(?:A1|AU)[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
 		//check if book
-		var temp = metaData["citation_type"];
-		if (temp.search(/isbn/i) != -1) {
-			temp = temp.split(";");
-			if (temp != null && temp.length > 0) {
-				temp = temp[0].trim();
+		let misc = metaData["citation_type"];
+		if (misc.search(/isbn/i) != -1) {
+			misc = misc.split(";");
+			if (misc != null && misc.length > 0) {
+				misc = misc[0].trim();
 				metaData["citation_type"] = "book";
-				metaData["citation_issn"] = temp;
+				metaData["citation_issn"] = misc;
 				
 				//fix subtitle
-				temp = metaData["citation_misc"];
-				if (temp != "") {
-					var tempTwo = metaData["citation_title"];
-					if (tempTwo != "") {
-						metaData["citation_title"] = tempTwo + " -- " + temp;
+				misc = metaData["citation_misc"];
+				if (misc != "") {
+					let title = metaData["citation_title"];
+					if (title != "") {
+						metaData["citation_title"] = title + " -- " + misc;
 					}
 				}
 				
@@ -42,10 +40,18 @@ var BINPreformatter = ( function () {
 			}
 		}
 		
+		//fix date
+		misc = metaData["citation_download"];
+		if (misc != null) {
+			misc = misc["citation_date"];
+			if (misc != null && misc != "") {
+				let date = metaData["citation_date"];
+				metaData["citation_download"]["citation_date"] = date.search(new RegExp("" + misc)) != -1 ? date : misc;
+			}
+		}
 		
 		//fix publisher
-		temp = metaData["citation_publisher"];
-		if (temp == "") metaData["citation_publisher"] = "IOP Publishing";
+		if (metaData["citation_publisher"] == "") metaData["citation_publisher"] = "IOP Publishing";
 		
 		//reset citation_misc
 		metaData["citation_misc"] = "";

@@ -10,18 +10,14 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title, year and journal abbreviation
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
 		//get volume, pages
-		var temp = metaData["citation_misc"];
-		temp = temp.replace(/\ \(Volume[^\)]*\).*$/i,"");
-		temp = temp.split(":");
+		let temp = metaData["citation_misc"].replace(/\ \(Volume[^\)]*\).*$/i,"").split(":");
 		if (temp != null && temp.length > 0) {
 			metaData["citation_volume"] = temp[0].replace(/^[^\ ]*\ /i,"").trim();
 			if (temp.length > 1) {
@@ -32,6 +28,7 @@ var BINPreformatter = ( function () {
 				}
 			}
 		}
+		//fix publisher
 		metaData["citation_publisher"] = "Annual Reviews";
 		
 		//preformat issn link to extract issn

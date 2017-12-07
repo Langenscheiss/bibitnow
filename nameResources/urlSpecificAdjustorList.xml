@@ -31,6 +31,7 @@
 <adjustor id="mdpi-com" prefselector="mdpi" preformatter="mdpi"></adjustor>
 <adjustor id="ojs-darwin-edu-ar" preformatter="darwiniana" prefselector="darwiniana"></adjustor>
 <adjustor id="global-oup-com" preformatter="oup" prefselector="oup"></adjustor>
+<adjustor id="academic-oup-com" preformatter="oup-journals" prefselector="oup-journals"></adjustor>
 <adjustor id="jps-jp-doi" preformatter="jps" prefselector="jps"></adjustor>
 <adjustor id="nature-com" preformatter="nature" prefselector="nature"></adjustor>
 <adjustor id="nejm-org" preformatter="nejm" prefselector="nejm"></adjustor>
@@ -40,7 +41,7 @@
 <adjustor id="sciencedirect-com-science-book" prefselector="sciencedirect-book" preformatter="sciencedirect-book"></adjustor>
 <adjustor id="sciencedirect-com-science-article" prefselector="sciencedirect" preformatter="sciencedirect"></adjustor>
 <adjustor id="scopus-com" prefselector="scopus" preformatter="scopus"></adjustor>
-<adjustor id="link-springer-com-article" prefselector="springer"></adjustor>
+<adjustor id="link-springer-com-article" prefselector="springer" preformatter="springer"></adjustor>
 <adjustor id="link-springer-com-book" prefselector="springer-link-book" preformatter="springer-link-book"></adjustor>
 <adjustor id="pnas-org" prefselector="pnas" preformatter="pnas"></adjustor>
 <adjustor id="press-princeton-edu" prefselector="princeton" preformatter="princeton"></adjustor>

@@ -11,31 +11,29 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//preformat misc for date
-		var temp = metaData["citation_misc"];
-		var tempTwo = "";
-		if (temp != "") {
-			tempTwo = temp.match(/Published[^;\(]*/i);
-			if (tempTwo != null && tempTwo.length > 0) {
-				metaData["citation_date"] = tempTwo[0].replace(/^Published[\s ]*[:]*/i,"").trim();
+		let bibField = metaData["citation_misc"];
+		let bibFieldTwo = "";
+		if (bibField != "") {
+			bibFieldTwo = bibField.match(/Published[^;\(]*/i);
+			if (bibFieldTwo != null && bibFieldTwo.length > 0) {
+				metaData["citation_date"] = bibFieldTwo[0].replace(/^Published[\s ]*[:]*/i,"").trim();
 			}
 			metaData["citation_misc"] = "";
 		}
 		
 		//preformat isbn
-		temp = metaData["citation_issn"];
-		if (temp != null) {
-			tempTwo = temp.match(/ISBN[^;\(]*/i);
-			if (tempTwo != null && tempTwo.length > 0) {
-				metaData["citation_issn"] = tempTwo[0].replace(/[^0-9X\-]/g,"").replace(/^978/,"978-").replace(/^979/,"979-").replace(/[\-]+/g,"-");
+		bibField = metaData["citation_issn"];
+		if (bibField != null) {
+			bibFieldTwo = bibField.match(/ISBN[^;\(]*/i);
+			if (bibFieldTwo != null && bibFieldTwo.length > 0) {
+				metaData["citation_issn"] = bibFieldTwo[0];
 			} else {
 				metaData["citation_issn"] = "";
 			}
 		}
 		
 		//fix publisher
-		temp = metaData["citation_publisher"];
-		temp = temp.replace(/[\ ]*\(OUP\)$/,"");
-		metaData["citation_publisher"] = temp;
+		metaData["citation_publisher"] = metaData["citation_publisher"].replace(/[\ ]*\(OUP\)$/,"");
 	}
 	
 	// expose preformatting function

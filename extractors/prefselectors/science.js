@@ -15,11 +15,8 @@ var BINPrefselector = ( function () {
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		var baseUrl = metaData["citation_url"].match(/(^[^:]*:\/\/[^\/]+)/);
-		if (baseUrl != null && baseUrl.length > 0) {
-			link = baseUrl[0] + link;
-		}
-		return link;
+		if (link == null || link == "") return "";
+		return (metaData["citation_url"].replace(/sciencemag\.org\/.*$/,"sciencemag.org") + link);
 	}
 	
 	// expose selector message and link formatter

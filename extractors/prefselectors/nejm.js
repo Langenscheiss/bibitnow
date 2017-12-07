@@ -9,13 +9,8 @@ var BINPrefselector = ( function () {
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		var returnString = metaData["citation_url"].match(/(^http[s]?:\/\/[^\/]*)\/.*$/);
-		if (returnString != null && returnString.length > 1 && link != "") {
-			returnString = "" + returnString[1] + link.replace(/showCitFormats\?/,"downloadCitation?format=ris&") + '&include=cit&direct=checked';
-		} else {
-			returnString = "";
-		}
-		return returnString;
+		if (link == null && link == "") return "";
+		return (metaData["citation_url"].replace(/nejm\.org\/.*$/,"nejm.org") + link.replace(/showCitFormats\?/,"downloadCitation?format=ris&") + '&include=cit&direct=checked');
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
