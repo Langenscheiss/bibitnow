@@ -11,37 +11,34 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//fix authors on amazon
-		var temp = metaData["citation_authors"];
-		temp = temp.replace(/[\ ;]*Entdecken\ [^;]*;/gi,"");
-		temp = temp.replace(/[\ ;]*Suchergebnisse\ [^;]*;/gi,"");
-		temp = temp.replace(/[\ ;]*Erfahren\ [^;]*/gi,"");
-		metaData["citation_authors"] = temp;
+		metaData["citation_authors"] = metaData["citation_authors"].replace(/[\ ;]*(?:Entdecken|Suchergebnisse|Erfahren)\ [^;]*/gi,"");
+		console.log(metaData["citation_authors"]);
 		
 		//preformat publisher
-		temp = metaData["citation_misc"];
-		var tempTwo = temp.replace(/\([^\(\)]*\)[\ ]*$/,"").match(/Verlag[^;\(]*/i);
-		if (tempTwo != null && tempTwo.length > 0) metaData["citation_publisher"] = tempTwo[0].replace(/^Verlag[\s ]*[:]*/i,"").trim();
+		let data = metaData["citation_misc"];
+		let dataPart = data.replace(/\([^\(\)]*\)[\ ]*$/,"").match(/Verlag[^;\(]*/i);
+		if (dataPart != null && dataPart.length > 0) metaData["citation_publisher"] = dataPart[0].replace(/^Verlag[\s ]*[:]*/i,"").trim();
 		
 		//extract ISBN
-		tempTwo = temp.match(/ISBN\-13[:\ 0-9X\-]*/i);
-		if (tempTwo == null || tempTwo.length == 0) tempTwo = temp.match(/ISBN[:\ 0-9X\-]*/i);
-		if (tempTwo != null && tempTwo.length > 0) {
-			tempTwo = tempTwo[0];
-			metaData["citation_issn"] = tempTwo.replace(/ISBN[^:]*:/,"").trim();
+		dataPart = data.match(/ISBN\-13[:\ 0-9X\-]*/i);
+		if (dataPart == null || dataPart.length == 0) dataPart = data.match(/ISBN[:\ 0-9X\-]*/i);
+		if (dataPart != null && dataPart.length > 0) {
+			dataPart = dataPart[0];
+			metaData["citation_issn"] = dataPart.replace(/ISBN[^:]*:/,"").trim();
 		} else {
 			metaData["citation_issn"] = "";
 		}
 		
 		//preformat date
-		temp = temp.replace(/Verlag[^;\(]*/i,"");
-		tempTwo = temp.match(/\([^\(\)]*\)\ ;\ /);
-		if (tempTwo != null && tempTwo.length > 0) {
-			temp = tempTwo[0];
+		data = data.replace(/Verlag[^;\(]*/i,"");
+		dataPart = data.match(/\([^\(\)]*\)\ ;\ /);
+		if (dataPart != null && dataPart.length > 0) {
+			data = dataPart[0];
 		} else {
-			tempTwo = temp.match(/\([^\(\)]*\)/);
-			if (tempTwo != null && tempTwo.length > 0) temp = tempTwo[0];
+			dataPart = data.match(/\([^\(\)]*\)/);
+			if (dataPart != null && dataPart.length > 0) data = dataPart[0];
 		}
-		metaData["citation_date"] = temp.trim();
+		metaData["citation_date"] = data.trim();
 		
 		//clear misc field to avoid any further interpretations
 		metaData["citation_misc"] = "";
