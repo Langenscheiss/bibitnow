@@ -10,7 +10,7 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title, year and journal abbreviation. Do not use title from citation download, due to latex characters
-		metaData["citation_download"] = metaData["citation_download"].replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").replace(/ID[\t\ ]+[\-]+[\t\ ]+/,"DO - ").trim();
+		metaData["citation_download"] = metaData["citation_download"].replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").replace(/ID[\t\ ]+[\-]+[\t\ ]+/,"DO - ").trim();
 	}
 	
 	
@@ -24,6 +24,9 @@ var BINPreformatter = ( function () {
 		} else {
 			metaData["citation_issn"] = "";
 		}
+		
+		//fix non-latex title by replacing it with the statically obtained title (which does not have math mode instructions)
+		metaData["citation_title_nonlatex"] = metaData["citation_title"];
 	}
 	
 	// expose preformatting function and raw preformatting function

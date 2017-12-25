@@ -48,6 +48,8 @@ var BINPrefselector = ( function () {
 		There are also additional fields in metaData whose css selectors cannot be modified, and hence are not registered in "query_summary":
 		"citation_webpage_title", title of webpage from which data was extracted
 		"citation_webpage_date", this contains the lastModified date of the webpage from which the data has been extracted, in the format YY/MM/DD.
+		"citation_title_nonlatex", since the title field is treated separately in the parser for latex (due to math mode instructions), one may programmatically set this field, here or in the preformatting stage, to some other input, in order to set a "non-latex" title
+		"citation_publisher_nonlatex", same as for title
 		
 		DOWNLOAD REQUEST METHOD
 		The field "citation_download_method" specifies the citation download http request method. At the moment, it can be set to either "POST" or "GET", by assigning one of the two strings to metaData["citation_download_method"]. If set to anything else, the system will fall back to "GET". Note that some websites (such as Wiley, see function below) require a POST request.
