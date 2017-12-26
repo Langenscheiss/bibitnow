@@ -17,6 +17,11 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		//fix authors in case of group authors
+		if(metaData["query_summary"]["citation_authors"] == 2) {
+			metaData["citation_authors"] = metaData["citation_authors"].replace(/(?:[\s]*et[\s]*al[\.\ ]*|\([^\(\)]+\))/gi,"").trim();
+		}
+		
 		//fix issn
 		let issn = metaData["citation_issn"].match(/ISSN[0-9X\-\ ]+/);
 		if (issn != null && issn.length > 0) {

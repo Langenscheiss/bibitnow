@@ -11,9 +11,7 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//fix authors on amazon
-		console.log(metaData["citation_authors"]);
 		metaData["citation_authors"] = metaData["citation_authors"].replace(/[\ ;]*(?:Visit|Search|Learn)\ [^;]*/gi,"");
-		console.log(metaData["citation_authors"]);
 		
 		//preformat publisher
 		let data = metaData["citation_misc"];
