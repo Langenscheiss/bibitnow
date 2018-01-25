@@ -16,6 +16,7 @@ var BINPrefselector = ( function () {
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = {
 		citation_misc: [ ['div#breadcrumbs a', 'innerText'] ],
+		citation_abstract: [ ['div.abstractSection','innerText',true,20000] , ['meta[name="dc.Description"]','content', false ,20000] ],
  		citation_download: [ ['div.article-tools a[title="Download Citation"]', 'href'] ]
 	};
 

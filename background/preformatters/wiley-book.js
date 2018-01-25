@@ -32,6 +32,9 @@ var BINPreformatter = ( function () {
 		
 		//fix type
 		metaData["citation_type"] = "book";
+		
+		//fix abstract
+		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/(?:^[\s]*Product[\s]*Information[\s]*|^[\s]*About[\s]*The[\s]*Product[\s]*)/gi,"").replace(/(?:^[\s]*Product[\s]*Information[\s]*|^[\s]*About[\s]*The[\s]*Product[\s]*)/gi,"").trim();
 	}
 	
 	// expose preformatting function

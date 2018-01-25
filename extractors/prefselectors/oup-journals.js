@@ -14,8 +14,12 @@ var BINPrefselector = ( function () {
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = { 
-		citation_issn: [ ['meta[name="citation_issn"]','content'] ],
-		citation_title: [ ['h1.wi-article-title.article-title-main','innerText'] ],
+		citation_issn: [ ['meta[name="citation_issn"]','content'] , ['div.journal-footer-colophon li','innerText'] ],
+		citation_title: [ ['meta[name="citation_title"]','content'], ['h1.wi-article-title.article-title-main','innerText',true] ],
+		citation_misc: [ ['section.abstract script[type^="math/tex"], section.abstract div.MathJax_Display','textContent', true, 1024, true, 1000] ],
+		citation_abstract: [ ['section.abstract','textContent', true, 20000] ],
+		citation_keywords: [ ['meta[name="citation_keyword"]','content'] , ['div.kwd-group a.kwd-part','innerText'] ],
+		citation_date: [ ['meta[name="citation_publication_date"]','content'] , ['div.citation-date','innerText'] ],
 		citation_download: [ ['div#getCitation ul a','href'] ]
 	};
 

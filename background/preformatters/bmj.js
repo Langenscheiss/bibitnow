@@ -17,7 +17,8 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//fix nothing so far
+		//fix abstract, prefer statically obtained
+		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') metaData["citation_abstract"] = "";
 	}
 	
 	// expose preformatting function and raw preformatting function

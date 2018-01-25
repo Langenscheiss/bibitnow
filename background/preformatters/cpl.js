@@ -23,9 +23,7 @@ var BINPreformatter = ( function () {
 		//get pubid from url
 		var temp = metaData["citation_url"];
 		temp = temp.replace(/^.*se\/publication\//,"");
-		
 		temp = temp.match(/^[0-9]+/);
-		
 		if (temp != null && temp.length > 0) metaData["citation_archive_id"] = temp[0].trim();
 	}
 	

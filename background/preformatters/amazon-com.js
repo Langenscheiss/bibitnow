@@ -10,13 +10,17 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		
+		//fix type for kindle edition
+		if (metaData["citation_type"] == "digital-text") metaData["citation_type"] = "book";
+		
 		//fix authors on amazon
 		metaData["citation_authors"] = metaData["citation_authors"].replace(/[\ ;]*(?:Visit|Search|Learn)\ [^;]*/gi,"");
 		
 		//preformat publisher
 		let data = metaData["citation_misc"];
-		let dataPart = data.replace(/\([^\(\)]*\)[\ ]*$/,"").match(/Publisher[^;\(]*/i);
-		if (dataPart != null && dataPart.length > 0) metaData["citation_publisher"] = dataPart[0].replace(/^Publisher[\s ]*[:]*/i,"").trim();
+		let dataPart = data.replace(/\([^\(\)]*\)[\ ]*$/,"").match(/(?:Publisher|Editor[a]?)[^;\(]*/i);
+		if (dataPart != null && dataPart.length > 0) metaData["citation_publisher"] = dataPart[0].replace(/^(?:Publisher|Editor[a]?)[\s ]*[:]*/i,"").trim();
 		
 		//extract ISBN
 		dataPart = data.match(/ISBN\-13[:\ 0-9X\-]*/i);
@@ -29,7 +33,7 @@ var BINPreformatter = ( function () {
 		}
 		
 		//preformat date
-		data = data.replace(/Publisher[^;\(]*/i,"");
+		data = data.replace(/^.*?(?:Publisher|Editor[a]?)[^;\(]*/i,"");
 		dataPart = data.match(/\([^\(\)]*\)\ ;\ /);
 		if (dataPart != null && dataPart.length > 0) {
 			data = dataPart[0];

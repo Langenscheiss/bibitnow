@@ -24,6 +24,21 @@ var BINPreformatter = ( function () {
 		
 		// clear misc
 		metaData["citation_misc"] = "";
+		
+		// fix date
+		if (metaData["query_summary"]["citation_date"] == 2) {
+			temp = metaData["citation_date"];
+			if (temp.search(/hardcover/i) != -1) {
+				metaData["citation_date"] = temp.replace(/^.*hardcover[\s|]*([0-9]{4})[^0-9]+.*$/i,
+					function(match, $1, offset, original) { return $1; }
+				);
+			} else {
+				metaData["citation_date"] = temp.replace(/([0-9]{4})[^0-9]+.*$/i,
+					function(match, $1, offset, original) { return $1; }
+				);
+			}
+		}
+		
 	}
 	
 	// expose preformatting function

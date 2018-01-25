@@ -23,6 +23,13 @@ var BINPreformatter = ( function () {
 		} else {
 			metaData["citation_firstpage"] = "";
 		}
+		
+		//fix abstract, prefer static
+		let abstract = metaData["citation_abstract"].replace(/^[\s]*abstract[\:\s]*/i,"");
+		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
+			if (abstract != "") metaData["citation_abstract"] = "";
+		}
+		metaData["citation_abstract"] = abstract;
 	}
 	
 	// expose preformatting function and raw preformatting function

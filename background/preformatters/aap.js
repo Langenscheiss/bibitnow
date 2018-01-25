@@ -9,7 +9,7 @@ var BINPreformatter = ( function () {
 	
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
-		//fix journal abbrev and doi
+		//fix journal abbrev and doi, remove abstract
 		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/M3[\t\ ]+[\-]+[\t\ ]+/,"DO - ").trim();
 	}
 	
@@ -17,9 +17,15 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//fix abbreviation if necessary
-		if(metaData["citation_download"]["citation_journal_abbrev"] == "hosppeds") metaData["citation_download"]["citation_journal_abbrev"] = "Hosp. Pediatr.";
-		//do nothing
+		//fix downloaded data if available
+		const abstract = metaData["citation_abstract"];
+		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
+			//fix abbreviation if necessary
+			if(metaData["citation_journal_abbrev"] == "hosppeds") metaData["citation_journal_abbrev"] = "Hosp. Pediatr.";
+			
+			//fix abstract, choose static abstract if available
+			if (abstract != "") metaData["citation_abstract"] = "";
+		}
 		
 	}
 	

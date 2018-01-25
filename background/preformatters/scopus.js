@@ -30,26 +30,24 @@ var BINPreformatter = ( function () {
 		//remove volume, issue, page, article number from misc string and send the rest to date
 		metaData["citation_date"] = temp.replace(/(?:volume|issue|page[s]?|article|number)[^,;]+[,;\ ]*/gi,"").replace(/[\ ]+/g," ").trim();
 		
-		//clear misc in citation download
-		if ((temp = metaData["citation_download"]) != null) temp["citation_misc"] = "";
-		
 		//fix issn
-		temp = metaData["citation_issn"];
-		if (temp != "") {
-			// first for data from HTML source
-			temp = temp.replace(/[^0-9X\-]/g,"");
-			if (temp.search(/\-/) == -1 && temp.length == 8) {
-				metaData["citation_issn"] = temp.slice(0,4) + "-" + temp.slice(4);
-			}
+		temp = metaData["citation_issn"].replace(/[^0-9X\-]/g,"");
+		if (temp.search(/\-/) == -1 && temp.length == 8) {
+			metaData["citation_issn"] = temp.slice(0,4) + "-" + temp.slice(4);
+		}
+		
+		//fix abstract
+		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/(?:Copyright[\s]*)?©.*$/i,"");
+		
+		//fix downloaded issn, clear downloaded misc and, preferrably, abstract in citation download and
+		if ((temp = metaData["citation_download"]) != null && typeof(temp) == 'object') {
+			temp["citation_misc"] = "";
+			if (metaData["citation_abstract"] != "") temp["citation_abstract"] = "";
 			
-			// then for downloaded citation
-			temp = metaData["citation_download"];
-			if (temp != null) temp = temp["citation_issn"];
-			if (temp != null && temp != "") {
-				temp = temp.replace(/[^0-9X\-]/g,"");
-				if (temp.search(/\-/) == -1 && temp.length == 8) {
-					metaData["citation_download"]["citation_issn"] = temp.slice(0,4) + "-" + temp.slice(4);
-				}	
+			//issn
+			temp = temp["citation_issn"].replace(/[^0-9X\-]/g,"");
+			if (temp.search(/\-/) == -1 && temp.length == 8) {
+				metaData["citation_download"]["citation_issn"] = temp.slice(0,4) + "-" + temp.slice(4);
 			}
 		}
 	}

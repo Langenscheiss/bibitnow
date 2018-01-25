@@ -13,6 +13,7 @@ var BINPrefselector = ( function () {
 		citation_title: [ ['span.pubTitle','innerText'] ],
 		citation_journal_title: [ ['span.pubSubTitle','innerText'] ],
 		citation_misc: [ ['meta[name="description"]','content'] ],
+		citation_abstract: [ ['div#bookDescription','innerText', true, 20000] ],
 		citation_authors: [ ['span.pubEditors','innerText'] ],
 		citation_date: [ ['p.copyright','innerText'] ]
 	};

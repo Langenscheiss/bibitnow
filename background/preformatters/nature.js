@@ -38,10 +38,12 @@ var BINPreformatter = ( function () {
 		metaData["citation_doi"] = metaData["citation_doi"].replace(/^.*doi/,"").trim().replace(/[\ ]+[^\ ]*$/,"");
 		
 		//fix volume and issue and doi
-		bibField = metaData["citation_volume"];
-		metaData["citation_volume"] = bibField.replace(/^.*volumeNum=/,"").replace(/[^0-9]+.*$/g,"").trim();
-		metaData["citation_issue"] = bibField.replace(/^.*issueNum=/,"").replace(/[^0-9]+.*$/g,"").trim();
-		if (metaData["citation_doi"] == "") metaData["citation_doi"] = decodeURIComponent(bibField).replace(/^.*contentID=/,"").replace(/\&.*$/g,"").trim();
+		if (metaData["query_summary"]["citation_volume"] == 2) {
+			bibField = metaData["citation_volume"];
+			metaData["citation_volume"] = bibField.replace(/^.*volumeNum=/,"").replace(/[^0-9]+.*$/g,"").trim();
+			if (metaData["citation_issue"] == "") metaData["citation_issue"] = bibField.replace(/^.*issueNum=/,"").replace(/[^0-9]+.*$/g,"").trim();
+			if (metaData["citation_doi"] == "") metaData["citation_doi"] = decodeURIComponent(bibField).replace(/^.*contentID=/,"").replace(/\&.*$/g,"").trim();
+		}
 	}
 	
 	// expose preformatting function and raw preformatting function

@@ -19,6 +19,7 @@ var BINPrefselector = ( function () {
 		citation_misc: [ ['div.article-details div+p','innerText'] ],
 		citation_issn: [ ['a.rightslink','href'] ],
 		citation_doi: [ ['div.article-details p a','href'] ],
+		citation_abstract: [ ['div.abstractSection.abstractInFull p','innerText', true, 20000] ],
 		citation_download: [ ['a#export-article-link','href'], ['li.downloadCitations a','href'] ]
 	};
 

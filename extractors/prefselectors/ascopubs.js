@@ -11,12 +11,13 @@ var BINPrefselector = ( function () {
 	function formatCitationLink(metaData, link) {
 		//get base url and modify
 		link = metaData["citation_url"].replace(/\/doi.*$/,"") + link;
-		return link.replace(/showCitFormats/,"downloadCitation") + "&format=ris";
+		return link.replace(/showCitFormats/,"downloadCitation") + "&format=ris&include=abs";
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = {
 		citation_download: [ ['td.export-citation a','href'] ],
+		citation_abstract: [ ['div.abstractSection.abstractInFull','innerText', true, 20000] ],
 		citation_misc: [ ['li.rightsLink a.rightslink','href'] ]
 	};
 

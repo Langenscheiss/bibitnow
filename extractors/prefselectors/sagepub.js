@@ -10,7 +10,7 @@ var BINPrefselector = ( function () {
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
 		if (link == null && link == "") return "";
-		return (metaData["citation_url"].replace(/sagepub\.com\/.*$/,"sagepub.com") + "/action/downloadCitation?doi=" + link);
+		return (metaData["citation_url"].replace(/sagepub\.com\/.*$/,"sagepub.com") + "/action/downloadCitation?doi=" + link + "&format=ris&include=abs");
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
@@ -23,6 +23,7 @@ var BINPrefselector = ( function () {
 		citation_misc: [ ['div.Article.information > div:first-of-type','innerText'] ],
 		citation_author: [ ['div.articleList div.art_authors span.NLM_string_name','innerText'] ],
 		citation_date: [ ['span.publicationContentEpubDate.dates','innerText'] , ['div.recommendCitationVolumeDate > p','innerText'] , ['div.articleList span.year','innerText'] ],
+		citation_abstract: [ ['div.abstractSection.abstractInFull','innerText', false, 20000] ],
 		citation_doi: [ ['div.publicationContentDoi a','href'] ],
 		citation_issn: [ ['div.issnFooter span:nth-of-type(2)','innerText'] , ['div.issnFooter span','innerText'] ],
 		citation_download: [ ['form[name="frmCitmgr"] input[name="doi"]','value'] ]

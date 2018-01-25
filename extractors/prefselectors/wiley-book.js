@@ -14,6 +14,7 @@ var BINPrefselector = ( function () {
 		citation_doi: [ ['span.doi','innerText'] ],
 		citation_issn: [ ['span.printIsbn','innerText'] , ['span.onlineIsbn','innerText'] ],
 		citation_date: [ ['span.onlinePublicationDate','innerText'] ],
+		citation_abstract: [ ['div#bookHome div#homepageContent','innerText',true,20000] ],
 		citation_publisher: [ ['p.copyright','innerText'] ]
 	};
 

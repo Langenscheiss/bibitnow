@@ -27,7 +27,18 @@ var BINPrefselector = ( function () {
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = { 
-		//static meta information unfortunately not available on this stupid page
+		citation_title: [ ['h1.document-title','innerText'] ],
+		citation_authors: [ ['div.authors-container span[ng-bind-html="::author.name"]','textContent'] ],
+		citation_journal_title: [ ['a.stats-document-abstract-publishedIn','textContent'] ],
+		citation_volume: [ ['span[ng-if="::vm.details.volume"]','textContent'] ],
+		citation_firstpage: [ ['div[ng-if~="::vm.details.startPage"]','innerText'] ],
+		citation_date: [ ['div.doc-abstract-pubdate','innerText'] ],
+		citation_issn: [ ['div[ng-if~="::vm.details.issn"]','innerText'] ],
+		citation_doi: [ ['div[ng-if~="::vm.details.doi"]','innerText'] ],
+		citation_publisher: [ ['div.doc-abstract-publisher','innerText'] ],
+		citation_abstract: [ ['div.abstract-text','innerText', true, 20000] ],
+		citation_keywords: [ ['div.stats-keywords-container li:first-of-type a','innerText'] ],
+		citation_issue: [ ['a.stats-document-abstract-publishedIn-issue','textContent'] ],
 		citation_download: [ ['BINURL','href'] ]
 	};
 

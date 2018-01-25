@@ -12,6 +12,7 @@ var BINPrefselector = ( function () {
 		citation_author: [ ['span.manufacturer','innerText'] ],
 		citation_publisher: [ ['td[itemprop="manufacturer"]','innerText'] ],
 		citation_issn: [ ['td[itemprop="isbn"]','innerText'] , ['td[itemprop="gtin13"]','innerText'] ],
+		citation_abstract: [ ['div.tab-content p','innerText',true, 20000] ],
 		citation_misc: [ ['div#Produktdetails td,th','innerText'] ]
 	};
 

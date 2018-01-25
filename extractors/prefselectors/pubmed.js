@@ -26,6 +26,7 @@ var BINPrefselector = ( function () {
 		citation_doi: [ ['div.resc a[ref="aid_type=doi"]','innerText'] ],
 		citation_publisher: [ ['p.copyright','innerText'] , ['div.linkoutlist a[title="Full text at publisher\'s site"]','innerText'] ],
 		citation_misc: [ ['meta[name="description"]','content'] ],
+		citation_abstract: [ ['AbstractText','innerText', true, 20000] ],
 		citation_download: [ ['meta[name="ncbi_uidlist"]','content'] , [ 'BINURL' ,'' ] ]
 	};
 

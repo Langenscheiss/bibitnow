@@ -30,7 +30,11 @@ var BINPreformatter = ( function () {
 		bibField = metaData["citation_date"].match(/published:(.*)$/);
 		if (bibField == null || bibField.length < 2) bibField = metaData["citation_date"].match(/published online:(.*)$/);
 		if (bibField != null && bibField.length == 2) metaData["citation_date"] = bibField[1].replace(/^[^:]*[:]/,"").trim();
-		
+		       
+		//prefer static abstract
+		if (metaData["citation_abstract"] != "" && (metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
+			metaData["citation_abstract"] = "";
+		}		
 	}
 	
 	// expose preformatting function

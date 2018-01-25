@@ -35,11 +35,12 @@ var BINPreformatter = ( function () {
 		if (metaData["citation_misc"] != "") metaData["citation_type"] = "book";
 		       
 		//fix pages
-		temp = metaData["citation_download"]["citation_firstpage"];
-		if (temp != null) temp = temp.split(/\-/)
-		if (temp != null && temp.length > 0) {
-			metaData["citation_download"]["citation_firstpage"] = temp[0];
-			if (temp.length > 1) metaData["citation_download"]["citation_lastpage"] = temp[1];
+		if ((temp = metaData["citation_download"]) != null && typeof(temp) == 'object') {
+			temp = temp["citation_firstpage"].split(/\-/);
+			if (temp != null && temp.length > 0) {
+				metaData["citation_download"]["citation_firstpage"] = temp[0];
+				if (temp.length > 1) metaData["citation_download"]["citation_lastpage"] = temp[1];
+			}
 		}
 	}
 	

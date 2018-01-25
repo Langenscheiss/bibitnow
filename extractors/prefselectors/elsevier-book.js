@@ -11,6 +11,7 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = { 
 		citation_author: [ ['span[itemprop="Author"]','innerText'] , ['span[itemprop="Editor"]','innerText'] ],
 		citation_title: [ ['header.book-intro-header','innerText'] ],
+		citation_abstract: [ ['section#description div[itemprop="description"]','innerText',true, 20000] ],
 		citation_issn: [ ['dd[itemprop="isbn"].print.isbn','innerText'] , ['dd[itemprop="isbn"]','innerText'] ],
 		citation_date: [ ['dd[itemprop="datePublished"]','innerText'] , ['meta[name="published date"]','content'] ],
 		citation_publisher: [ ['dd[itemprop="publisher"]','innerText'] ]

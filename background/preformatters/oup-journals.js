@@ -17,7 +17,60 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//do nothing
+		let mathSymbols = metaData["citation_misc"];
+		
+		//prefer static abstract if available
+		let abstract = metaData["citation_abstract"];
+		if (abstract != "") {
+			let download = metaData["citation_download"];
+			if (download != null && typeof(download) == 'object') {
+				download["citation_abstract"] = "";
+			}
+			
+			//fix math in abstract, math symbols saved in citation_misc
+			let mathSymbols = metaData["citation_misc"];
+			if (mathSymbols != "" && (mathSymbols = mathSymbols.split(/[\ ]+;[\ ]+/)) != null) {
+				const length = mathSymbols.length;
+				if (length%2 == 0) {
+					//index variable
+					let idx = 0;
+					for (let i = 0; i<length; ++i) {
+					
+						//get match and math symbol from misc
+						let match = mathSymbols[i].trim();
+						i++;
+						let symbol = mathSymbols[i].trim();
+						match += symbol;
+						
+						//continue only if not empty string
+						if (symbol != "") {
+							
+							//search for match in abstract text
+							let nextIdx = abstract.indexOf(match,idx);
+							
+							//if found, replace by math
+							if (nextIdx != -1) {
+								
+								//get new index in abstract after match
+								idx = nextIdx + match.length;
+								
+								//replace string in abstract
+								abstract = abstract.slice(0,nextIdx) + "$" + symbol + "$" + abstract.slice(idx);
+							}
+						}
+					}
+				}
+			}
+			//reassign to abstract
+			metaData["citation_abstract"] = abstract;
+			
+		} else {
+			//fix double $$ for math in dynamically obtained abstract
+			abstract = metaData["citation_download"];
+			if (abstract != null && typeof(abstract) == 'object') abstract["citation_abstract"] = abstract["citation_abstract"].replace(/\$\$/g,"$");
+		}
+		//clear misc 
+		metaData["citation_misc"] = "";
 	}
 	
 	// expose preformatting function and raw preformatting function

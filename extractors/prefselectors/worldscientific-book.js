@@ -12,6 +12,7 @@ var BINPrefselector = ( function () {
 		citation_author: [ ['div.byAuthors','innerText'] , ['div.editedBy','innerText'] ],
 		citation_issn: [ ['div.bookNavigatorOffersList span','innerText'] , ['div.bookNavigatorOffersList','innerText'] ],
 		citation_date: [ ['div#journalNavPanel p','innerText'] ],
+		citation_abstract: [ ['div#aboutBook p','innerText',true,20000] ],
 		citation_doi: [ ['input[name="href"]','value'] ]
 	};
 

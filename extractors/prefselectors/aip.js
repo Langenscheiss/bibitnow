@@ -12,13 +12,15 @@ var BINPrefselector = ( function () {
 		
 		//get base url and modify
 		link = metaData["citation_url"].replace(/\.org\/.*$/,".org") + link;
-		return link.replace(/showCitFormats/,"downloadCitation");
+		return link.replace(/showCitFormats/,"downloadCitation") + "&include=all";
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = { 
 		citation_doi: [ ['a#crossMark','data-doi'] ],
 		citation_issn: [ ['a[title="Rights Link"]','href'] ],
+		citation_abstract: [ ['div.abstractSection.abstractInFull','innerText', true, 20000] ],
+		citation_keywords: [ ['meta[name=\"keywords\"]','content'] , ['ul.list.topic-list.padded-content.aipthesaurus a','innerText'] ],
 		citation_download: [ ['li[tabindex="-1"] a', 'href'] , ['ul.tools-sub-menu a','href'] ]
 	};
 

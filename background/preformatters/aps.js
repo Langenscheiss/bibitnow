@@ -32,6 +32,9 @@ var BINPreformatter = ( function () {
 		
 		//fix non-latex title by replacing it with the statically obtained title (which does not have math mode instructions)
 		metaData["citation_title_nonlatex"] = metaData["citation_title"];
+		
+		//remove new lines from abstract if obtained from abstract html section and not from meta
+		if (metaData["query_summary"]["citation_abstract"] == 1) metaData["citation_abstract"] = metaData["citation_abstract"].replace(/\n/g,"");
 	}
 	
 	// expose preformatting function and raw preformatting function

@@ -17,7 +17,7 @@ var BINPrefselector = ( function () {
 		       
 		//get CFID etc from link
 		link = link.replace(/^.*CFID=/i,"");
-		return ("https://dl.acm.org/downformats.cfm?id=" + idArr[1].trim() + "&parent_id=" + idArr[0].trim() + "&expformat=endnotes&CFID=" + link);
+		return ("https://dl.acm.org/downformats.cfm?id=" + idArr[1].trim() + "&parent_id=" + idArr[0].trim() + "&expformat=endnotes&CFID=" + link + "&include=abs");
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
@@ -26,6 +26,7 @@ var BINPrefselector = ( function () {
 		citation_misc: [ ['meta[name="citation_isbn"]','content'] ],
 		citation_journal_title: [ ['meta[name="citation_journal_title"]','content'] ],
 		citation_url: [ ['meta[name=citation_abstract_html_url]','content'] ],
+		citation_abstract: [ ['div#abstract','innerText',true,20000] ],
 		citation_download: [ ['form[name="qiksearch"]', 'action'] ]
 	};
 

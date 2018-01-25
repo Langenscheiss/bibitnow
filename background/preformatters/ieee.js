@@ -15,7 +15,13 @@ var BINPreformatter = ( function () {
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
-		//do nothing	
+		//fix date string
+		metaData["citation_date"] = metaData["citation_date"].replace(/(?:publication|of|date)/gi,"");
+		
+		//prefer static keywords if available
+		if (metaData["citation_keywords"] != "" && metaData["citation_download"] != null && typeof(metaData["citation_download"]) == 'object') {
+			metaData["citation_download"]["citation_keywords"] = "";
+		}
 	}
 	
 	// expose preformatting function

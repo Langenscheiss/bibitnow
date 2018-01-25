@@ -17,7 +17,7 @@ var BINPreformatter = ( function () {
 		
 		//misc field
 		let temp = metaData["citation_misc"].trim();
-		
+
 		//first check whether citation summary from abstract page is available.
 		let citationSummary = temp.replace(/^[^\ ]*/i,""); //summary
 		temp = decodeURIComponent(temp.replace(/\ .*$/i,"")).replace(/\+/g," "); //link

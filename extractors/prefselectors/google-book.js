@@ -21,6 +21,7 @@ var BINPrefselector = ( function () {
 		citation_date: [ ['div.bookinfo_sectionwrap div:nth-of-type(2)','innerText'] ],
 		citation_misc: [ ['table#metadata_content_table tr.metadata_row','innerText'] ],
 		citation_title: [ ['td#bookinfo h1.booktitle','innerText'] ],
+		citation_abstract: [ ['meta[name="description"]','content', true, 20000] ],
 		citation_url: [ ['div[data-cbh="consent.google.com"]','data-continue'] ],
 		citation_download: [ ['title','innerText'] ] //dummy
 	};

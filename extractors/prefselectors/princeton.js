@@ -11,8 +11,9 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = { 
 		citation_author: [ ['div.views-field-field-contributor','innerText'] ],
 		citation_issn: [ ['meta[name="isbn13"]','content'] , ['meta[property="books:isbn"]','content'] ],
-		citation_date: [ ['div.field.field--name-field-year-copyright','innerText'] ],
+		citation_date: [ ['div.field.field--name-field-year-copyright','innerText'] , ['div.view-footer','innerText',true] ],
 		citation_publisher: [ ['meta[property="og:site_name"]','content'] ],
+		citation_abstract: [ ['div.view-id-work_body span.field-content','innerText',true,20000] ],
 		citation_misc: [ ['span.sub-title-heading','innerText'] ]
 	};
 

@@ -11,6 +11,12 @@ var BINPreformatter = ( function () {
 	function preformatRawData(metaData, parser) {
 		//fix title, year and journal abbreviation. Do not use title from citation download, due to latex characters
 		metaData["citation_download"] = metaData["citation_download"].replace(/DA[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").trim();
+		
+		//fix abstract
+		if(metaData["citation_download"].search(/N2[\t\ ]+[\-]+[\t\ ]+/) == -1) metaData["citation_download"] = metaData["citation_download"].replace(/AB[\t\ ]+[\-]+[\t\ ]+/,"N2 - ").trim();
+		       
+		//fix journal
+		if(metaData["citation_download"].search(/JF[\t\ ]+[\-]+[\t\ ]+/) == -1) metaData["citation_download"] = metaData["citation_download"].replace(/J[OA][\t\ ]+[\-]+[\t\ ]+/,"JF - ").trim();
 	}
 	
 	//preformatting function
@@ -26,7 +32,6 @@ var BINPreformatter = ( function () {
 		}
 		
 		//reformat author names to account for science direct specific formatting
-		
 		bibField = metaData["citation_authors"];
 		if (bibField != "") {
 			let authorString = "";
@@ -72,6 +77,21 @@ var BINPreformatter = ( function () {
 		
 		//fix publisher
 		if (metaData["citation_publisher"] == "") metaData["citation_publisher"] = "Elsevier B.V.";
+		       
+		//fix abstract and keywords
+		let abstract = metaData["citation_abstract"].replace(/^.*[\s]*Abstract[\s\:]+/,"").replace(/^.*[\s]*Summary[\s\:]+/,"");
+		metaData["citation_abstract"] = abstract;
+		
+		//prefer static keywords and abstract
+		bibField = metaData["citation_keywords"];
+		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
+			if (bibField != "") metaData["citation_keywords"] = "";
+			if (abstract != "") {
+				metaData["citation_abstract"] = "";
+			} else {
+				metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^.*[\s]*Abstract[\s\:]+/,"");
+			}
+		}
 		
 	}
 	

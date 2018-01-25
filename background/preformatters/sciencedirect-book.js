@@ -21,7 +21,7 @@ var BINPreformatter = ( function () {
 		tempTwo = metaData["citation_authors"].replace(/^[^\:]*\:[\s]*/,"").replace(/(?:[\s]+and[\s]+|[\s]*\,[\s]*)/g," ; ");
 		if (tempTwo.search(/[^\s\;]/) == -1) {
 			tempTwo = "";
-			temp = metaData["citation_misc"].replace(new RegExp("[\s]*" + temp + "[\s]*",""),"").split(/[\s]+by[\s]+/);
+			temp = metaData["citation_misc"].replace(new RegExp("[\s]*" + BINResources.escapeForRegExp(temp) + "[\s]*",""),"").split(/[\s]+by[\s]+/);
 			if (temp != null && temp.length > 1) {
 				tempTwo = temp[1].replace(/[\s]+on[\s]+ScienceDirect.*$/,"").replace(/(?:[\s]+and[\s]+|[\s]*\,[\s]*)/g," ; ");
 			}

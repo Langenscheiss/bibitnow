@@ -19,6 +19,7 @@ var BINPrefselector = ( function () {
 		citation_misc: [ ['li.permissions a','href' ] ],
 		citation_doi: [ ['meta[name="evt-doiPage"]','content'] ],
 		citation_date: [ ['meta[name="evt-dt"]','content'] ],
+		citation_abstract: [ ['dd#abstract','innerText', true, 20000] ],
 		citation_download: [ ['li.downloadCitation a','href'] ]
 	};
 

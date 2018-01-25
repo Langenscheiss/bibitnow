@@ -12,6 +12,7 @@ var BINPrefselector = ( function () {
 		citation_author: [ ['div#bookAuthors span[itemprop="name"]','innerText'] ],
 		citation_title: [ ['meta[property="og:title"]','content'] , ['h1#bookTitle','innerText'] ],
 		citation_misc: [ ['div#details div.row','innerText'] ],
+		citation_abstract: [ ['div#description span[style="display:none"]','textContent', true, 20000] , ['div#description span','innerText',true, 20000] ],
 		citation_issn: [ ['div#bookDataBox span[itemprop="isbn"]','innerText'] ]
 	};
 

@@ -10,6 +10,9 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		//fix type for kindle edition
+		if (metaData["citation_type"] == "digital-text") metaData["citation_type"] = "book";
+		
 		//fix authors on amazon
 		metaData["citation_authors"] = metaData["citation_authors"].replace(/[\ ;]*(?:Consulter|résultats|Infos)\ [^;]*/gi,"");
 		
@@ -29,7 +32,7 @@ var BINPreformatter = ( function () {
 		}
 
 		//preformat date
-		data = data.replace(/Editeur[^;\(]*/i,"");
+		data = data.replace(/^.*?Editeur[^;\(]*/i,"");
 		dataPart = data.match(/\([^\(\)]*\)\ ;\ /);
 		if (dataPart != null && dataPart.length > 0) {
 			data = dataPart[0];

@@ -11,7 +11,7 @@ var BINPrefselector = ( function () {
 	function formatCitationLink(metaData, link) {
 		let doi = metaData["citation_doi"];
 		if (doi == "") return "";
-		return (metaData["citation_url"].replace(/worldscientific\.com\/.*$/,"worldscientific.com") + "/action/downloadCitation?doi=" + doi);
+		return (metaData["citation_url"].replace(/worldscientific\.com\/.*$/,"worldscientific.com") + "/action/downloadCitation?doi=" + doi + "&include=abs");
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
@@ -20,6 +20,7 @@ var BINPrefselector = ( function () {
 		citation_journal_abbrev: [ ['div.articleMeta i','innerText'] ],
 		citation_firstpage: [ ['meta[property="og:description"]','content'] ],
 		citation_download: [ ['div.articleMeta i','innerText'] ],
+		citation_abstract: [ ['div.abstractSection','innerText',true,20000] ],
 		citation_issn: [ ['div#smallIssueCover + div','innerText'] ]
 	};
 

@@ -14,6 +14,8 @@ var BINPrefselector = ( function () {
 		citation_date: [ ['div.copyright','innerText'] ],
 		citation_issn: [ ['dd[itemprop="isbn"]','innerText'] ],
 		citation_misc: [ ['div.actions input[name="isbn"]','value'] ],
+		citation_abstract: [ ['div.product-about div.springer-html','innerText',true,20000] ],
+		citation_keywords: [ ['div.product-bibliographic a[itemprop="genre"]','innerText'] ],
 		citation_doi: [ ['input[name="doi"]','value'] ]
 	};
 

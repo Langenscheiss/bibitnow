@@ -18,30 +18,31 @@ var BINPreformatter = ( function () {
 		
 		//downloaded
 		let downloaded = metaData["citation_download"];
+		let isValid = (downloaded != null && typeof(downloaded) == 'object');
 		
 		//fix publisher and date
 		let bibField;
 		if ((bibField = metaData["citation_publisher"]) != "") {
 			metaData["citation_publisher"] = bibField.replace(/\,.*$/,"");
-		} else if (downloaded != null) {
+		} else if (isValid) {
 			metaData["citation_publisher"] = downloaded["citation_publisher"];
 		}
 		if ((bibField = metaData["citation_date"]) != "") {
 			metaData["citation_date"] = bibField.replace(/^[^\,]*\,[\s]*/,"").replace(/[\s]*\-.*$/,"");
-		} else if (downloaded != null) {
+		} else if (isValid) {
 			metaData["citation_date"] = downloaded["citation_date"];
 		}
 		
 		//fix ISBN
 		if ((bibField = metaData["citation_misc"]) != "") {
 			metaData["citation_issn"] = bibField.replace(/^.*\;[\s]*ISBN[\s]*/,"").replace(/^[^\,]*\,[\s]*/,"").replace(/[^0-9X]+.*$/,"").replace(/^978/,"978-").replace(/^979/,"979-").replace(/[\-]+/g,"-");
-		} else if (downloaded != null) {
+		} else if (isValid) {
 			metaData["citation_issn"] = downloaded["citation_issn"].replace(/^978/,"978-").replace(/^979/,"979-");
 		}
 		
 		//fix author and title
-		if (metaData["citation_title"] == "" && downloaded != null) metaData["citation_title"] = downloaded["citation_title"];
-		if (metaData["citation_authors"] == "" && downloaded != null) metaData["citation_authors"] = downloaded["citation_authors"];
+		if (metaData["citation_title"] == "" && isValid) metaData["citation_title"] = downloaded["citation_title"];
+		if (metaData["citation_authors"] == "" && isValid) metaData["citation_authors"] = downloaded["citation_authors"];
 		       
 		//clear journal title, downloaded ris and misc
 		metaData["citation_download"] = "";

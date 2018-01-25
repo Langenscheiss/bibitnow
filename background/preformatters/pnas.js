@@ -19,6 +19,19 @@ var BINPreformatter = ( function () {
 		
 		//fix journal abbreviation
 		metaData["citation_journal_abbrev"] = "Proc. Natl. Acad. Sci. U.S.A.";
+		
+		//fix date format (this stupid US format just does not make any sense!!)
+		let temp = metaData["citation_date"];
+		if (temp != "" && (temp = temp.split(/[\/\-]+/)) != null && temp.length == 3) {
+			metaData["citation_date"] = temp[1] + "-" + temp[0] + "-" + temp[2];
+		}
+		
+		//fix abstract, prefer static
+		temp = metaData["citation_abstract"].replace(/^[\s]*abstract[\:\s]*/i,"");
+		metaData["citation_abstract"] = temp;
+		if (temp != "" && (metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
+			metaData["citation_abstract"] = "";
+		}
 	}
 	
 	// expose preformatting function and raw preformatting function

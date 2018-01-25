@@ -18,6 +18,7 @@ var BINPrefselector = ( function () {
 		citation_type: [ ['span#wd-book-print-isbn','innerText'] , ['span#wd-book-online-isbn','innerText'] ],
 		citation_title: [ ['div#wd-pub-name h1[itemref="book"]','innerText'] ],
 		citation_misc: [ ['div#wd-pub-name div.publication-sub-title','innerText'] ],
+		citation_abstract: [ ['div.article-text.wd-jnl-art-abstract','innerText', true, 20000] , ['div#wd-book-page-intro','innerText', true, 20000] ],
 		citation_date: [ ['span#wd-book-pub-date span[itemprop="datePublished"]','innerText'] ],
  		citation_download: [ ['a.btn.btn-primary.wd-btn-cit-abs-ris','href'] ] // the download citation button on iop seems to be crap! You have to throw away a lot!
 	};

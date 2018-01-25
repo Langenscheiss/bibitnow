@@ -40,13 +40,22 @@ var BINPreformatter = ( function () {
 			}
 		}
 		
-		//fix date
+		//fix date and abstract
 		misc = metaData["citation_download"];
-		if (misc != null) {
+		if (misc != null && typeof(misc) == 'object') {
 			misc = misc["citation_date"];
-			if (misc != null && misc != "") {
+			if (misc != "") {
 				let date = metaData["citation_date"];
-				metaData["citation_download"]["citation_date"] = date.search(new RegExp("" + misc)) != -1 ? date : misc;
+				metaData["citation_download"]["citation_date"] = date.search(new RegExp("" + BINResources.escapeForRegExp(misc))) != -1 ? date : misc;
+			}
+			
+			//if abstract obtained dynamically, extract math expressions
+			if ((misc = metaData["citation_download"]["citation_abstract"]) != "") {
+				metaData["citation_download"]["citation_abstract"] = misc.replace(/##[A-Z]+##[\s]*\[[^\]]*?\][\s]*?\{\$[\s]*(.*?)[\s]*\$\}/g, 
+					function(match, $1, offset, original) {
+						return "$"+$1+"$";
+					}
+				).replace(/##[A-Z]+##[\s]*\[[^\]]*?\][\ ]?/g,"");
 			}
 		}
 		

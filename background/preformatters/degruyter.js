@@ -9,30 +9,41 @@ var BINPreformatter = ( function () {
 	
 	// preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
-		//fix author
-		var temp = metaData["citation_download"];
-		if (metaData["query_summary"]["citation_authors"] != 2) temp = temp.replace(/(?:AU|A1)[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
+
 		//fix issn if journal
-		if (metaData["query_summary"]["citation_issn"] == 2) temp = temp.replace(/SN[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
-		metaData["citation_download"] = temp;
+		if (metaData["query_summary"]["citation_issn"] == 2) metaData["citation_download"] = metaData["citation_download"].replace(/SN[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//fix author list
-		var temp = metaData["citation_authors"];
-		if(metaData["query_summary"]["citation_authors"] == 1) temp = temp.replace(/^.*[\s]by[\s]/i,"");
-		temp = temp.replace(/[\ ]*\/[\ ]*/g," ; ").replace(/;[\ ]*$/,"");
-		metaData["citation_authors"] = temp.trim();
+		//fix type and authors for books
+		if (metaData["citation_journal_title"] == "") {
+			//type = book
+			metaData["citation_type"] = "book";
+			
+			//remove dynamically obtained authors
+			if (metaData["citation_download"] != null && typeof(metaData["citation_download"]) == 'object') metaData["citation_download"]["citation_authors"] = "";
+		       
+			//get authors from static date
+			let authors = metaData["citation_authors"];
+			authors = authors.replace(/^Ed\.[\s]*by[\s]*/,"");
+			if(metaData["query_summary"]["citation_authors"] == 2) authors = authors.replace(/^.*[\s]by[\s]/i,"");
+			metaData["citation_authors"] = authors.replace(/[\ ]*\/[\ ]*/g," ; ").replace(/;[\ ]*$/,"").trim();
+		} else {
+			//prefer static author info if from meta data
+			if (metaData["query_summary"]["citation_authors"] == 1 && metaData["citation_download"] != null && typeof(metaData["citation_download"]) == 'object') {
+				metaData["citation_download"]["citation_authors"] = "";
+			}
+		}
+		
+		//fix abstract
+		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^Abstract[:\s]*/,"");
 		
 		//fix publisher
-		temp = metaData["citation_publisher"];
-		if (temp == "") metaData["citation_publisher"] = "De Gruyter";
+		if (metaData["citation_publisher"] == "") metaData["citation_publisher"] = "De Gruyter";
 		
-		//fix type
-		temp = metaData["citation_journal_title"];
-		if (temp == "") metaData["citation_type"] = "book";
+		
 	}
 	
 	// expose preformatting function

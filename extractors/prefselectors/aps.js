@@ -28,7 +28,9 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = { 
 		citation_issn: [ ['p.legal','innerText'] ],
 		citation_download: [ ['a#export-article-link','href'] , ['BINURL','']],
-		citation_author: [['meta[name="citation_author"]','content'] , ['div#title h5.authors','innerText'] ]
+		citation_abstract: [ ['div#article-content section.abstract div.content p','innerText', true, 20000] , ['meta[name="description"]','content', true, 20000] ],
+		citation_author: [ ['meta[name="citation_author"]','content'] , ['div#title h5.authors','innerText'] ],
+		citation_keywords: [ ['div.physh-tagging a.physh-concept','innerText'] ]
 	};
 
 	// finally expose selector message and link formatter

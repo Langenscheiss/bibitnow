@@ -78,11 +78,13 @@ var BINPreformatter = ( function () {
 			//extract publication date, choose best tag for it
 			dataField = extractTag(dataAll,'ArticleDate','',false)
 			if (dataPart.search(/year/i) == -1) {
-				if (dataField.search(/year/i) != -1 || (dataPart.search(/month/i) == -1 && dateField.search(/month/i) != -1)) dataPart = dataField;
-			} else if (dataPart.search(/month/i) == -1 && dateField.search(/month/i) != -1) {
+				if (dataField.search(/year/i) != -1 || (dataPart.search(/month/i) == -1 && dataField.search(/month/i) != -1)) dataPart = dataField;
+			} else if (dataPart.search(/month/i) == -1 && dataField.search(/month/i) != -1) {
 				dataPart = dataField;
 			}
-			parsedString = extractTag(dataPart,'Year','',false).replace(/[^0-9]/g,"") + extractTag(dataPart,'Month','',false).replace(/\&lt;[\/]*Month\&gt;/g,"") + extractTag(dataPart,'Day','',false).replace(/[^0-9]/g,"");
+			parsedString = extractTag(dataPart,'Year','',false).replace(/[^0-9]/g,"");
+			if ((dataField = extractTag(dataPart,'Month','',false).replace(/\&lt;[\/]*Month\&gt;/g,"")) != "") parsedString += "-" + dataField;
+			if ((dataField = extractTag(dataPart,'Day','',false).replace(/[^0-9]/g,"")) != "") parsedString += "-" + dataField;
 			if (parsedString != "") {
 				metaData["citation_date"] = parsedString;
 				metaData["query_summary"]["citation_date"] = 10;
@@ -239,6 +241,7 @@ var BINPreformatter = ( function () {
 			dataPart = data.match(/^[^\.]+\./i);
 			if (dataPart != null && dataPart.length > 0) {
 				metaData["citation_journal_abbrev"] = dataPart[0].replace(/[\.]+$/,"").trim();
+				data = data.replace(/^[^\.]+\./i,"");
 			}
 		}
 		
@@ -246,13 +249,12 @@ var BINPreformatter = ( function () {
 		
 		//get date string if not obtained dynamically
 		if (metaData["query_summary"]["citation_date"] != 10) {
-			metaData["citation_date"] = data.replace(/^[^\.]*\./,"").replace(/[^\ A-Za-z0-9].*$/).trim();
+			metaData["citation_date"] = data.replace(/[^\ A-Za-z0-9].*$/,"").trim();
 		}
 		
 		//further format misc for parsing
 		data = data.replace(/[\.\ ]*Epub.*$/,"").replace(/^.*(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/,"");
 		data = data.replace(/^(?:;|\ [0-9]*[\.\;]*)/,"").replace(/\(/," ").replace(/\)/," ").replace(/:/," ").replace(/[\ ]+/g," ").trim().split(" ");
-
 		//other fields to parse to
 		let bibFields = ["citation_volume","citation_issue","citation_firstpage"], queryCodes = [2,1,5];
 		if(data != null) {

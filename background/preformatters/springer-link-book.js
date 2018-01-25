@@ -14,6 +14,9 @@ var BINPreformatter = ( function () {
 		if (metaData["query_summary"]["citation_authors"] == 1) {
 			metaData["citation_authors"] = metaData["citation_authors"].replace(/\ [^\ ]*\.[\ ]*\;/g," ;");
 		}
+		
+		//fix type
+		metaData["citation_type"] = "book";
 	}
 	
 	// expose preformatting function

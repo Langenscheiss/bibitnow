@@ -11,14 +11,16 @@ var BINPrefselector = ( function () {
 	function formatCitationLink(metaData, link) {
 		
 		//almost nothing to do
-		return link.replace(/^http:\/\/api\./,"http://www.");
+		if (metaData["citation_url"] == "" || link == null || link == "") return "";
+		return metaData["citation_url"].replace(/\.com\/.*$/,".com") + link.replace(/:\/\/api\./,"://www.");
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
-	var prefselectorMsg = { 
-		citation_misc: [ ['div#infoArticle div:nth-child(3)','innerText'] ],
+	var prefselectorMsg = {
+		citation_misc: [ ['div#infoArticle div:nth-child(3)','innerText'] , ['div#altLayoutPublisherLogo p, div.greybg>div:nth-of-type(1) p:nth-of-type(1)','innerText', true] ],
 		citation_issn: [ ['meta[name="DCTERMS.isPartOf"]','content'] ],
-		citation_download: [ ['link[title="EndNote Export"]','href'] ]
+		citation_abstract: [ ['div#Abst','innerText', true, 20000] ],
+		citation_download: [ ['a[title="EndNote Export"]','href'] ]
 	};
 
 	// finally expose selector message and link formatter
