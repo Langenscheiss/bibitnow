@@ -68,6 +68,7 @@
 <adjustor id="onlinelibrary-wiley-com-book" prefselector="wiley-book" preformatter="wiley-book"></adjustor>
 <adjustor id="onlinelibrary-wiley-com-doi" prefselector="wiley" preformatter="wiley"></adjustor>
 <adjustor id="onlinelibrary-wiley-com-wol1-doi" prefselector="wiley" preformatter="wiley"></adjustor>
+<adjustor id="washingtonpost-com" prefselector="washingtonpost" preformatter="washingtonpost"></adjustor>
 <adjustor id="worldscientific-com-doi" prefselector="worldscientific" preformatter="worldscientific"></adjustor>
 <adjustor id="worldscientific-com-worldscibooks" prefselector="worldscientific-book" preformatter="worldscientific-book"></adjustor>
 </adjustorList>
