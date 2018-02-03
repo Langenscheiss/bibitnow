@@ -21,6 +21,9 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		//fix database
+		metaData["citation_database"] = "Wiley Online Library";
+		
 		//fix author list (if necessary, depends on Wiley journal)
 		metaData["citation_authors"] = metaData["citation_authors"].replace(/[\s]*;/g, ' ;');
 		

@@ -5,6 +5,7 @@
 <!ELEMENT adjustor (#PCDATA)>
 ]>
 <adjustorList>
+<adjustor id="publications-rwth-aachen-de" prefselector="aachen" preformatter="aachen"></adjustor>
 <adjustor id="pubs-acs-org" prefselector="acs" preformatter="acs"></adjustor>
 <adjustor id="aappublications-org" prefselector="aap" preformatter="aap"></adjustor>
 <adjustor id="dl-acm-org" prefselector="acm" preformatter="acm"></adjustor>
@@ -68,6 +69,7 @@
 <adjustor id="onlinelibrary-wiley-com-book" prefselector="wiley-book" preformatter="wiley-book"></adjustor>
 <adjustor id="onlinelibrary-wiley-com-doi" prefselector="wiley" preformatter="wiley"></adjustor>
 <adjustor id="onlinelibrary-wiley-com-wol1-doi" prefselector="wiley" preformatter="wiley"></adjustor>
+<adjustor id="washingtonpost-com" prefselector="washingtonpost" preformatter="washingtonpost"></adjustor>
 <adjustor id="worldscientific-com-doi" prefselector="worldscientific" preformatter="worldscientific"></adjustor>
 <adjustor id="worldscientific-com-worldscibooks" prefselector="worldscientific-book" preformatter="worldscientific-book"></adjustor>
 </adjustorList>
