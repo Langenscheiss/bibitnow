@@ -96,9 +96,9 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = {
 		citation_author: [ ['meta[name="citation_authors"]','content'] ],
     citation_title: [ ['meta[property="og:title"]', 'content'] ],
-		citation_publisher: [ ['meta[property="og:site_name"]','innerText'] ],
-    citation_keywords: [ ['meta[name="keywords"]', 'content' ] ]
-
+		citation_publisher: [ ['meta[property="og:site_name"]','content'] ],
+    citation_keywords: [ ['meta[name="keywords"]', 'content' ] ],
+    citation_date: [ ['span[itemprop="datePublished"]', 'innerText'] ],
 	};
 
 	// finally expose selector message
