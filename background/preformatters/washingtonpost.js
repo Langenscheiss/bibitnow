@@ -20,8 +20,12 @@ var BINPreformatter = ( function () {
 			//remove time of day
 			metaData["citation_date"] = metaData["citation_date"].replace(/T.*$/i,"");
 		} else if (metaData["query_summary"]["citation_date"] == 2) {
-			//assume current year
-			metaData["citation_date"] = metaData["citation_date"].replace(/[\s]*at.*$/i,"") + " " + (new Date()).getFullYear();
+			//use "last modified" year of webpage if not stated in retrieved date
+			let date = metaData["citation_date"].replace(/[\s]*at.*$/i,"");
+			if (date.search(/[0-9]{4}/) == -1) {
+				date + " " + metaData["citation_webpage_date"].replace(/\-.*$/,"");
+			}
+			metaData["citation_date"] = date;
 		}
 		
 		//add issn (taken from wiki)
