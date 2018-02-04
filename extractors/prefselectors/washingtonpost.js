@@ -19,7 +19,7 @@ var BINPrefselector = ( function () {
 		citation_publisher: [ ['meta[property="og:site_name"]','content'] ], /*custom keyword query not necessary, already part of fixed kernel*/
 		citation_abstract: [ ['meta[property="og:description"]','content',true,20000] ],/*the last two arguments tell the system that the extractor may pass several lines and up to 20000 chars to the parser*/
 		citation_url: [ ['meta[property="og:url"]','content'] ],
-		citation_date: [ ['span[itemprop="datePublished"]', 'content'] , ['span[itemprop="datePublished"]', 'innerText']],
+		citation_date: [ ['span[itemprop="datePublished"]', 'innerText'] , ['span[itemprop="datePublished"]', 'content']],
 	};
 
 	// finally expose selector message
