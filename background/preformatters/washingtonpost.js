@@ -16,10 +16,10 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//fix date, remove time of day depending on which request was successful
-		if (metaData["query_summary"]["citation_date"] == 2) {
+		if (metaData["query_summary"]["citation_date"] == 1) {
 			//remove time of day
 			metaData["citation_date"] = metaData["citation_date"].replace(/T.*$/i,"");
-		} else if (metaData["query_summary"]["citation_date"] == 1) {
+		} else if (metaData["query_summary"]["citation_date"] == 2) {
 			//use "last modified" year of webpage if not stated in retrieved date
 			let date = metaData["citation_date"].replace(/[\s]*at.*$/i,"");
 			if (date.search(/[0-9]{4}/) == -1) {
