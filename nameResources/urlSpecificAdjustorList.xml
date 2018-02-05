@@ -66,6 +66,7 @@
 <adjustor id="springer-com-gp" prefselector="springer-book" preformatter="springer-book"></adjustor>
 <adjustor id="sciencemag-org" prefselector="science" preformatter="science"></adjustor>
 <adjustor id="tandfonline-com" prefselector="taylorandfrancis" preformatter="taylorandfrancis"></adjustor>
+<adjustor id="nytimes-com" prefselector="nytimes" preformatter="nytimes"></adjustor>
 <adjustor id="onlinelibrary-wiley-com-book" prefselector="wiley-book" preformatter="wiley-book"></adjustor>
 <adjustor id="onlinelibrary-wiley-com-doi" prefselector="wiley" preformatter="wiley"></adjustor>
 <adjustor id="onlinelibrary-wiley-com-wol1-doi" prefselector="wiley" preformatter="wiley"></adjustor>
