@@ -53,6 +53,9 @@ var BINPreformatter = ( function () {
 		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
 			metaData["citation_abstract"] = misc != "" ? "" : metaData["citation_abstract"].replace(/^Abstract[\s]*/i,"");
 		}
+		
+		//set database
+		metaData["citation_database"] = "BioOne Complete";
 	}
 	
 	// expose preformatting function

@@ -47,6 +47,7 @@ var BINPreformatter = ( function () {
 		//clear journal title, downloaded ris and misc
 		metaData["citation_download"] = "";
 		metaData["citation_journal_title"] = "";
+		metaData["citation_database"] = "Google Books";
 		metaData["citation_misc"] = "";
 	}
 	

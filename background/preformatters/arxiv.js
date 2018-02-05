@@ -61,6 +61,7 @@ var BINPreformatter = ( function () {
 		//manually set journal
 		metaData["citation_journal_title"] = "ArXiv e-prints";
 		metaData["citation_journal_abbrev"] = "arXiv";
+		metaData["citation_database"] = "ArXiv e-prints";
 		
 		//preformat url
 		metaData["citation_url"] = metaData["citation_url"].replace("/pdf/","/abs/");

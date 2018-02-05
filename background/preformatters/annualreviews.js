@@ -9,8 +9,8 @@ var BINPreformatter = ( function () {
 	
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
-		//fix title, year and journal abbreviation
-		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
+		//fix title, year, misc and journal abbreviation
+		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/(?:PY|N1)[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
 	}
 	
 	//preformatting function
@@ -41,7 +41,6 @@ var BINPreformatter = ( function () {
 				metaData["citation_issn"] = "";
 			}
 		}
-		
 		metaData["citation_misc"] = "";
 	}
 	

@@ -73,6 +73,9 @@ var BINPreformatter = ( function () {
 			if (abstract != "") metaData["citation_abstract"] = "";
 			metaData["citation_title"] = metaData["citation_title"].replace(/\$\$[\s]*[^\$]+?[\s]*\$\$/g,"").replace(/[\ ]+/g," ");
 		}
+		
+		//set database
+		metaData["citation_database"] = "Springer Link";
 	}
 	
 	// expose preformatting function and raw preformatting function

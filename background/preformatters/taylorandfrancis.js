@@ -54,6 +54,9 @@ var BINPreformatter = ( function () {
 		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
 			if (temp != "") metaData["citation_abstract"] = "";
 		}
+		
+		//database
+		metaData["citation_database"] = "Taylor & Francis Online";
 	}
 	
 	// expose preformatting function

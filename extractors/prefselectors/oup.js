@@ -11,6 +11,7 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = { 
 		citation_misc: [ ['div.content_right.product_sidebar p:not(:empty):nth-of-type(2)','innerText'] , ['div.content_right.product_sidebar p:not(:empty):nth-of-type(3)','innerText'] , ['div.content_right.product_sidebar p:not(:empty):nth-of-type(4)','innerText'] , ['div.content_right.product_sidebar p:not(:empty):nth-of-type(5)','innerText'] , ['div.content_right.product_sidebar p:not(:empty):nth-of-type(6)','innerText'] ],
 		citation_issn: [ ['div.content_right.product_sidebar > p:nth-last-of-type(2)','innerText'] ],
+		citation_url: [ ['meta[property="og:url"]','content'] ],
 		citation_abstract: [ ['div.expanding_content_container_inner_narrow','innerText', true, 20000] ]
 	};
 

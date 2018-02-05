@@ -20,6 +20,15 @@ var BINPreformatter = ( function () {
 		
 		//clear misc 
 		metaData["citation_misc"] = "";
+		
+		//prefer static publisher
+		if (metaData["citation_publisher"] != "") {
+			let download = metaData["citation_download"]; 
+			if (download != null && typeof(download) == 'object') download["citation_publisher"] = "";
+		}
+		
+		//set database
+		metaData["citation_database"] = "PubMed Central"
 	}
 	
 	// expose preformatting function and raw preformatting function

@@ -93,6 +93,9 @@ var BINPreformatter = ( function () {
 			}
 		}
 		
+		//set database
+		metaData["citation_database"] = "ScienceDirect";
+		
 	}
 	
 	// expose preformatting function and raw preformatting function

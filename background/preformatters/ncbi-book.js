@@ -14,6 +14,9 @@ var BINPreformatter = ( function () {
 		       
 		//fix abstract
 		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^[\s]*(?:Abstract|Headline)[\s\:]*/i,"");
+		
+		//database
+		metaData["citation_database"] = "NCBI Bookshelf";
 	}
 	
 	// expose preformatting function

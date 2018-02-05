@@ -47,6 +47,9 @@ var BINPreformatter = ( function () {
 		
 		//fix publisher
 		if (metaData["citation_publisher"] == "") metaData["citation_publisher"] = "Elsevier B.V.";
+		       
+		//set database
+		metaData["citation_database"] = "ScienceDirect";
 		
 	}
 	

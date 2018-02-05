@@ -17,6 +17,9 @@ var BINPreformatter = ( function () {
 		
 		//fix type
 		metaData["citation_type"] = "book";
+		
+		//set database
+		metaData["citation_database"] = "Springer Link";
 	}
 	
 	// expose preformatting function

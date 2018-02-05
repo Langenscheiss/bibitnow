@@ -100,6 +100,9 @@ var BINPreformatter = ( function () {
 		
 		//fix abstract
 		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^Abstract[\s\:]*/i,"");
+		
+		//set database
+		metaData["citation_database"] = "Oxford University Research Archive";
 	}
 
 	// expose preformatting function and raw preformatting function

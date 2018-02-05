@@ -22,6 +22,9 @@ var BINPreformatter = ( function () {
 		if (metaData["citation_keywords"] != "" && metaData["citation_download"] != null && typeof(metaData["citation_download"]) == 'object') {
 			metaData["citation_download"]["citation_keywords"] = "";
 		}
+		
+		//set database
+		metaData["citation_database"] = "IEEE Xplore Digital Library";
 	}
 	
 	// expose preformatting function

@@ -45,6 +45,9 @@ var BINPreformatter = ( function () {
 		
 		//clear misc field to avoid any further interpretations
 		metaData["citation_misc"] = "";
+		
+		//set Amazon store as database
+		metaData["citation_database"] = "Amazon.nl Webstore";
 	}
 	
 	// expose preformatting function

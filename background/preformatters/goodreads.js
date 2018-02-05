@@ -20,6 +20,7 @@ var BINPreformatter = ( function () {
 		
 		//clear journal title and misc
 		metaData["citation_journal_title"] = "";
+		metaData["citation_database"] = "Goodreads Inc.";
 		metaData["citation_misc"] = "";
 	}
 

@@ -16,14 +16,19 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//remove (Article), (Review) etc. at the end of title
-		metaData["citation_title"] = metaData["citation_title"].replace(/[\s]*\([^\(\)]*\)$/,"");
+		//remove (Article), (Review) etc. at the end of title		
+		//prefer formatted static title
+		let temp = metaData["citation_title"];
+		if (temp != "") {
+			metaData["citation_title"] = temp.replace(/[\s]*\([^\(\)]*\)$/,"");
+			if ((temp = metaData["citation_download"]) != null && typeof(temp) == 'object') temp["citation_title"] = "";
+		}
 		
 		//remove subscript from author names
 		metaData["citation_authors"] = metaData["citation_authors"].replace(/\.[a-z\ ]*;/g,". ;");
 		
 		//replace in misc field with "page" if page not already included, and let the rest be done by misc parser
-		let temp = metaData["citation_misc"];
+		temp = metaData["citation_misc"];
 		if (temp.search(/page/i) == -1) temp = temp.replace(/Article\ number/i,"page");
 		metaData["citation_misc"] = temp;
 		
@@ -50,6 +55,9 @@ var BINPreformatter = ( function () {
 				metaData["citation_download"]["citation_issn"] = temp.slice(0,4) + "-" + temp.slice(4);
 			}
 		}
+		
+		//set database
+		metaData["citation_database"] = "Scopus";
 	}
 	
 	// expose preformatting function and raw preformatting function

@@ -6,16 +6,22 @@ var BINPrefselector = ( function () {
 	var BINParser =  null;
 	var window = null;
 	var document = null;
-
+	
+	// this function is called by the background script in order to return a properly formatted citation download link
+	function formatCitationLink(metaData, link) {
+		return "";
+	}
+	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
-	var prefselectorMsg = { 
+	var prefselectorMsg = {
+		citation_author: [ [ 'meta[name="author"]', 'content'] ],
+		citation_title: [ ['meta[property="og:title"]', 'content'] ],
 		citation_url: [ ['meta[property="og:url"]','content'] ],
-		citation_abstract: [ ['meta[name="citation_abstract"]','content', true, 20000] ],
-		citation_date: [ ['meta[name="citation_publication_date"]','content'] , ['meta[name="citation_online_date"]','content'] ],
-		citation_misc: [ ['meta[name="citation_dissertation_institution"]','content'] ]
+		citation_abstract: [ ['meta[property="og:description"]','content',true,20000] ],
+		citation_date: [ ['meta[name="DISPLAYDATE"]', 'content' ] ]
 	};
 
 	// finally expose selector message
-	return { prefselectorMsg: prefselectorMsg };
+	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink };
 
 }());

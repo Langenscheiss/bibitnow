@@ -167,6 +167,9 @@ var BINPreformatter = ( function () {
 		//unset misc
 		metaData["citation_misc"] = "";
 		
+		//set database
+		metaData["citation_database"] = "ProQuest Central";
+		
 	}
 	
 	// expose preformatting function

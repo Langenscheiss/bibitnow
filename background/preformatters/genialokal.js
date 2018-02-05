@@ -17,8 +17,9 @@ var BINPreformatter = ( function () {
 		metaData["citation_date"] = metaData["citation_misc"].replace(/^.*Veröffentlicht[\s]*;[\s]*/,"").replace(/;.*$/,"");
 		metaData["citation_misc"] = "";
 				
-		//fix journal
+		//fix journal and database
 		metaData["citation_journal_title"] = "";
+		metaData["citation_database"] = "genialokal.de Onlineshop"
 	}
 	
 	// expose preformatter

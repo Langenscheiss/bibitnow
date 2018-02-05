@@ -57,9 +57,12 @@ var BINPreformatter = ( function () {
 					}
 				}
 			}
-		}	
+		}
 		//reassign abstract
 		metaData["citation_abstract"] = abstract;
+		
+		//clear misc
+		metaData["citation_misc"] = "";
 	}
 	
 	// expose preformatting function

@@ -53,6 +53,9 @@ var BINPreformatter = ( function () {
 				if (metaData["citation_abstract"] != "") metaData["citation_download"]["citation_abstract"] = "";
 			}
 		}
+		
+		//set database
+		metaData["citation_database"] = "Ingenta Connect";
 	}
 	
 	// expose preformatting function and raw preformatting function

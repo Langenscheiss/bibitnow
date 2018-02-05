@@ -10,21 +10,36 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//manually set journal
-		metaData["citation_journal_title"] = "Chalmers Publication Library";
-		metaData["citation_journal_abbrev"] = "CPL";
 		
-		//null volume, issue, pages
-		metaData["citation_volume"] = "";
-		metaData["citation_issue"] = "";
-		metaData["citation_firstpage"] = "";
-		metaData["citation_lastpage"] = "";
+		//fix date and attempt to determine date scheme
+		let temp = metaData["citation_date"].trim();
+		metaData["citation_date"] = temp.replace(/[\s].*$/,"");
+		if (temp.search(/(?:AM|PM|^[0-9]{1,2}\/)/) != -1) {
+			metaData["citation_date_reverse"] = true; 
+		}
 		
-		//get pubid from url
-		var temp = metaData["citation_url"];
-		temp = temp.replace(/^.*se\/publication\//,"");
-		temp = temp.match(/^[0-9]+/);
-		if (temp != null && temp.length > 0) metaData["citation_archive_id"] = temp[0].trim();
+		//get temp from url
+		temp = metaData["citation_url"].replace(/^.*se\/.*publication\//,"");
+		if (temp != "") temp = temp.match(/^[0-9]+/);
+		if (temp != null && temp.length > 0) {
+			//if id found, remove all info related to actual journal
+			metaData["citation_journal_title"] = "Chalmers Research";
+			metaData["citation_archive_id"] = temp[0].trim();
+			metaData["citation_issue"] = "";
+			metaData["citation_volume"] = "";
+			metaData["citation_firstpage"] = "";
+			metaData["citation_issn"] = "";
+		}
+		
+		//database
+		metaData["citation_database"] = "Chalmers Research Database";
+		
+		//if thesis, reset publisher
+		if ((temp = metaData["citation_misc"]) != "") {
+			metaData["citation_type"] = "thesis";
+			metaData["citation_publisher"] = temp;
+		}
+		
 	}
 	
 	// expose preformatting function

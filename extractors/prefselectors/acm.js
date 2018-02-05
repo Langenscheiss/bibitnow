@@ -16,8 +16,12 @@ var BINPrefselector = ( function () {
 		if (idArr == null || idArr.length < 2) return "";
 		       
 		//get CFID etc from link
-		link = link.replace(/^.*CFID=/i,"");
-		return ("https://dl.acm.org/downformats.cfm?id=" + idArr[1].trim() + "&parent_id=" + idArr[0].trim() + "&expformat=endnotes&CFID=" + link + "&include=abs");
+		if (link.search(/CFID=/i) != -1) {
+			link = "&CFID=" + link.replace(/^.*CFID=/i,"");
+		} else if (link.search(/[0-9]/) == -1) {
+			link = "";
+		}
+		return ("https://dl.acm.org/downformats.cfm?id=" + idArr[1].trim() + "&parent_id=" + idArr[0].trim() + "&expformat=endnotes" + link + "&include=abs");
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>

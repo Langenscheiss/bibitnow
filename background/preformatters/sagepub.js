@@ -9,8 +9,8 @@ var BINPreformatter = ( function () {
 	
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
-		//fix abbreviation
-		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").trim();
+		//fix abbreviation, misc
+		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/N1[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
 	}
 	
 	//preformatting function
@@ -34,7 +34,10 @@ var BINPreformatter = ( function () {
 		//prefer static abstract
 		if (metaData["citation_abstract"] != "" && (metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
 			metaData["citation_abstract"] = "";
-		}		
+		}
+		
+		//set database
+		metaData["citation_database"] = "SAGE Journals";
 	}
 	
 	// expose preformatting function

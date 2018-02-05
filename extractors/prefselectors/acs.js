@@ -9,7 +9,7 @@ var BINPrefselector = ( function () {
 
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		link = "http://pubs.acs.org" + link;
+		link = metaData["citation_url"].replace(/acs\.org\/.*$/,"acs.org") + link;
 		return link.replace(/showCitFormats/,"downloadCitation") + "&include=abs";
 	}
 	

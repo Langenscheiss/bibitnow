@@ -10,7 +10,7 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title, year and journal abbreviation. Do not use title from citation download, due to latex characters
-		metaData["citation_download"] = metaData["citation_download"].replace(/SN[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
+		metaData["citation_download"] = metaData["citation_download"].replace(/(SN|N1)[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
 	}
 	
 	

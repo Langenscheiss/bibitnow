@@ -282,6 +282,9 @@ var BINPreformatter = ( function () {
 				}
 			}
 		}
+		
+		//set database
+		metaData["citation_database"] = "PubMed";
 	}
 	
 	// expose preformatting function and raw preformatting function
