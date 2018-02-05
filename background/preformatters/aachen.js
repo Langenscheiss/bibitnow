@@ -36,7 +36,12 @@ var BINPreformatter = ( function () {
 				return $1.replace(/URL:.*$/,"");
 			}
 		);
+		
+		//clear misc
 		metaData["citation_misc"] = "";
+		
+		//database
+		metaData["citation_database"] = "RWTH Publications";
 		
 	}
 	

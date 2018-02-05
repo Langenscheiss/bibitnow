@@ -22,6 +22,9 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		//set database
+		metaData["citation_database"] = "ScienceDirect";
+		
 		//remove volume, issue, page from misc string and send the rest to date
 		metaData["citation_date"] = metaData["citation_misc"].replace(/(?:volume|issue|page[s]?)[^,;]+[,;\ ]*/gi,"").replace(/[\ ]+/g," ").trim();
 		
@@ -92,10 +95,6 @@ var BINPreformatter = ( function () {
 				metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^.*[\s]*Abstract[\s\:]+/,"");
 			}
 		}
-		
-		//set database
-		metaData["citation_database"] = "ScienceDirect";
-		
 	}
 	
 	// expose preformatting function and raw preformatting function
