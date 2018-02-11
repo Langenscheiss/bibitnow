@@ -44,7 +44,7 @@ var BINPreformatter = ( function () {
 		//fix abstract, prefer static
 		let abstract = metaData["citation_abstract"].replace(/^[\s]*(?:abstract[\:\s]*|Jump[\s]*to…)/gi,"").replace(/^[\s]*(?:abstract[\:\s]*|Jump[\s]*to…)/gi,"").replace(/(?:Copyright[\s]*)?©.*$/i,"").trim();
 		
-		//fix math in abstract, math symbols saved in citation_type
+		//fix math in abstract, math symbols saved in citation_misc
 		let mathSymbols = metaData["citation_misc"];
 		if (abstract != "" && mathSymbols != "" && (mathSymbols = mathSymbols.split(/[\ ]+;[\ ]+/)) != null) {
 			const length = mathSymbols.length;
@@ -87,15 +87,17 @@ var BINPreformatter = ( function () {
 			}
 		}
 		
+		//clear static misc
+		metaData["citation_misc"] = "";
+		
+		//fix abstract
 		metaData["citation_abstract"] = abstract;
 		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
 			metaData["citation_abstract"] = (abstract != "") ? "" : metaData["citation_abstract"].replace(/(?:Copyright[\s]*)?©.*$/i,"").trim();
-		}
-		
-		//clear misc
-		metaData["citation_misc"] = "";
-		
-		
+			
+			//clear dynamic misc
+			metaData["citation_misc"] = "";
+		}		
 	}
 	
 	// expose preformatting function

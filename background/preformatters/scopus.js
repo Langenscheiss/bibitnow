@@ -16,6 +16,20 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		//fix type
+		metaData["citation_type"] = metaData["citation_type"].replace(/^.*document[\s]+type/i,"").replace(/[\s]*;.*$/,"");
+		if (metaData["citation_type"].search(/book/i) != -1) {
+			metaData["citation_journal_title"] = "";
+			metaData["citation_journal_abbrev"] = "";
+			let download = metaData["citation_download"]; 
+			if (download != null && typeof(download) == 'object') {
+				download["citation_journal_title"] = "";
+				download["citation_journal_abbrev"] = "";
+			}
+		} else {
+			metaData["citation_type"] = "";
+		}
+		
 		//remove (Article), (Review) etc. at the end of title		
 		//prefer formatted static title
 		let temp = metaData["citation_title"];
@@ -25,7 +39,9 @@ var BINPreformatter = ( function () {
 		}
 		
 		//remove subscript from author names
-		metaData["citation_authors"] = metaData["citation_authors"].replace(/\.[a-z\ ]*;/g,". ;");
+		metaData["citation_authors"] = metaData["citation_authors"].replace(/\.[a-z\s]*(?:;|$)/g,". ;");
+		console.log(metaData["citation_authors"]);
+		
 		
 		//replace in misc field with "page" if page not already included, and let the rest be done by misc parser
 		temp = metaData["citation_misc"];

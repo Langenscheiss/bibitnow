@@ -1,0 +1,248 @@
+\documentclass[
+a4paper,
+12pt,
+]
+{article}
+\usepackage[english]{babel}
+\usepackage[twoside, a4paper, lmargin=3.5cm, rmargin=3.0cm, top=2.5cm, bottom=2.5cm]{geometry} 
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+\usepackage{lmodern}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{wrapfig}
+\usepackage{color}
+\usepackage{upgreek}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{empheq}
+\usepackage{dsfont}
+\usepackage{trsym}
+\usepackage{listings}
+\usepackage{pifont}
+\usepackage{ifthen}
+\usepackage{calc}
+\usepackage{enumerate}
+\usepackage{hyperref} \hypersetup{colorlinks=true,linktocpage=true,linkcolor=blue,breaklinks=true,citecolor=blue,urlcolor=blue} % 
+\usepackage[anythingbreaks]{breakurl} % Links can be split over several lines. Only works with pdflatex compiler, unfortunately :(
+\definecolor{light-gray}{gray}{0.95}
+\definecolor{light-blue}{rgb}{0.89,0.992,1.0}
+\lstdefinelanguage{javascript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+%   keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+\begin{document}
+% new commands 
+\newcommand{\plgdir}{\$PLUGINDIR}
+\newcommand{\gitdir}{\$GITDIR}
+\newcommand{\tmpl}{0\_TEMPLATE.js}
+\newcommand{\exmpl}{0\_EXAMPLE.js}
+\newcommand{\pathbox}[1]{\begin{center}\colorbox{light-gray}{#1}\end{center}}
+\newcommand{\App}[1]{App.~\ref{#1}}
+\newcommand{\Sec}[1]{Sec.~\ref{#1}}
+\newcommand{\plgname}{\textbf{BibItNow!}}
+% end new commands
+
+% title
+\title{{\plgname} Site Adjustors -- How to contribute?}
+\date{\today}
+\author{Langenscheiss}
+\maketitle
+% end title
+
+\section*{Welcome}
+
+Hej.\\
+If you have decided to contribute by writing your own site adjustors, thanks a lot! This is really going to help me! So let me return the favor and help you getting started with this little step-by-step guide.
+
+\section{Step 1 -- Get full source code}\label{sec_1}
+
+The code on this github only exposes the parts of the plugin for which I currently (you may always inspire me to change this policy) accept external contributions. However, for testing/debugging purposes, or for figuring out how the code works if you wish, you obviously need the full source code. You can \href{https://aqpl.mc2.chalmers.se/PDSU/files/BibItNowMultiBrowser.zip}{download} the latest developer versions for all currently supported browsers from my website.\\
+Since site adjustors work browser-independently, you may pick whatever browser-variant you prefer as your own developer version. In the following, we will denote the local plugin root directory, i.e., where \textit{manifest.json} is located, as ``\plgdir''. The corresponding root directory on github will be called ``\gitdir''.
+
+\section{Step 2 -- Enabled desired site}\label{sec_2}
+
+The next step is to add the desired website to the plugin. Open the Adjustor List located in
+\pathbox{\plgdir/nameResources/urlSpecificAdjustorList.xml}
+This file is currently written in the \href{https://en.wikipedia.org/wiki/XML}{XML format}, but will soon be converted to \href{https://en.wikipedia.org/wiki/JSON}{JSON}. Add an adjustor entry to this file. The structure is pretty self-explanatory. Specify the \href{https://en.wikipedia.org/wiki/URL}{URL} scheme, and the filenames for the adjustor scripts. For example, if you wish to add the website ``https://www.johndoe.com'', you specify ``johndoe-com'' as URL scheme, and insert ``johndoe'' or whatever filename you like \textbf{without the .js extension} as preformatter and/or prefselector. Details about how the specified scheme is matched with the found URL are described in \App{app_matching}.\par
+
+Once you have added an entry to the adjustor list, linking an URL scheme to preformatter/prefselector script files, you need to make sure these files exist, as the plugin will crash otherwise if the URL scheme is positively matched. If you have specified ``johndoe'' as preformatter, add a copy of ``\tmpl'' from the preformatter directory on github 
+\pathbox{\gitdir/background/preformatters/}
+to 
+\pathbox{\plgdir/background/preformatters/}
+and rename it to ``johndoe.js''. Follow the same procedure for the ``prefselector'' specified in the  prefselector file, with ``\tmpl'' now of course taken from 
+\pathbox{\gitdir/extractors/prefselectors/}
+and copied to
+\pathbox{\plgdir/extractors/prefselectors/}.
+
+These 3 steps should be enough to let the plugin know that a prefselector and preformatter should be loaded for the given website. If you haven't adjusted the template files, and everything is correct, the global web console should show the message ``This seems to work!'' if you activate the plugin popup while surfing on the given website.
+% 
+\section{Step 3 -- Find optimal prefselectors}\label{sec_3}
+ 
+Now, the potentially more difficult part starts. You need to study the source of abstract/article article pages in order to figure out \href{https://www.w3schools.com/cssref/css_selectors.asp}{CSS selectors} which select the desired citation info to be read by the extractor. The first thing to look for are meta tags. Decent publishing houses put the most relevant citation info into such meta tags. Hence, {\plgname} has a fixed kernel of search queries for most bibliography fields -- henceforth shortened as ``bibfields'' -- and if you are lucky, those queries are already enough to complete a citation (details about the bibfields and their corresponding default search queries are presented in \App{app_bibfields}).
+However, often you are not that lucky, and you need to be more inventive in providing custom CSS selectors for search queries. Technically, these search queries are carried out PRIOR to those defined in the fixed kernel, thereby suggesting the name ``preferred selector'' or ``prefselector'' as a short form.\par
+ 
+Once you think you have found the info in the website \href{https://en.wikipedia.org/wiki/HTML}{HTML} code\footnote{Note that {\plgname} queries code \textbf{after} the page has finished loading, possibly including effects of dynamically loaded scripts on the website's DOM. The static source code might hence not always be representative of the information that is available to the plugin. In other words, be sure to inspect the final DOM in case a CSS selector does not find the desired information.} and the corresponding CSS selector for, e.g., the author(s) of an article, refer to \App{app_prefselector} and to the \href{https://github.com/Langenscheiss/bibitnow/blob/master/extractors/prefselectors/0_EXAMPLE.js}{example file}
+\pathbox{\gitdir/extractors/prefselectors/\exmpl}
+in order to understand how to precisely link a CSS selector to a certain bibfield, which in this case would be \textit{citation\_authors}.\par
+
+You can add as many custom queries as you want, and each query can be further specified with several arguments next to the CSS selector itself. For example, if you have found the author info in the two non-standard meta tags
+\begin{center}
+\lstset{language=Html,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+<meta name="bla_author" content="John Doe"></meta>
+<meta name="bla_author" content="Jane Doe"></meta>
+\end{lstlisting}
+\end{center}
+which are not recognized by the fixed kernel, you will have to add the property
+\begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}} 
+\begin{lstlisting}
+citation_authors : [['meta[name="bla_author"]','content']]
+\end{lstlisting}
+\end{center}
+to the JSON object \textit{prefselectorMsg} in the prefselector script file.\par
+As explained in \App{app_bibfields} for the author bibfield, the extractor will select EVERY ELEMENT that is found using the specified prefselector string, and concatenates everything into a semicolon-separated list, as the main parser expects this format. So, if the above author information was instead given in a single tag such as
+\begin{center}
+\lstset{language=Html,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+<meta name="bla_author" 
+	content="John Doe and Jane Doe"></meta>
+\end{lstlisting}
+\end{center}
+you will first have to replace the ''and`` by a semicolon. This is one main reason why {\plgname} has preformatters, see \Sec{sec_5}.
+The file \href{https://github.com/Langenscheiss/bibitnow/blob/master/extractors/prefselectors/0_EXAMPLE.js}{``\exmpl``} shows more examples of adding prefselectors. As a general rule, try to use CSS selectors which read the info in a robust way. Remember that websites change from time to time.
+
+\section{Step 4 -- Parse a link for dynamic citation export if possible}\label{sec_4}
+
+While not necessarily something for your first shot at writing a site adjustor, remember that a core functionality of {\plgname} is to communicate with the citation export/''Download citation``-button offered on abstract pages of most publishers/databases. In the absolute majority of all cases, these buttons are technically form submission buttons or simple file links, i.e., something that can be called with an \href{https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest}{XHR} to a specifically formatted URL.
+Since the main parser is expecting the downloaded citation to be in the \href{https://en.wikipedia.org/wiki/RIS_(file_format)}{RIS citation format}, it is highly recommended -- yet not necessary -- to parse a URL which links to a resource in this RIS format.\par
+
+To determine the URL per citation, {\plgname} provides 2 stages:
+\begin{enumerate}
+ \item In the \textit{prefselectorMsg} object, the \textit{citation\_download} property allows to query a download link from the abstract page.
+ \item If such a download link is found, this link together with all extracted static data is passed to the second stage -- the \textit{formatCitationLink} function defined in the prefselector script file. Possibly using all static citation data including a citation URL, this function allows to specifiy the XHR method (\href{https://en.wikipedia.org/wiki/XMLHttpRequest#The_open_method}{GET or POST}) and requires you to return a formatted and finalized  request URL. \textbf{Note} that if an invalid URL is returned, or if \textbf{no preformatting script has been found for the website}, the plugin will skip the dynamic citation download request altogether.
+ If, however, a request is sent, and if it finishes with status code 200 (OK, successful), the response data will be saved as text into the \textit{citation\_download} property of the \textit{metaData} object accessible in preformatting. 
+\end{enumerate}
+
+There are a number of important rules to obey in using the static citation data, and in parsing the request URL.
+\begin{enumerate}
+ \item \textbf{Rule 1: Never parse any data to anything but text.} 
+ It is sometimes tempting to use \href{https://en.wikipedia.org/wiki/XMLHttpRequest#The_open_method}{\textit{eval}} on data, or to assign it to the \href{https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML}{\textit{innerHTML}} property of a \href{https://www.w3schools.com/jsref/dom_obj_attributes.asp}{DOM node}. However, for security reasons, this will not be tolerated in any code of {\plgname}, including site adjustors. In particular, Mozilla warns against this practice when submitting web extensions.
+ It is allowed to ''try-catch`` a \href{https://www.w3schools.com/jsref/dom_obj_attributes.asp}{\textit{JSON.parse}} on text data, as the content of the returned JSON object is interpreted as data only. 
+ However, the author generally advises against parsing with anything but string methods if it does not require too much extra code. Reading, e.g., a single property from a JSON string can often be done with a simple regular expression; it does not require you to parse the whole string into a JSON object. Note also that performance is currently not a bottle neck for {\plgname}, so you can always afford to manually parse raw strings with regexp magic.
+ 
+ \item \textbf{Rule 2: Avoid cross-site and mixed-content requests.} Modern browsers prohibit cross-site and mixed-content XHR. In other words, for the XHR to be successful, you need to stay on the same domain as in the active tab, from which you have extracted the static citation data, and you may not switch between ''http`` and ''https``. There is only one exception allowed by {\plgname} : cross-site requests to ''citation-needed.springer``. This exception currently exists because the publisher ''Nature`` is in the process of merging with the publisher ''Springer``.
+ 
+\end{enumerate}
+
+Refer to the example file \href{https://github.com/Langenscheiss/bibitnow/blob/master/extractors/prefselectors/0_EXAMPLE.js}{''\exmpl``} for a demonstration of how to successfully parse a citation download link.
+
+\section{Step 5 -- The most important step: preformatting}\label{sec_5}
+
+As already mentioned in \Sec{sec_3}, the raw data extracted from the website source is, in many cases, not immediately ready to be understood by the main parser, and sometimes not even available at all (which means you need to hardcode it). As the name suggests, the purpose of the preformatting stage is to preformat the data and to correct all these flaws before the main parser takes over. For more details and ''hands-on`` instructions, refer to the file \href{https://github.com/Langenscheiss/bibitnow/blob/master/background/preformatters/0_EXAMPLE.js}{''\exmpl``} in
+\pathbox{\gitdir/background/preformatters/}
+In the above mentioned example of two author names provided in one meta tag, but not in a semicolon-separated list, the \textit{preformatData} function in the preformatting script file would have to contain a line similar to
+\begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+metaData["citation_authors"] = metaData["citation_authors"]
+			.replace(/[\s]+and[\s]+/gi," ; ");
+\end{lstlisting}
+\end{center}
+in order to correct for this mistake. The \href{https://github.com/Langenscheiss/bibitnow/blob/master/background/preformatters/0_EXAMPLE.js}{example file} illustrates more complex modifications, and \App{app_bibfields} explains which bibfield expects precisely which data structure in the main parser. \textbf{Note carefully} that the same \textbf{rules and restrictions to parsing data as stated in \Sec{sec_4}} also apply to the entire preformatting stage.\par
+
+The preformatting stage is divided into 2 functions that are called in the following sequence:
+\begin{enumerate}
+ \item \textbf{The function \textit{preformatRawData}} is only called if the dynamic citation download request yielded a positive response with valid, non-empty response data. The \textit{citation\_download} property of the \textit{metaData} JSON-object passed to this function then contains the raw response text. In the subsequent parser stage, this text is assumed to represent citation data in the RIS-format! 
+ Hence, if this is not already the case at this stage, you need to reformat the data by modifying it in accordance with the restrictions stated in \Sec{sec_4} (see the \href{https://github.com/Langenscheiss/bibitnow/blob/master/background/preformatters/pubmed.js}{site adjustor for PubMed} as an example of how to deal with this situation!).
+ 
+ \item The function \textit{preformatData} is called in any case. If any data from the dynamic citation download could -- after calling \textit{preformatRawData} -- be successfully parsed, it will be accessible as a JSON object linked to in the \textit{citation\_download} property of the \textit{metaData} object. The bibfields in this object are associated with exactly the same properties as in the \textit{metaData} object itself. For example,
+ \begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+ metaData["citation_title"]
+ \end{lstlisting}
+\end{center}
+contains the title of the citation as obtained from the static data, while
+\begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+ metaData["citation_download"]["citation_title"]
+ \end{lstlisting}
+\end{center}
+contains the title obtained from the dynamic download request in case the latter was successful. \textbf{Importantly}, after the \textit{preformatData} function has returned (it returns void), any non-empty string in the JSON object linked to in the \textit{citation\_download} property will replace the corresponding static data. In other words, if you, for example, want the plugin to prefer the statically obtained citation title, you will have to add a code similar to 
+\begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+if (metaData["citation_title"] != "") {
+	let download = metaData["citation_download"];
+	if (download != null
+		&& typeof(download) == 'object') {
+		    download["citation_title"] = "";
+	}	
+}
+\end{lstlisting}
+\end{center}
+to the \textit{preformatData} function in order to erase the dynamically obtained data. Note that since \textit{metaData["citation\_download"]} is only an (empty) string if no data was obtained through a dynamic download, you always need to properly check for that to avoid crashes!
+\end{enumerate}
+
+\section{Step 6 -- Debugging and Submission}\label{sec_6}
+
+Once you have written everything, continue testing your site adjustor with various sources on the website of interest. Typically, one overlooks edge cases that need adjustments either in the definition of the preferred selectors, or in the preformatting stage. The more robust your adjustor is, the better.\par
+
+Finally, once everything is ready, use the \href{https://github.com/Langenscheiss/bibitnow}{github repository} to propose a new addition. You do not need to upload a new version of the URL adjustor list. Simply state the URL scheme in the header of your adjustor script files, and the adjustor will be added for the next adjustor upgrade release (which may appear in a different frequency compared to feature updates), given that all criteria for a correct submission are fulfilled.
+
+THANKS!
+
+\appendix
+ \section{Bibfields}\label{app_bibfields}
+ 
+ Soon!
+ 
+ \section{URL Matching}\label{app_matching}
+ 
+ Soon!
+ 
+ \section{Format of prefselectors}\label{app_prefselector}
+
+ Even sooner!
+ 
+ % As pointed out in section 3, the first crucial ingredient of a site adjustor are preferred selectors, prefselectors. They are entered in the following format within the JSON object "prefselectorMsg" in the prefselector script file:
+% 
+% var prefselectorMsg = {
+% ...
+% #BIBFIELD : [#PREFSELECTOR_1, #PREFSELECTOR_2,...],
+% ...
+% }
+% 
+% where #BIBFIELD is one of the bibliography fields described in APPENDIX X, and each preferred selector #PREFSELECTOR_i is specified by an array containing several required and several optional arguments:
+% 
+% #PREFSELECTOR_i = [#CSS_SELECTORS,#ATTRIBUTE_TO_READ,#ALLOW_MULTIPLE_LINES,#MAXIMUM_NUMBER_OF_CHARS,#ALLOW_HTML_TAGS,#MAXIMUM_NUMBER_OF_HITS]
+% 
+% #CSS_SELECTORS = String, required!
+% CSS-selector(s) selecting the HTML tag(s) from which the data for the #BIBFIELD should be obtained. For #BIBFIELDS from class 1 (see APPENDIX X), only the first positive, i.e., non-empty result for the #ATTRIBUTE_TO_READ obtained by ANY of the specified selectors will be selected. In class 2, all non-empty results from all selectors will be taken into account.
+% Examples: 'meta[name="citation_author"]','a.citLink','div#title span.titleText'
+% 
+% #ATTRIBUTE_TO_READ = String, required!
+% Attribute of the HTML tags selected by #CSS_SELECTORS that should be taken as the data for the #BIBFIELD. This attribute could be any standard or non-standard property possessed by the selected HTML tag(s). Furthermore, you may set the attribute to either "innerText" or "textContent" to read the content IN BETWEEN the tags, <tag>#content</tag>, via the "innerText" or "textContent" property. The difference between the two properties is explained, e.g., at https://stackoverflow.com/questions/35213147/difference-between-text-content-vs-inner-text
+% You can ignore all the warnings about "innerText" not being standard, too slow, or not being supported. It is supported for all browsers for which \plgname is developed, works more than fast enough for the desired performance of the plugin (=there is no loop over millions of calls of innerText), and has its legitimate purpose. In fact, most site adjustors of \plgname use innerText, as it comes closer to what the publisher intends to show on its website.
+% Examples: 'content','href','innerText'
+% 
+% #ALLOW_MULTIPLE_LINES = Boolean, optional. Default = false.
+% If false, any data string retrieved by setting #CSS_SELECTORS and #ATTRIBUTE_TO_READ is trimmed after the first occurence of a newline character! If true, any newline character is converted to a simple white space character.
+% 
+% #MAXIMUM_NUMBER_OF_CHARS = non-negative integer, optional. Default = 1024.
+\end{document}
+

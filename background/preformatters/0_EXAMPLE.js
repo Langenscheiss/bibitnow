@@ -35,6 +35,7 @@ var BINPreformatter = ( function () {
 		"risKeys", an array containing the ris keys (e.g. TI, JF, ...) that the parser is looking for when parsing downloaded RIS data
 		"endNoteKeys", an array containing endnote keys (e.g. %T, %J, ...) corresponding to the ris keys in the array "risKeys". Used by the endnote to RIS converter.
 		"EndnoteToRis", this is the endnote to ris converter function. Its first argument is input, which must be a string containing endnote data. The second argument is the boolean fullJournal. If true, it will convert the string associated with the %J key in the input data to a full journal name in the RIS format, assigned to the "JF - " key. If false, it will instead be assigned to the "JA - " key for an abbreviated journal name.
+	TODO more resources available now!
 	
 	DO NOT PARSE OR EVAL DATA
 	For obvious security reasons, it is HIGHLY recommended NOT TO EVER parse any meta data to html or to use eval on it, etc. The data should not be trusted, and should hence only be kept in text format.
@@ -49,10 +50,12 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title and journal
-		var temp = metaData["citation_download"];
-		temp = temp.replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JF - ").replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").trim();
-		console.log(temp);
-		metaData["citation_download"] = temp;
+		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JF - ").replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").trim();
+		
+		//fix abstract if necessary
+		if (metaData["query_summary"]["citation_download"] == 2) {
+			metaData["citation_download"] = metaData["citation_download"].replace(/AB[\t\ ]+[\-]+[\t\ ]+/,"N2 - ").trim();
+		}
 	}
 	
 	/* The function preformatData is called by the background script after the static meta data and any dynamically downloaded meta data has been both retreived and parsed, but before any static meta data is replaced by any successfully obtained dynamic citation data, and before the meta data is send to the main parser. The arguments are metaData and parser. metaData is described in the example prefselector file, see example.js in extractors/prefselectors/. Note that the field "citation_download" now possibly contains the dynamically downloaded meta data in a preformatted form, see below for details.
@@ -67,27 +70,79 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		//fix database
+		metaData["citation_database"] = "Wiley Online Library";
+		
 		//fix author list (if necessary, depends on Wiley journal)
-		var temp = metaData["citation_authors"];
-		temp = temp.replace(/[^;\ ];/g," ;");
-		metaData["citation_authors"] = temp;
+		metaData["citation_authors"] = metaData["citation_authors"].replace(/[\s]*;/g, ' ;');
 		
 		//fix journal title for Cochrane
-		temp = metaData["citation_journal_title"];
-		if (temp == "") {
-			temp = metaData["citation_misc"];
-			if (temp.search(/cochrane/i) != -1) {
-				metaData["citation_journal_title"] = "Cochrane Database of Systematic Reviews";
-				metaData["citation_journal_abbrev"] = "CDSR";
-			}
+		if (metaData["citation_journal_title"] == "" && metaData["citation_misc"].search(/cochrane/i) != -1) {
+			metaData["citation_journal_title"] = "Cochrane Database of Systematic Reviews";
+			metaData["citation_journal_abbrev"] = "Cochrane Database Syst. Rev.";
 		}
 		
 		//fix publisher
-		if ((temp = metaData["citation_publisher"]) == "") {
+		let publisher = metaData["citation_publisher"] 
+		if (publisher == "") {
 			metaData["citation_publisher"] = "Wiley";
 		} else if (metaData["query_summary"]["citation_publisher"] >= 1) {
-			metaData["citation_publisher"] = temp.replace(/^[^0-9]*[0-9]+\ /,"");
+			metaData["citation_publisher"] = publisher.replace(/^[^0-9]*[0-9]+\ /,"");
 		}
+		
+		//fix abstract, prefer static
+		let abstract = metaData["citation_abstract"].replace(/^[\s]*(?:abstract[\:\s]*|Jump[\s]*to…)/gi,"").replace(/^[\s]*(?:abstract[\:\s]*|Jump[\s]*to…)/gi,"").replace(/(?:Copyright[\s]*)?©.*$/i,"").trim();
+		
+		//fix math in abstract, math symbols saved in citation_misc
+		let mathSymbols = metaData["citation_misc"];
+		if (abstract != "" && mathSymbols != "" && (mathSymbols = mathSymbols.split(/[\ ]+;[\ ]+/)) != null) {
+			const length = mathSymbols.length;
+			if (length%2 == 0) {
+				//index variable
+				let idx = 0;
+				for (let i = 0; i<length; ++i) {
+				
+					//get match and math symbol from misc
+					let match = mathSymbols[i].trim();
+					i++;
+					let symbol = mathSymbols[i].trim();
+					match += " " + symbol;
+					
+					//continue only if not empty string
+					if (symbol != "") {
+						
+						//search for match in abstract text
+						let nextIdx = abstract.indexOf(match,idx);
+						
+						//if found, replace by math
+						if (nextIdx != -1) {
+							
+							//get index in OLD abstract after match
+							idx = nextIdx + match.length;
+
+							//convert symbol
+							symbol = BINResources.convertSpecialChars(symbol,0,false,true);
+							
+							//replace string in abstract
+							abstract = abstract.slice(0,nextIdx) + "$" + symbol + "$" + abstract.slice(idx);
+							
+							//get index in NEW abstract where to start searching from!
+							idx = nextIdx + symbol.length+2;
+						}
+					}
+				}
+				//reduce white spaces around dollars
+				abstract = abstract.replace(/[\ ]+\$/g, " $").replace(/\$[\ ]+/, "$ ");
+			}
+		}
+		
+		metaData["citation_abstract"] = abstract;
+		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
+			metaData["citation_abstract"] = (abstract != "") ? "" : metaData["citation_abstract"].replace(/(?:Copyright[\s]*)?©.*$/i,"").trim();
+		}
+		
+		//clear misc
+		metaData["citation_misc"] = "";
 		
 	}
 	

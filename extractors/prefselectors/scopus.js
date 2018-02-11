@@ -18,6 +18,7 @@ var BINPrefselector = ( function () {
 		citation_doi: [ ['span[id="recordDOI"]','innerText'] ],
 		citation_author: [ ['a[title="Show Author Details"]','innerText'] ],
 		citation_journal_title: [ ['div.sourceTitle a','innerText'] , ['span#publicationTitle a','innerText'] , ['span#noSourceTitleLink','innerText'] ],
+		citation_type: [ ['section#referenceInfo ul#documentInfo li','innerText'] ],
 		citation_title: [ ['h1.svTitle','innerText'] , ['h2.h3','innerText'] ],
 		citation_abstract: [ ['section#abstractSection p','innerText',true,20000] ],
 		citation_keywords: [ ['section#authorKeywords li','innerText'] ],

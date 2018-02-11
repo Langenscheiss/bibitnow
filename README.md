@@ -17,7 +17,10 @@ All this functionality is implemented in 2 different javascript files per websit
 full domain without subpaths, full domain with first sudomain removed and without subpaths, full domain with first and second (if available) subdomain removed and without subpaths, ..., full domain with all but the last remaining subdomain removed and without subpaths, full domain with first subpath, full domain with first subpath and with the first subdomain removed, ... . Matching stops as soon as the first match is encountered.
 
 2.) Preferred selectors and Preformatters
-The functions defined and exposed in these files allow you to define custom search queries via css selectors, extract and format a link for dynamic citation downloads, and to preformat extracted data before being sent to the main parser. Please refer to the example files in
+The functions defined and exposed in these files allow you to define custom search queries via css selectors, extract and format a link for dynamic citation downloads, and to preformat extracted data before being sent to the main parser. Please refer to the pdf guide
+- NOW_TO_CONTRIBUTE.pdf
+
+and to the example files in
 - extractors/prefselectors/
 - background/preformatters/
 
