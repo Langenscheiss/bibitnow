@@ -47,7 +47,7 @@ var BINPreformatter = ( function () {
 		metaData["citation_misc"] = "";
 		
 		//set Amazon store as database
-		metaData["citation_database"] = "Amazon.com Webstore";
+		metaData["citation_database"] = metaData["citation_domain"].replace(/^amazon/,"Amazon") + "." + metaData["citation_top_level_domain"] + " Webstore";
 	}
 	
 	// expose preformatting function

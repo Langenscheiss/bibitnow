@@ -26,14 +26,14 @@ var BINPrefselector = ( function () {
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
-	var prefselectorMsg = { 
+	var prefselectorMsg = {
 		citation_title: [ ['h1.document-title','innerText'] ],
 		citation_authors: [ ['div.authors-container span[ng-bind-html="::author.name"]','textContent'] ],
 		citation_journal_title: [ ['a.stats-document-abstract-publishedIn','textContent'] ],
 		citation_volume: [ ['span[ng-if="::vm.details.volume"]','textContent'] ],
 		citation_firstpage: [ ['div[ng-if~="::vm.details.startPage"]','innerText'] ],
 		citation_date: [ ['div.doc-abstract-pubdate','innerText'] ],
-		citation_issn: [ ['div[ng-if~="::vm.details.issn"]','innerText'] ],
+		citation_issn: [ ['div[ng-if~="::vm.details.issn"]','innerText',true] ],
 		citation_doi: [ ['div[ng-if~="::vm.details.doi"]','innerText'] ],
 		citation_publisher: [ ['div.doc-abstract-publisher','innerText'] ],
 		citation_abstract: [ ['div.abstract-text','innerText', true, 20000] ],

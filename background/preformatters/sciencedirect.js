@@ -82,7 +82,7 @@ var BINPreformatter = ( function () {
 		if (metaData["citation_publisher"] == "") metaData["citation_publisher"] = "Elsevier B.V.";
 		       
 		//fix abstract and keywords
-		let abstract = metaData["citation_abstract"].replace(/^.*[\s]*Abstract[\s\:]+/,"").replace(/^.*[\s]*Summary[\s\:]+/,"");
+		let abstract = metaData["citation_abstract"].replace(/^.*[\s]*Abstract[\s\:]+/i,"").replace(/^.*[\s]*Summary[\s\:]+/i,"");
 		metaData["citation_abstract"] = abstract;
 		
 		//prefer static keywords and abstract

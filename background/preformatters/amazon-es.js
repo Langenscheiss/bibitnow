@@ -18,8 +18,8 @@ var BINPreformatter = ( function () {
 		
 		//preformat publisher
 		let data = metaData["citation_misc"];
-		let dataPart = data.replace(/\([^\(\)]*\)[\ ]*$/,"").match(/Editor[^;\(]*/i);
-		if (dataPart != null && dataPart.length > 0) metaData["citation_publisher"] = dataPart[0].replace(/^Editor[\s ]*[:]*/i,"").trim();
+		let dataPart = data.replace(/\([^\(\)]*\)[\ ]*$/,"").match(/Editor[a]?[^;\(]*/i);
+		if (dataPart != null && dataPart.length > 0) metaData["citation_publisher"] = dataPart[0].replace(/^Editor[a]?[\s ]*[:]*/i,"").trim();
 		
 		//extract ISBN
 		dataPart = data.match(/ISBN\-13[:\ 0-9X\-]*/i);
@@ -32,7 +32,7 @@ var BINPreformatter = ( function () {
 		}
 		
 		//preformat date
-		data = data.replace(/^.*?Editor[^;\(]*/i,"");
+		data = data.replace(/^.*?Editor[a]?[^;\(]*/i,"");
 		dataPart = data.match(/\([^\(\)]*\)\ ;\ /);
 		if (dataPart != null && dataPart.length > 0) {
 			data = dataPart[0];

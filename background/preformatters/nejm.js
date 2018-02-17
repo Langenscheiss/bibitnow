@@ -49,7 +49,8 @@ var BINPreformatter = ( function () {
 		metaData["citation_misc"] = "";
 		
 		//fix abstract
-		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/(?:[\s]*Full[\s]*text[\s]*of[\s]*[^\s]+?[\.]{3}[\s]*|[\s]*Read[\s]*the[\s]*full[\s]*article.*$)/gi," ").trim();
+		console.log(metaData["citation_abstract"]);
+		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/(?:^Abstract[\s]*|[\s]*Full[\s]*text[\s]*of[\s]*[^\s]+?[\.]{3}[\s]*|[\s]*Read[\s]*the[\s]*full[\s]*article.*$)/gi," ").trim();
 		
 		//manually set issn
 		metaData["citation_issn"] = "1533-4406";

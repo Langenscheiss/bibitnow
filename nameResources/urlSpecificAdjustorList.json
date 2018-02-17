@@ -1,7 +1,7 @@
 [
 	{ "scheme": "publications\\.rwth-aachen" , "top": "de" , "prefselector": "aachen" , "preformatter": "aachen" },
 	{ "scheme": "pubs\\.acs" , "top": "org" , "prefselector": "acs" , "preformatter": "acs" },
-	{ "scheme": "aappublications" , "top": "org" , "prefselector": "aap" , "preformatter": "aap" },
+	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)aappublications" , "top": "org" , "prefselector": "aap" , "preformatter": "aap" },
 	{ "scheme": "dl\\.acm" , "top": "org" , "prefselector": "acm" , "preformatter": "acm" },
 	{ "scheme": "aip\\.scitation" , "top": "org" , "prefselector": "aip" , "preformatter": "aip" },
 	{ "scheme": "agris\\.fao" , "top": "org" , "prefselector": "agris" },
@@ -43,7 +43,7 @@
 	{ "scheme": "goodreads" , "top": "com" , "prefselector": "goodreads" , "preformatter": "goodreads" },
 	{ "scheme": "books\\.google(?:|\\.co|\\.com)" , "top": "[0-9a-z]+" , "prefselector": "google-book" , "preformatter": "google-book" },
 	{ "scheme": "hindawi" , "top": "com" , "prefselector": "hindawi" , "preformatter": "hindawi" },
-	{ "scheme": "ieeexplore\\.ieee" , "top": "org", "path": "document" , "prefselector": "ieee" , "preformatter": "ieee" },
+	{ "scheme": "ieeexplore\\.ieee" , "top": "org", "path": "(?:document|xpl)" , "prefselector": "ieee" , "preformatter": "ieee" },
 	{ "scheme": "ingentaconnect" , "top": "com" , "prefselector": "ingentaconnect" , "preformatter": "ingentaconnect" },
 	{ "scheme": "iopscience\\.iop" , "top": "org" , "prefselector": "iop" , "preformatter": "iop" },
 	{ "scheme": "mdpi" , "top": "com" , "prefselector": "mdpi" , "preformatter": "mdpi" },
@@ -53,7 +53,7 @@
 	{ "scheme": "academic\\.oup" , "top": "com" , "preformatter": "oup-journals" , "prefselector": "oup-journals" },
 	{ "scheme": "ora\\.ox\\.ac" , "top": "uk" , "prefselector": "oxford-archive" , "preformatter": "oxford-archive"  },
 	{ "scheme": "pubs\\.rsc" , "top": "org" , "prefselector": "rsc" , "preformatter": "rsc"  },
-	{ "scheme": "jps" , "top": "jp" , "path": "doi" , "preformatter": "jps" , "prefselector": "jps" },
+	{ "scheme": "(?:journals\\.|)jps" , "top": "jp" , "path": "doi" , "preformatter": "jps" , "prefselector": "jps" },
 	{ "scheme": "nature" , "top": "com" , "preformatter": "nature" , "prefselector": "nature" },
 	{ "scheme": "nejm" , "top": "org" , "preformatter": "nejm" , "prefselector": "nejm" },
 	{ 	
@@ -67,10 +67,11 @@
 	},
 	{ "scheme": "research\\.chalmers" , "top": "se" , "prefselector": "cpl" , "preformatter": "cpl" },
 	{ "scheme": "journals\\.sagepub" , "top": "com" , "prefselector": "sagepub" , "preformatter": "sagepub" },
-	{ 	"scheme": "sciencedirect" , "top": "com" ,
+	{ 	
+		"scheme": "sciencedirect" , "top": "com" ,
 		"path":	[
-				{ "scheme": "science-book" , "prefselector": "sciencedirect-book" , "preformatter": "sciencedirect-book" },
-				{ "scheme": "science-article" , "prefselector": "sciencedirect" , "preformatter": "sciencedirect" }
+				{ "scheme": "science\\/book" , "prefselector": "sciencedirect-book" , "preformatter": "sciencedirect-book" },
+				{ "scheme": "science\\/article" , "prefselector": "sciencedirect" , "preformatter": "sciencedirect" }
 			]			
 	},
 	{ "scheme": "scopus" , "top": "com" , "prefselector": "scopus" , "preformatter": "scopus" },
@@ -78,7 +79,7 @@
 		"scheme": "link\\.springer" , "top": "com" , 
 		"path":	[
 				{ "scheme": "(?:article|protocol)" , "prefselector": "springer" , "preformatter": "springer" },
-				{ "scheme": "book" , "prefselector": "springer-link-book" , "preformatter": "springer-link-book" }
+				{ "scheme": "(?:book|referencework)" , "prefselector": "springer-link-book" , "preformatter": "springer-link-book" }
 			]
 	},
 	{ "scheme": "pnas" , "top": "org"  , "prefselector": "pnas" , "preformatter": "pnas" },
@@ -91,12 +92,12 @@
 		"scheme": "onlinelibrary\\.wiley" , "top": "com" ,
 		"path":	[
 				{ "scheme": "book" , "prefselector": "wiley-book" , "preformatter": "wiley-book"  },
-				{ "scheme": "(?:doi|wol1\\-doi)" , "prefselector": "wiley" , "preformatter": "wiley"  }
+				{ "scheme": "(?:doi|wol1\\/doi)" , "prefselector": "wiley" , "preformatter": "wiley"  }
 			]
 	},
 	{ "scheme": "washingtonpost" , "top": "com" , "prefselector": "washingtonpost" , "preformatter": "washingtonpost" },
 	{ 
-		"scheme": "worldscientific-com-doi" , "top": "com" ,
+		"scheme": "worldscientific" , "top": "com" ,
 		"path":	[
 				{ "scheme": "doi" , "prefselector": "worldscientific" , "preformatter": "worldscientific"  },
 				{ "scheme": "worldscibooks" , "prefselector": "worldscientific-book" , "preformatter": "worldscientific-book"  }

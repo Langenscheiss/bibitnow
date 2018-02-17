@@ -23,6 +23,12 @@ var BINPreformatter = ( function () {
 			metaData["citation_download"]["citation_keywords"] = "";
 		}
 		
+		
+		//fix static issn/isbn and type if isbn available
+		let issn = metaData["citation_issn"].replace(/(?:^[^0-9X]*|[^0-9X\-]+.*$)/g,"").replace(/[^0-9X\-]/g,"");
+		if (issn.replace(/[\-]/g,"").length > 8) metaData["citation_type"] = "book";
+		metaData["citation_issn"] = issn;
+		
 		//set database
 		metaData["citation_database"] = "IEEE Xplore Digital Library";
 	}

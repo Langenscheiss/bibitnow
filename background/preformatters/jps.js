@@ -26,6 +26,11 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		//fix issn
+		if (metaData["citation_journal_title"] == "Journal of the Physical Society of Japan") {
+			metaData["citation_issn"] = "0031-9015";
+		}
+		
 		//fix misc
 		metaData["citation_misc"] = metaData["citation_misc"].replace(/number/i,"issue");
 	}

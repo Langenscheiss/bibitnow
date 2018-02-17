@@ -34,7 +34,7 @@ var BINPreformatter = ( function () {
 		}
 		
 		//fix publisher
-		let publisher = metaData["citation_publisher"] 
+		let publisher = metaData["citation_publisher"];
 		if (publisher == "") {
 			metaData["citation_publisher"] = "Wiley";
 		} else if (metaData["query_summary"]["citation_publisher"] >= 1) {

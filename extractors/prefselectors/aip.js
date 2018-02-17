@@ -19,7 +19,7 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = { 
 		citation_doi: [ ['a#crossMark','data-doi'] ],
 		citation_issn: [ ['a[title="Rights Link"]','href'] ],
-		citation_abstract: [ ['div.abstractSection.abstractInFull','innerText', true, 20000] ],
+		citation_abstract: [ ['div.abstractSection.abstractInFull','innerText', true, 20000] , ['div.hlFld-Abstract','innerText',true,20000] ],
 		citation_keywords: [ ['meta[name=\"keywords\"]','content'] , ['ul.list.topic-list.padded-content.aipthesaurus a','innerText'] ],
 		citation_download: [ ['li[tabindex="-1"] a', 'href'] , ['ul.tools-sub-menu a','href'] ]
 	};

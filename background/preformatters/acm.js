@@ -32,7 +32,11 @@ var BINPreformatter = ( function () {
 		if (temp != null && temp.length == 3) metaData["citation_date"] = temp[1] + "/" + temp[0] + "/" + temp[2];
 
 		//check if book
-		if (metaData["citation_misc"] != "") metaData["citation_type"] = "book";
+		if (metaData["citation_misc"] != "") {
+			metaData["citation_type"] = "book";
+			//clear misc
+			metaData["citation_misc"] = "";
+		}
 		       
 		//fix pages
 		if ((temp = metaData["citation_download"]) != null && typeof(temp) == 'object') {

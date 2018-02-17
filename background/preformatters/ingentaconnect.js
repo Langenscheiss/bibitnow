@@ -20,17 +20,21 @@ var BINPreformatter = ( function () {
 		let misc = metaData["citation_misc"];
 		if (misc.search(/isbn/i) != -1) {
 			metaData["citation_type"] = "book";
+			let match;
 			//extract isbn
-			misc = misc.replace(/^.*isbn[\:\s]*/i,"").trim();
-			metaData["citation_issn"] = misc.replace(/[^0-9]+.*$/,"");
-			
+			match = misc.match(/^.*isbn[\:\s]*(.*?)(?:author[s]?|publication|format)/i);
+			if (match != null && match.length > 1 && (match = match[1]) != "") metaData["citation_issn"] = match.replace(/[^0-9]+.*$/,"");
+
 			//extract date
-			misc = misc.replace(/^.*publication[\s]*date/i,"");
-			metaData["citation_date"] = misc.replace(/;.*$/i,"");
+			match = misc.match(/^.*publication[\s]*date[\:\s]*(.*?)(?:isbn|author[s]?|format)/i);
+			if (match != null && match.length > 1 && (match = match[1]) != "") metaData["citation_date"] = match.replace(/;.*$/i,"");
 			
 			//extract author
-			misc = misc.replace(/^.*author[s\:]*/i,"").trim();
-			metaData["citation_authors"] = misc;
+			match = misc.match(/^.*author[s\:]*(.*?)(?:isbn|publication|format)/i,"");
+			if (match != null && match.length > 1 && (match = match[1]) != "") metaData["citation_authors"] = match.trim();
+		       
+			//clear misc
+			metaData["citation_misc"] = "";
 		} else {
 		
 			misc = misc.replace(/^Source:/i,"").trim();
@@ -40,6 +44,7 @@ var BINPreformatter = ( function () {
 			
 			//replace pp in misc field with "page" if page not already included, remove number of pages in brackets at the end as well, replace "number" by "issue" and let the rest be done by the misc parser
 			misc = misc.replace(/^[^\,]*\,/,"").trim().replace(/pp\./i,"page").replace(/number/i,"issue").replace(/\([^\(\)]*\)$/,"").trim();
+			console.log(misc);
 			metaData["citation_misc"] = misc;
 			
 			//remove volume, issue, page from misc string and send the rest to date

@@ -18,7 +18,7 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = {
 		citation_download: [ ['td.export-citation a','href'] ],
 		citation_abstract: [ ['div.abstractSection.abstractInFull','innerText', true, 20000] ],
-		citation_misc: [ ['li.rightsLink a.rightslink','href'] ]
+		citation_misc: [ ['li.rightsLink a.rightslink','href'] , ['a.articleWorksPurchase','href'] ]
 	};
 
 	// finally expose selector message

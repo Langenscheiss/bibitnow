@@ -33,6 +33,9 @@ var BINPreformatter = ( function () {
 			}
 		}
 		
+		//fix static abstract
+		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^[\s]*abstract[\s]*/gi,"");
+		
 		//fix keywords if taken from topic list
 		if (metaData["query_summary"]["citation_keywords"] == 2) metaData["citation_keywords"] = metaData["citation_keywords"].toLowerCase();
 	}

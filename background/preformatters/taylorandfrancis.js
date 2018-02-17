@@ -48,15 +48,15 @@ var BINPreformatter = ( function () {
 		metaData["citation_type"] = "article";
 		metaData["citation_issn"] = metaData["citation_issn"].slice(0,9);
 		
+		//database
+		metaData["citation_database"] = "Taylor & Francis Online";
+		
 		//fix abstract, prefer static
 		temp = metaData["citation_abstract"].replace(/^[\s]*abstract[\:\s]*/i,"");
 		metaData["citation_abstract"] = temp;
 		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
 			if (temp != "") metaData["citation_abstract"] = "";
 		}
-		
-		//database
-		metaData["citation_database"] = "Taylor & Francis Online";
 	}
 	
 	// expose preformatting function
