@@ -18,7 +18,7 @@ var BINPrefselector = ( function () {
 				return "";
 			}
 		}
-		return (metaData["citation_url"].replace(/sciencedirect\.com\/.*$/,"sciencedirect.com") + "/sdfe/arp/cite?pii=" + link + "&format=application/x-research-info-systems&withabstract=true");
+		return (metaData["citation_url_nopath"] + "/sdfe/arp/cite?pii=" + link + "&format=application/x-research-info-systems&withabstract=true");
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>

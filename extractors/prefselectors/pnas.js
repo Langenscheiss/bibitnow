@@ -11,9 +11,9 @@ var BINPrefselector = ( function () {
 	function formatCitationLink(metaData, link) {
 		if (link == null || link == "") return "";
 		if (metaData["query_summary"]["citation_download"] == 1) {
-			return (metaData["citation_url"].replace(/pnas\.org\/.*$/,"pnas.org") + link.replace(/citmgr\?/,"citmgr?type=mendeley&"));
+			return (metaData["citation_url_nopath"] + link.replace(/citmgr\?/,"citmgr?type=mendeley&"));
 		} else if (metaData["query_summary"]["citation_download"] == 2){
-			return (metaData["citation_url"].replace(/pnas\.org\/.*$/,"pnas.org") + link.trim());
+			return (metaData["citation_url_nopath"] + link.trim());
 		}
 	}
 	

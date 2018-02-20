@@ -9,11 +9,7 @@ var BINPrefselector = ( function () {
 
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		link = metaData["citation_url"].replace(/(^.*?[\/]+.*?)\/.*$/,
-			function(match, $1, offset, original) {
-				return $1;
-			}
-		) + link;
+		link = metaData["citation_url_nopath"] + link;
 		return link.replace(/showCitFormats/,"downloadCitation") + "&include=abs";
 	}
 	

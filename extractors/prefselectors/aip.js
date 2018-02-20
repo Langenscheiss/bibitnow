@@ -10,8 +10,11 @@ var BINPrefselector = ( function () {
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
 		
+		// return if invalid link
+		if (link == null || link == "") return "";
+		
 		//get base url and modify
-		link = metaData["citation_url"].replace(/\.org\/.*$/,".org") + link;
+		link = metaData["citation_url_nopath"] + link;
 		return link.replace(/showCitFormats/,"downloadCitation") + "&include=all";
 	}
 	

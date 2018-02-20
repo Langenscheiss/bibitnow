@@ -14,7 +14,7 @@ var BINPrefselector = ( function () {
 		if (metaData["citation_url"] == "") return "";
 		link = link.match(/number=[0-9]*/);
 		if (link == null || link == "") return "";
-		return metaData["citation_url"].replace(/\.info\/.*$/,".info/journal/CitationForm.php?mode=download&" + link + "&file_format=ris&ab_include=abs");
+		return (metaData["citation_url_nopath"] + "/journal/CitationForm.php?mode=download&" + link + "&file_format=ris&ab_include=abs");
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>

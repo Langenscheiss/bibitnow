@@ -10,7 +10,7 @@ var BINPrefselector = ( function () {
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
 		if (link == null || link == "") return "";
-		return (metaData["citation_url"].replace(/ac\.uk\/.*$/,"ac.uk") + link);
+		return (metaData["citation_url_nopath"] + link);
 	}
 	
 	

@@ -21,7 +21,8 @@ var BINPrefselector = ( function () {
 		} else if (link.search(/[0-9]/) == -1) {
 			link = "";
 		}
-		return ("https://dl.acm.org/downformats.cfm?id=" + idArr[1].trim() + "&parent_id=" + idArr[0].trim() + "&expformat=endnotes" + link + "&include=abs");
+		
+		return (metaData["citation_url_nopath"] + "/downformats.cfm?id=" + idArr[1].trim() + "&parent_id=" + idArr[0].trim() + "&expformat=endnotes" + link + "&include=abs");
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>

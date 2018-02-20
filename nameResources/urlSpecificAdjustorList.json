@@ -33,7 +33,7 @@
 			]
 	},
 	{ "scheme": "annualreviews" , "top": "org" , "prefselector": "annualreviews" , "preformatter": "annualreviews" },
-	{ "scheme": "bmj" , "top": "com" , "path": "content" , "prefselector": "bmj" , "preformatter": "bmj" },
+	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)bmj" , "top": "com" , "path": "content" , "prefselector": "bmj" , "preformatter": "bmj" },
 	{ "scheme": "journals\\.aps" , "top": "org" , "prefselector": "aps" , "preformatter": "aps" },
 	{ "scheme": "arxiv" , "top": "org" , "prefselector": "arxiv" , "preformatter": "arxiv" },
 	{ "scheme": "bioone" , "top": "org" , "preformatter": "bioone" , "prefselector": "bioone" },

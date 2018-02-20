@@ -12,7 +12,7 @@ var BINPrefselector = ( function () {
 		let returnString = metaData["citation_download"]; 
 		//if download link found, use it. Otherwise, make an educated guess for aps
 		if (metaData["query_summary"]["citation_download"] == 1) {
-			returnString = 'https://journals.aps.org' + returnString + '?type=ris&download=false';
+			returnString = metaData["citation_url_nopath"] + returnString + '?type=ris&download=false';
 		} else if (metaData["query_summary"]["citation_download"] == 2) {
 			returnString = metaData["citation_url"].match(/(^http[s]?:\/\/[^\/]*\/[^\/]*\/)[^\/]*(.*$)/);
 			if (returnString != null && returnString.length > 2) {

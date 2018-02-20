@@ -12,7 +12,7 @@ var BINPrefselector = ( function () {
 		
 		//get base url
 		if (metaData["query_summary"]["citation_download"] == 1) {
-			return (metaData["citation_url"].replace(/\.gov\/.*$/,".gov/pubmed/") + link + "?report=xml&format=text");
+			return (metaData["citation_url_nopath"] + "/pubmed/" + link + "?report=xml&format=text");
 		} else {
 			return (link.replace(/&format=.*$/,"").replace(/&report=.*$/,"") + "&report=xml&format=text");
 		}

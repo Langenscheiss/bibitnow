@@ -11,7 +11,7 @@ var BINPrefselector = ( function () {
 	function formatCitationLink(metaData, link) {
 		let doi = metaData["citation_doi"];
 		if (doi == "") return "";
-		return (metaData["citation_url"].replace(/worldscientific\.com\/.*$/,"worldscientific.com") + "/action/downloadCitation?doi=" + doi + "&include=abs");
+		return (metaData["citation_url_nopath"] + "/action/downloadCitation?doi=" + doi + "&include=abs");
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>

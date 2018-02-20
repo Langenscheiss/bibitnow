@@ -17,7 +17,7 @@ var BINPrefselector = ( function () {
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
 		if (link == null || link == "") return "";
-		return (metaData["citation_url"].replace(/sciencemag\.org\/.*$/,"sciencemag.org") + link);
+		return (metaData["citation_url_nopath"] + link);
 	}
 	
 	// expose selector message and link formatter
