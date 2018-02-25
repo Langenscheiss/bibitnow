@@ -1,4 +1,4 @@
-/* This is an example of how a preferred selector script looks, based on the site adjustor for Wiley. It allows to set the css selectors for extracting static meta data for the website to which this script is associated (in urlSpecificAdjustorList.xml). Furthermore, you can expose a function used by the background system to format the citation download link for the dynamically downloaded citation. Any code outside the BINPrefselector object will not be accepted! (DO NOT POLLUTE GLOBAL NAMESPACE!!)
+/* This is an example of how a preferred selector script looks, based on the site adjuster for Wiley. It allows to set the css selectors for extracting static meta data for the website to which this script is associated (in urlSpecificAdjusterList.json). Furthermore, you can expose a function used by the background system to format the citation download link for the dynamically downloaded citation. Any code outside the BINPrefselector object will not be accepted! (DO NOT POLLUTE GLOBAL NAMESPACE!!)
  
 GLOBAL RESOURCES
 Note that the global object BINResources may be used in the following functions. This object exposes the following functions:

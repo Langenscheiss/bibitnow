@@ -1,4 +1,4 @@
-/* This is an example of how a preformatting script looks, based on the site adjustor for Wiley. It allows to preprocess the extracted meta data from the website to which this script is associated (in urlSpecificAdjustorList.xml). You can also access and modify any dynamically downloaded meta data before being processed by the system's own RIS parser. Any code outside the BINPreformatter object will not be accepted! (DO NOT POLLUTE GLOBAL NAMESPACE!!)
+/* This is an example of how a preformatting script looks, based on the site adjuster for Wiley. It allows to preprocess the extracted meta data from the website to which this script is associated (in urlSpecificAdjusterList.json). You can also access and modify any dynamically downloaded meta data before being processed by the system's own RIS parser. Any code outside the BINPreformatter object will not be accepted! (DO NOT POLLUTE GLOBAL NAMESPACE!!)
 
 GLOBAL RESOURCES
 Note that the global object BINResources may be used in the following functions. This object exposes the following functions:
@@ -43,7 +43,7 @@ var BINPreformatter = ( function () {
 	DOWNLOADED DATA
 	The field "citation_download" contains the retreived data of the citation download request, if the latter was initiated. The data comes in raw text format. If this data is in the endnote format, you may use EndnoteToRis to convert it to RIS. Finally, metaData["citation_download"] must contain the downloaded data in the RIS format in order to be valid after preformatRawData has been called! To check whether the download was successful, you can access metaData["citation_download_status"], which comes with one of the following values:
 		0: Citation download globally disabled by the plugin preferences
-		1: Citation download not specified by site adjustor. Site disabled.
+		1: Citation download not specified by site adjuster. Site disabled.
 		2: Citation download failed (due to failed request, network error etc.)
 		3: Citation download successful
 	 */

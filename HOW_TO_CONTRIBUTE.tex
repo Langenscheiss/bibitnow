@@ -55,7 +55,7 @@ a4paper,
 % end new commands
 
 % title
-\title{{\plgname} Site Adjustors -- How to contribute?}
+\title{{\plgname} Site Adjusters -- How to contribute?}
 \date{\today}
 \author{Langenscheiss}
 \maketitle
@@ -64,20 +64,28 @@ a4paper,
 \section*{Welcome}
 
 Hej.\\
-If you have decided to contribute by writing your own site adjustors, thanks a lot! This is really going to help me! So let me return the favor and help you getting started with this little step-by-step guide.
+If you have decided to contribute by writing your own site adjusters, thanks a lot! This is really going to help me! So let me return the favor and help you getting started with this little step-by-step guide.
 
 \section{Step 1 -- Get full source code}\label{sec_1}
 
 The code on this github only exposes the parts of the plugin for which I currently (you may always inspire me to change this policy) accept external contributions. However, for testing/debugging purposes, or for figuring out how the code works if you wish, you obviously need the full source code. You can \href{https://aqpl.mc2.chalmers.se/PDSU/files/BibItNowMultiBrowser.zip}{download} the latest developer versions for all currently supported browsers from my website.\\
-Since site adjustors work browser-independently, you may pick whatever browser-variant you prefer as your own developer version. In the following, we will denote the local plugin root directory, i.e., where \textit{manifest.json} is located, as ``\plgdir''. The corresponding root directory on github will be called ``\gitdir''.
+Since site adjusters work browser-independently, you may pick whatever browser-variant you prefer as your own developer version. In the following, we will denote the local plugin root directory, i.e., where \textit{manifest.json} is located, as ``\plgdir''. The corresponding root directory on github will be called ``\gitdir''.
 
 \section{Step 2 -- Enabled desired site}\label{sec_2}
 
-The next step is to add the desired website to the plugin. Open the Adjustor List located in
-\pathbox{\plgdir/nameResources/urlSpecificAdjustorList.xml}
-This file is currently written in the \href{https://en.wikipedia.org/wiki/XML}{XML format}, but will soon be converted to \href{https://en.wikipedia.org/wiki/JSON}{JSON}. Add an adjustor entry to this file. The structure is pretty self-explanatory. Specify the \href{https://en.wikipedia.org/wiki/URL}{URL} scheme, and the filenames for the adjustor scripts. For example, if you wish to add the website ``https://www.johndoe.com'', you specify ``johndoe-com'' as URL scheme, and insert ``johndoe'' or whatever filename you like \textbf{without the .js extension} as preformatter and/or prefselector. Details about how the specified scheme is matched with the found URL are described in \App{app_matching}.\par
+The next step is to add the desired website to the plugin. Open the Adjuster List located in
+\pathbox{\plgdir/nameResources/urlSpecificAdjusterList.json}, 
+written in the \href{https://en.wikipedia.org/wiki/JSON}{JSON} format. Add an adjuster entry to this file. The structure is pretty self-explanatory. Specify the \href{https://en.wikipedia.org/wiki/URL}{URL} scheme, and the filenames for the adjuster scripts. For example, if you wish to add the website ``https://www.johndoe.com'', and you wish to link it to script adjuster files ``johndoe.js'' (both for preformatter and prefselector), you add the object
+\begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}} 
+\begin{lstlisting}
+{ "scheme": "johndoe" , "top": "com" ,
+  "prefselector": "johndoe" , "preformatter": "johndoe"}
+\end{lstlisting}
+\end{center}
+to the JSON array. Note that the names of script files are stated \textbf{without the .js extension}. Details about how to specify more complex matching schemes, and how these schemes are then matched with the found URL are described in \App{app_matching}.\par
 
-Once you have added an entry to the adjustor list, linking an URL scheme to preformatter/prefselector script files, you need to make sure these files exist, as the plugin will crash otherwise if the URL scheme is positively matched. If you have specified ``johndoe'' as preformatter, add a copy of ``\tmpl'' from the preformatter directory on github 
+Once you have added an entry to the adjuster list, linking an URL scheme to preformatter/prefselector script files, you need to make sure these files exist, as the plugin will crash otherwise if the URL scheme is positively matched. If you have specified ``johndoe'' as preformatter, add a copy of ``\tmpl'' from the preformatter directory on github 
 \pathbox{\gitdir/background/preformatters/}
 to 
 \pathbox{\plgdir/background/preformatters/}
@@ -126,7 +134,7 @@ The file \href{https://github.com/Langenscheiss/bibitnow/blob/master/extractors/
 
 \section{Step 4 -- Parse a link for dynamic citation export if possible}\label{sec_4}
 
-While not necessarily something for your first shot at writing a site adjustor, remember that a core functionality of {\plgname} is to communicate with the citation export/''Download citation``-button offered on abstract pages of most publishers/databases. In the absolute majority of all cases, these buttons are technically form submission buttons or simple file links, i.e., something that can be called with an \href{https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest}{XHR} to a specifically formatted URL.
+While not necessarily something for your first shot at writing a site adjuster, remember that a core functionality of {\plgname} is to communicate with the citation export/''Download citation``-button offered on abstract pages of most publishers/databases. In the absolute majority of all cases, these buttons are technically form submission buttons or simple file links, i.e., something that can be called with an \href{https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest}{XHR} to a specifically formatted URL.
 Since the main parser is expecting the downloaded citation to be in the \href{https://en.wikipedia.org/wiki/RIS_(file_format)}{RIS citation format}, it is highly recommended -- yet not necessary -- to parse a URL which links to a resource in this RIS format.\par
 
 To determine the URL per citation, {\plgname} provides 2 stages:
@@ -139,7 +147,7 @@ To determine the URL per citation, {\plgname} provides 2 stages:
 There are a number of important rules to obey in using the static citation data, and in parsing the request URL.
 \begin{enumerate}
  \item \textbf{Rule 1: Never parse any data to anything but text.} 
- It is sometimes tempting to use \href{https://en.wikipedia.org/wiki/XMLHttpRequest#The_open_method}{\textit{eval}} on data, or to assign it to the \href{https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML}{\textit{innerHTML}} property of a \href{https://www.w3schools.com/jsref/dom_obj_attributes.asp}{DOM node}. However, for security reasons, this will not be tolerated in any code of {\plgname}, including site adjustors. In particular, Mozilla warns against this practice when submitting web extensions.
+ It is sometimes tempting to use \href{https://en.wikipedia.org/wiki/XMLHttpRequest#The_open_method}{\textit{eval}} on data, or to assign it to the \href{https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML}{\textit{innerHTML}} property of a \href{https://www.w3schools.com/jsref/dom_obj_attributes.asp}{DOM node}. However, for security reasons, this will not be tolerated in any code of {\plgname}, including site adjusters. In particular, Mozilla warns against this practice when submitting web extensions.
  It is allowed to ''try-catch`` a \href{https://www.w3schools.com/jsref/dom_obj_attributes.asp}{\textit{JSON.parse}} on text data, as the content of the returned JSON object is interpreted as data only. 
  However, the author generally advises against parsing with anything but string methods if it does not require too much extra code. Reading, e.g., a single property from a JSON string can often be done with a simple regular expression; it does not require you to parse the whole string into a JSON object. Note also that performance is currently not a bottle neck for {\plgname}, so you can always afford to manually parse raw strings with regexp magic.
  
@@ -166,7 +174,7 @@ in order to correct for this mistake. The \href{https://github.com/Langenscheiss
 The preformatting stage is divided into 2 functions that are called in the following sequence:
 \begin{enumerate}
  \item \textbf{The function \textit{preformatRawData}} is only called if the dynamic citation download request yielded a positive response with valid, non-empty response data. The \textit{citation\_download} property of the \textit{metaData} JSON-object passed to this function then contains the raw response text. In the subsequent parser stage, this text is assumed to represent citation data in the RIS-format! 
- Hence, if this is not already the case at this stage, you need to reformat the data by modifying it in accordance with the restrictions stated in \Sec{sec_4} (see the \href{https://github.com/Langenscheiss/bibitnow/blob/master/background/preformatters/pubmed.js}{site adjustor for PubMed} as an example of how to deal with this situation!).
+ Hence, if this is not already the case at this stage, you need to reformat the data by modifying it in accordance with the restrictions stated in \Sec{sec_4} (see the \href{https://github.com/Langenscheiss/bibitnow/blob/master/background/preformatters/pubmed.js}{site adjuster for PubMed} as an example of how to deal with this situation!).
  
  \item The function \textit{preformatData} is called in any case. If any data from the dynamic citation download could -- after calling \textit{preformatRawData} -- be successfully parsed, it will be accessible as a JSON object linked to in the \textit{citation\_download} property of the \textit{metaData} object. The bibfields in this object are associated with exactly the same properties as in the \textit{metaData} object itself. For example,
  \begin{center}
@@ -200,9 +208,9 @@ to the \textit{preformatData} function in order to erase the dynamically obtaine
 
 \section{Step 6 -- Debugging and Submission}\label{sec_6}
 
-Once you have written everything, continue testing your site adjustor with various sources on the website of interest. Typically, one overlooks edge cases that need adjustments either in the definition of the preferred selectors, or in the preformatting stage. The more robust your adjustor is, the better.\par
+Once you have written everything, continue testing your site adjuster with various sources on the website of interest. Typically, one overlooks edge cases that need adjustments either in the definition of the preferred selectors, or in the preformatting stage. The more robust your adjuster is, the better.\par
 
-Finally, once everything is ready, use the \href{https://github.com/Langenscheiss/bibitnow}{github repository} to propose a new addition. You do not need to upload a new version of the URL adjustor list. Simply state the URL scheme in the header of your adjustor script files, and the adjustor will be added for the next adjustor upgrade release (which may appear in a different frequency compared to feature updates), given that all criteria for a correct submission are fulfilled.
+Finally, once everything is ready, use the \href{https://github.com/Langenscheiss/bibitnow}{github repository} to propose a new addition. You do not need to upload a new version of the URL adjuster list. Simply state the URL scheme in the header of your adjuster script files, and the adjuster will be added for the next adjuster upgrade release (which may appear in a different frequency compared to feature updates), given that all criteria for a correct submission are fulfilled.
 
 THANKS!
 
@@ -213,13 +221,102 @@ THANKS!
  
  \section{URL Matching}\label{app_matching}
  
- Soon!
+ In this appendix, we first describe the format of URL specific adjuster list, located in
+ \pathbox{\plgdir/nameResources/urlSpecificAdjusterList.json}, 
+ and then explain how the URL schemes specified in this list are used for URL matching.
+ 
+ \subsection{URL List Format}\label{app_matching_list}
+ 
+ The URL list is essentially a single array of JSON objects, each corresponding to a URL scheme that is potentially matched to the URL of the website on which the plugin is launched. Each object contains up to 5 valid properties -- ''scheme``, ''top``, ''path``, ''prefselector`` and ''preformatter`` -- to which either a string or, in some cases, another array of JSON objects can be assigned. An example of such a JSON object that \plgname uses in order to recognize and load site adjusters for the ''Science`` Journals is
+ \begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)sciencemag" ,
+  "top": "org" ,
+  "prefselector": "science" , "preformatter": "science" },
+\end{lstlisting}
+\end{center}
+ Let us describe the properties in detail:
+ \begin{enumerate}
+  \item \textbf{Property:} ''scheme`` -- \textbf{Format:} \textit{string} -- \textbf{Required:} yes -- \textbf{Description:} State the domain, without top-level domain, that should be recognized by the URL matching system. As further explained below, the assigned string is embedded into a regular expression, meaning that you may also include properly escaped regular expressions into the scheme. \textbf{Never forget to escape} characters with a particular function in regexp, such as ''.`` and ''/``. 
+  Importantly, escapes require \textbf{two} instead of just one extra backslash: one for escaping the backslash character in the JSON string, and the resulting backslash to escape the following character in the regular expression into which the scheme is embedded.
+  \textbf{NOTE:} While there is no inbuilt technical restriction, regexp-only schemes which match to any domain will not be recognized as valid contributions, and will \textbf{not be tolerated!} 
+  A scheme must match to a specific domain, but you may allow for multiple subdomains, such as in the above stated ''Science`` example.
+  
+  \item \textbf{Property:} ''top`` -- \textbf{Format:} \textit{string} or \textit{array} -- \textbf{Required:} yes -- \textbf{Description:} State the top-level domain(s) that should be recognized by the URL matching system. If a \textit{string} is provided, and if the found top-level domain is NOT matched precisely by the provided string, the whole matching procedure terminates without returning a valid site adjuster. Note, however, that the provided string is again embedded into a regular expression, in order to improve compatibility to websites which exist under many top-level domains. 
+  Regexp-only matching is tolerated if it makes sense, i.e., if the domain exists under many different top-level domains (see Google adjuster as an example).\par
+  
+  If an array is provided, each element of this array must be another JSON object. This object must have a ''scheme`` property in the format described in point 1, and can furthermore have a ''path``,''prefselector`` and ''preformatter`` property, in the same format as described below in points 3, 4, and 5. In this case, the ''scheme`` string is the string specifying the top-level domain as stated above. 
+  The search for top-level domains either stops at the first array element with a positively matched scheme, or terminates the entire matching procedure without returning a site adjuster if no top-level domain scheme matches.\par
+  
+  The purpose of providing an array with several such objects is to let the URL matcher choose different prefselectors and preformatters for different top-level domains. One example from the source where this is heavily used is the Amazon store. As the code excerpt  below demonstrates, only one prefselector is necessary, but each top-level domain results in choosing a different preformatter that is adjusted to the language used on the webpage of the particular top-level domain.
+   \begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+{ "scheme": "amazon" , "prefselector": "amazon" ,
+  "top": [
+   { "scheme": "com" , "preformatter": "amazon-com" },
+   { "scheme": "de" , "preformatter": "amazon-de" },
+   { "scheme": "it" , "preformatter": "amazon-it" },
+   { "scheme": "fr" , "preformatter": "amazon-fr" },
+   ...
+	]
+},
+\end{lstlisting}
+\end{center}
+
+ \item \textbf{Property:} ''path`` -- \textbf{Format:} \textit{string} or \textit{array} -- \textbf{Required:} no -- \textbf{Description:} State the url path that should be recognized by the URL matching system. If a \textit{string} is provided, the matching is only positive if the \textbf{beginning} of the found path, i.e., the part following the ''/`` after the top-level domain up to some character, is matched by the provided string. If the provided path string does not match, the entire matching procedure terminates without returning a valid site adjuster.
+ Again, note that the path scheme may is embedded into a regular expression. The rules for contributing are the same as for the ''top`` property.\par
+  
+  Just as for the ''top`` property, assigning instead an array to ''path`` requires that each element of this array must be another JSON object. This object must have a ''scheme`` property in the format described under point 1, and can furthermore have a ''prefselector`` and ''preformatter`` property, in the same format as described below in points 4 and 5; the ''top`` property is not valid in this case. 
+  The ''scheme`` string is the string specifying the path as explained above. If such an array of paths is assigned, a positive match is only obtained if at least one provided path scheme does match in the way described above. After the first positive match, the search stops. If no scheme matches, the matching procedure terminates without return a valid site adjuster.\par
+  
+  The purpose of assigning an array to ''path`` is the same as for ''top``: to choose different prefselectors/preformatters for different paths. An example from the code where this is used is the ''ScienceDirect`` portal, where different adjusters are applied for journal articles and books:
+  \begin{center}
+  \lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+  \begin{lstlisting}
+{ "scheme": "sciencedirect" , "top": "com" ,
+  "path": [
+	   { "scheme": "science\\/book" , 
+	     "prefselector": "sciencedirect-book" , 
+	     "preformatter": "sciencedirect-book" },
+	   { "scheme": "science\\/article" , 
+	     "prefselector": "sciencedirect" , 
+	     "preformatter": "sciencedirect" }
+	 ]			
+},
+\end{lstlisting}
+\end{center}
+
+\item \textbf{Property:} ''prefselector`` -- \textbf{Format:} \textit{string} -- \textbf{Required:} no -- \textbf{Description:} State the name of the prefselector javascript file, relative to
+\pathbox{\plgdir/extractors/prefselectors/}
+and without the ''.js`` file extension.
+
+\item \textbf{Property:} ''preformatter`` -- \textbf{Format:} \textit{string} -- \textbf{Required:} no -- \textbf{Description:} State the name of the preformatter javascript file, relative to
+\pathbox{\plgdir/background/preformatters/}
+and without the ''.js`` file extension.
+ \end{enumerate}
+
+ If any JSON object in the list specifies multiple prefselector/preformatter files in different properties, the final one is chosen according to the following preference list (1 = highest, 3 = lowest preference):
+ \begin{enumerate}
+  \item ''prefselector``/''preformatter`` property of an object in an array assigned to the ''path`` property. This ''path`` property can itself be either from the base object in the adjuster list, or in an object inside an array assigned to the ''top`` property.
+  
+  \item ''prefselector``/''preformatter`` property of an object in an array assigned to the ''top`` property.
+  
+  \item ''prefselector``/''preformatter`` property of the base object in the adjuster list.
+ \end{enumerate}
+ 
+ \subsection{Matching procedure}
+ The URL is matched as follows. Prior to the matching, the protocol scheme ''http://`` or ''https://`` (actually called ''scheme``, but here to be distinguished from the above explained ''scheme`` property!) and any ''www`` subdomain following right after the protocol scheme are removed from obtained URL. The remaining part of the URL is separated into a domain, top-level domain, and a path. The domain contains all characters from the beginning up to (but not including) the last period separating the domain from the top-level domain. 
+ The top-level domain contains all characters after this period up to the first ''/`` separating the path from the domain, or up to the end of the URL if no path is included. Every character after the first ''/`` belongs to the path.\par
+ 
+ The domain-scheme specified in the adjuster list must match \textbf{the entire domain} obtained as described in the previous paragraph. To match multiple subdomains, you may use regular expressions, see previous \Sec{app_matching_list}. The same as for the domain also holds for the top-level domain. For the path, the scheme obtained from the adjuster list is matched from the beginning of the path. A positive match hence only requires that the obtained path \textbf{begins} with the specified path-scheme. 
  
  \section{Format of prefselectors}\label{app_prefselector}
 
  Even sooner!
  
- % As pointed out in section 3, the first crucial ingredient of a site adjustor are preferred selectors, prefselectors. They are entered in the following format within the JSON object "prefselectorMsg" in the prefselector script file:
+% As pointed out in section 3, the first crucial ingredient of a site adjuster are preferred selectors, prefselectors. They are entered in the following format within the JSON object "prefselectorMsg" in the prefselector script file:
 % 
 % var prefselectorMsg = {
 % ...
@@ -237,7 +334,7 @@ THANKS!
 % 
 % #ATTRIBUTE_TO_READ = String, required!
 % Attribute of the HTML tags selected by #CSS_SELECTORS that should be taken as the data for the #BIBFIELD. This attribute could be any standard or non-standard property possessed by the selected HTML tag(s). Furthermore, you may set the attribute to either "innerText" or "textContent" to read the content IN BETWEEN the tags, <tag>#content</tag>, via the "innerText" or "textContent" property. The difference between the two properties is explained, e.g., at https://stackoverflow.com/questions/35213147/difference-between-text-content-vs-inner-text
-% You can ignore all the warnings about "innerText" not being standard, too slow, or not being supported. It is supported for all browsers for which \plgname is developed, works more than fast enough for the desired performance of the plugin (=there is no loop over millions of calls of innerText), and has its legitimate purpose. In fact, most site adjustors of \plgname use innerText, as it comes closer to what the publisher intends to show on its website.
+% You can ignore all the warnings about "innerText" not being standard, too slow, or not being supported. It is supported for all browsers for which \plgname is developed, works more than fast enough for the desired performance of the plugin (=there is no loop over millions of calls of innerText), and has its legitimate purpose. In fact, most site adjusters of \plgname use innerText, as it comes closer to what the publisher intends to show on its website.
 % Examples: 'content','href','innerText'
 % 
 % #ALLOW_MULTIPLE_LINES = Boolean, optional. Default = false.
