@@ -1,0 +1,18 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Step 1 -- Get full source code}{2}{section.1}
+\contentsline {section}{\numberline {2}Step 2 -- Enabled desired site}{2}{section.2}
+\contentsline {section}{\numberline {3}Step 3 -- Find optimal prefselectors}{3}{section.3}
+\contentsline {section}{\numberline {4}Step 4 -- Parse a link for dynamic citation export if possible}{4}{section.4}
+\contentsline {section}{\numberline {5}Step 5 -- The most important step: preformatting}{5}{section.5}
+\contentsline {section}{\numberline {6}Step 6 -- Debugging and Submission}{7}{section.6}
+\contentsline {section}{\numberline {A}Bibfields}{7}{appendix.A}
+\contentsline {subsection}{\numberline {A.1}Extraction class}{7}{subsection.A.1}
+\contentsline {subsection}{\numberline {A.2}List of bibfields}{8}{subsection.A.2}
+\contentsline {subsubsection}{\numberline {A.2.1}Class 1}{8}{subsubsection.A.2.1}
+\contentsline {section}{\numberline {B}Static extraction sanitizer}{8}{appendix.B}
+\contentsline {section}{\numberline {C}URL Matching}{8}{appendix.C}
+\contentsline {subsection}{\numberline {C.1}URL List Format}{9}{subsection.C.1}
+\contentsline {subsection}{\numberline {C.2}Prefselector/Preformatter preference}{11}{subsection.C.2}
+\contentsline {subsection}{\numberline {C.3}Matching procedure}{11}{subsection.C.3}
+\contentsline {section}{\numberline {D}Format of prefselectors}{12}{appendix.D}
+\contentsline {subsection}{\numberline {D.1}Prefselector arguments}{13}{subsection.D.1}

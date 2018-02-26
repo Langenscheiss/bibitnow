@@ -60,7 +60,7 @@ a4paper,
 \author{Langenscheiss}
 \maketitle
 % end title
-
+\tableofcontents
 \section*{Welcome}
 
 Hej.\\
@@ -68,8 +68,8 @@ If you have decided to contribute by writing your own site adjusters, thanks a l
 
 \section{Step 1 -- Get full source code}\label{sec_1}
 
-The code on this github only exposes the parts of the plugin for which I currently (you may always inspire me to change this policy) accept external contributions. However, for testing/debugging purposes, or for figuring out how the code works if you wish, you obviously need the full source code. You can \href{https://aqpl.mc2.chalmers.se/PDSU/files/BibItNowMultiBrowser.zip}{download} the latest developer versions for all currently supported browsers from my website.\\
-Since site adjusters work browser-independently, you may pick whatever browser-variant you prefer as your own developer version. In the following, we will denote the local plugin root directory, i.e., where \textit{manifest.json} is located, as ``\plgdir''. The corresponding root directory on github will be called ``\gitdir''.
+The code in this \href{https://github.com/Langenscheiss/bibitnow}{github repository} only exposes the parts of the plugin for which I currently (you may always inspire me to change this policy) accept external contributions. However, for testing/debugging purposes, or for figuring out how the code works if you wish, you obviously need the full source code. You can \href{https://aqpl.mc2.chalmers.se/PDSU/files/BibItNowMultiBrowser.zip}{download} the latest developer versions for all currently supported browsers from my website.\\
+Since site adjusters work browser-independently, you may pick whatever browser-variant you prefer as your own developer version. In the following, we will denote the local plugin root directory, i.e., where \textit{manifest.json} is located, as ``\plgdir''. The corresponding root directory in the github repository will be called ``\gitdir''.
 
 \section{Step 2 -- Enabled desired site}\label{sec_2}
 
@@ -85,7 +85,7 @@ written in the \href{https://en.wikipedia.org/wiki/JSON}{JSON} format. Add an ad
 \end{center}
 to the JSON array. Note that the names of script files are stated \textbf{without the .js extension}. Details about how to specify more complex matching schemes, and how these schemes are then matched with the found URL are described in \App{app_matching}.\par
 
-Once you have added an entry to the adjuster list, linking an URL scheme to preformatter/prefselector script files, you need to make sure these files exist, as the plugin will crash otherwise if the URL scheme is positively matched. If you have specified ``johndoe'' as preformatter, add a copy of ``\tmpl'' from the preformatter directory on github 
+Once you have added an entry to the adjuster list, linking an URL scheme to preformatter/prefselector script files, you need to make sure these files exist, as the plugin will crash otherwise if the URL scheme is positively matched. If you have specified ``johndoe'' as preformatter, add a copy of ``\tmpl'' from the preformatter directory in the github repository 
 \pathbox{\gitdir/background/preformatters/}
 to 
 \pathbox{\plgdir/background/preformatters/}
@@ -105,7 +105,7 @@ Once you think you have found the info in the website \href{https://en.wikipedia
 \pathbox{\gitdir/extractors/prefselectors/\exmpl}
 in order to understand how to precisely link a CSS selector to a certain bibfield, which in this case would be \textit{citation\_authors}.\par
 
-You can add as many custom queries as you want, and each query can be further specified with several arguments next to the CSS selector itself. For example, if you have found the author info in the two non-standard meta tags
+The basic procedure is to provide, as first argument, a CSS selector selecting the desired HTML element, and as second argument, an attribute of the selected element that should be read out and saved for the corresponding bibfield. You can add as many custom queries as you want, and each query can be further specified with several optional arguments next to the CSS selector and the attribute. For example, if you have found the author info in the two non-standard meta tags
 \begin{center}
 \lstset{language=Html,showstringspaces=false,backgroundcolor=\color{light-blue}}
 \begin{lstlisting}
@@ -120,8 +120,8 @@ which are not recognized by the fixed kernel, you will have to add the property
 citation_authors : [['meta[name="bla_author"]','content']]
 \end{lstlisting}
 \end{center}
-to the JSON object \textit{prefselectorMsg} in the prefselector script file.\par
-As explained in \App{app_bibfields} for the author bibfield, the extractor will select EVERY ELEMENT that is found using the specified prefselector string, and concatenates everything into a semicolon-separated list, as the main parser expects this format. So, if the above author information was instead given in a single tag such as
+that is, with CSS selector ``meta[name="bla\_author"]'' and attribute ``content'' (since the ``content'' attribute of the meta tags contains the data) to the JSON object \textit{prefselectorMsg} in the prefselector script file.\par
+As explained in \App{app_bibfields_class} for the author bibfield, the extractor will select EVERY ELEMENT that is found using the specified prefselector string, and concatenates everything into a semicolon-separated list, as the main parser expects this format. So, if the above author information was instead given in a single tag such as
 \begin{center}
 \lstset{language=Html,showstringspaces=false,backgroundcolor=\color{light-blue}}
 \begin{lstlisting}
@@ -140,7 +140,7 @@ Since the main parser is expecting the downloaded citation to be in the \href{ht
 To determine the URL per citation, {\plgname} provides 2 stages:
 \begin{enumerate}
  \item In the \textit{prefselectorMsg} object, the \textit{citation\_download} property allows to query a download link from the abstract page.
- \item If such a download link is found, this link together with all extracted static data is passed to the second stage -- the \textit{formatCitationLink} function defined in the prefselector script file. Possibly using all static citation data including a citation URL, this function allows to specifiy the XHR method (\href{https://en.wikipedia.org/wiki/XMLHttpRequest#The_open_method}{GET or POST}) and requires you to return a formatted and finalized  request URL. \textbf{Note} that if an invalid URL is returned, or if \textbf{no preformatting script has been found for the website}, the plugin will skip the dynamic citation download request altogether.
+ \item If such a download link is found, this link together with all extracted static data is passed to the second stage -- the \textit{formatCitationLink} function defined in the prefselector script file. Possibly using all static citation data including a citation URL, this function allows to specify the XHR method (\href{https://en.wikipedia.org/wiki/XMLHttpRequest#The_open_method}{GET or POST}) and requires you to return a formatted and finalized  request URL. \textbf{Note} that if an invalid URL is returned, or if \textbf{no preformatting script has been found for the website}, the plugin will skip the dynamic citation download request altogether.
  If, however, a request is sent, and if it finishes with status code 200 (OK, successful), the response data will be saved as text into the \textit{citation\_download} property of the \textit{metaData} object accessible in preformatting. 
 \end{enumerate}
 
@@ -176,7 +176,7 @@ The preformatting stage is divided into 2 functions that are called in the follo
  \item \textbf{The function \textit{preformatRawData}} is only called if the dynamic citation download request yielded a positive response with valid, non-empty response data. The \textit{citation\_download} property of the \textit{metaData} JSON-object passed to this function then contains the raw response text. In the subsequent parser stage, this text is assumed to represent citation data in the RIS-format! 
  Hence, if this is not already the case at this stage, you need to reformat the data by modifying it in accordance with the restrictions stated in \Sec{sec_4} (see the \href{https://github.com/Langenscheiss/bibitnow/blob/master/background/preformatters/pubmed.js}{site adjuster for PubMed} as an example of how to deal with this situation!).
  
- \item The function \textit{preformatData} is called in any case. If any data from the dynamic citation download could -- after calling \textit{preformatRawData} -- be successfully parsed, it will be accessible as a JSON object linked to in the \textit{citation\_download} property of the \textit{metaData} object. The bibfields in this object are associated with exactly the same properties as in the \textit{metaData} object itself. For example,
+ \item \textbf{The function \textit{preformatData}} is called in any case. If any data from the dynamic citation download could -- after calling \textit{preformatRawData} -- be successfully parsed, it will be accessible as a JSON object linked to in the \textit{citation\_download} property of the \textit{metaData} object. The bibfields in this object are associated with exactly the same properties as in the \textit{metaData} object itself. For example,
  \begin{center}
 \lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
 \begin{lstlisting}
@@ -217,11 +217,42 @@ THANKS!
 \appendix
  \section{Bibfields}\label{app_bibfields}
  
- Soon!
+ In this appendix, we list all bibliography fields (bibfields) accessible via preferred selectors and/or in the preformatting stage. More precisely, subsection \ref{app_bibfields_list} states, for each bibfield, the purpose for the final formatted citation, the format and data type expected or enforced during and at the end of the preformatting stage, and what in the following subsection \ref{app_bibfields_class} is defined as the provided \textit{extraction class}. 
+ The fixed default set of CSS selectors and attributes used to search for bibfield data in the DOM (see \Sec{sec_3}) can be found in the \href{https://github.com/Langenscheiss/bibitnow/blob/master/extractors/prefselectors/0_EXAMPLE.js}{example prefselector file} in the github repository.
+ 
+ \subsection{Extraction class}\label{app_bibfields_class} 
+ Depending on the bibfield and its specific needs and purpose for the final citation, {\plgname} adjusts the precise way in which it uses CSS selectors to extract data from the HTML source. This concerns mainly how much data is extracted (how many search queries are performed), and in which format this data is passed onto the parser/preformatting stage. For example, to obtain \emph{all} author name information, it makes sense to not finish a search query with the first non-empty hit, but to instead search for all elements selected by a particular CSS selector.\par
+ 
+ Altogether, {\plgname} differentiates between bibfields in 4 \textbf{extraction classes}.
+ \begin{itemize}
+  \item \textbf{Class 1:} For each bibfield belonging to class 1, the plugin stops the search as initiated by the (default or custom, see \Sec{sec_3}) CSS selectors after the first non-empty string is found. Any bibfield of class 1 supports custom, site-specific CSS selectors defined as described in section \ref{sec_3} and \App{app_prefselector}.
+  
+  \item \textbf{Class 2a:} For bibfields in class 2a, the plugin searches until the first CSS selector (default or custom) gives a non-empty result, then searches and reads all elements selected by this CSS selector and the associated attribute. A bibfield-dependent maximum number of result strings are then concatenated to one string containing a semicolon-separated list and sent to the preformatting stage/main parser. Just as for class 1, all bibfields which are part of this class support custom CSS selectors, attributes, etc. , including the possibility to reset the maximum number of result strings passed on.
+  
+  \item \textbf{Class 2b:} The only difference to class 2a is that the search does not stop with the first CSS selector/attribute yielding a non-empty result. Instead, all default and and all custom selectors are queried, and all results are concatenated to a string containing a semicolon-separated list.
+  
+  \item \textbf{Class 3:} These are additional bibfields which are accessible in the preformatting stage, but for which the data extraction cannot be guided by preferred selectors.
+  
+ \end{itemize}
+ 
+ Regardless of its class, the extracted string of any bibfield is passed in a sanitized form to the parser/preformatting stage, where the bibfield data is available through the \textit{metaData} object, see \Sec{sec_5}. As detailed in \App{app_sanitize} and \App{app_prefselector}, custom prefselectors give limited control over this sanitizing process.
+ 
+ \subsection{List of bibfields}\label{app_bibfields_list} 
+ Let us now describe each bibfield. The following list is sorted according to the 4 extraction classes defined in \Sec{app_bibfields_class}:
+ \subsubsection{Class 1}
+ \begin{itemize}
+  \item \textbf{Bibfield:} citation\_title -- \textbf{Format:} Single string containing any unicode characters which survive sanitizing -- \textbf{Purpose:} Contains the title of cited work, i.e., title of the book, scientific article, thesis, etc. .
+ \end{itemize}
+
+ TODO CONTINUE
+ 
+ \section{Static extraction sanitizer}\label{app_sanitize}
+ 
+ TODO
  
  \section{URL Matching}\label{app_matching}
  
- In this appendix, we first describe the format of URL specific adjuster list, located in
+ In this appendix, we first describe the format of \href{https://github.com/Langenscheiss/bibitnow/blob/master/nameResources/urlSpecificAdjusterList.json}{URL specific adjuster list}, located in
  \pathbox{\plgdir/nameResources/urlSpecificAdjusterList.json}, 
  and then explain how the URL schemes specified in this list are used for URL matching.
  
@@ -238,12 +269,12 @@ THANKS!
 \end{center}
  Let us describe the properties in detail:
  \begin{enumerate}
-  \item \textbf{Property:} ''scheme`` -- \textbf{Format:} \textit{string} -- \textbf{Required:} yes -- \textbf{Description:} State the domain, without top-level domain, that should be recognized by the URL matching system. As further explained below, the assigned string is embedded into a regular expression, meaning that you may also include properly escaped regular expressions into the scheme. \textbf{Never forget to escape} characters with a particular function in regexp, such as ''.`` and ''/``. 
+  \item \textbf{Property:} ''scheme`` -- \textbf{Type:} \textit{String} -- \textbf{Required:} yes -- \textbf{Description:} State the domain, without top-level domain, that should be recognized by the URL matching system. As further explained below, the assigned string is embedded into a regular expression, meaning that you may also include properly escaped regular expressions into the scheme. \textbf{Never forget to escape} characters with a particular function in regexp, such as ''.`` and ''/``. 
   Importantly, escapes require \textbf{two} instead of just one extra backslash: one for escaping the backslash character in the JSON string, and the resulting backslash to escape the following character in the regular expression into which the scheme is embedded.
   \textbf{NOTE:} While there is no inbuilt technical restriction, regexp-only schemes which match to any domain will not be recognized as valid contributions, and will \textbf{not be tolerated!} 
   A scheme must match to a specific domain, but you may allow for multiple subdomains, such as in the above stated ''Science`` example.
   
-  \item \textbf{Property:} ''top`` -- \textbf{Format:} \textit{string} or \textit{array} -- \textbf{Required:} yes -- \textbf{Description:} State the top-level domain(s) that should be recognized by the URL matching system. If a \textit{string} is provided, and if the found top-level domain is NOT matched precisely by the provided string, the whole matching procedure terminates without returning a valid site adjuster. Note, however, that the provided string is again embedded into a regular expression, in order to improve compatibility to websites which exist under many top-level domains. 
+  \item \textbf{Property:} ''top`` -- \textbf{Type:} \textit{String} or \textit{Array} -- \textbf{Required:} yes -- \textbf{Description:} State the top-level domain(s) that should be recognized by the URL matching system. If a \textit{string} is provided, and if the found top-level domain is NOT matched precisely by the provided string, the whole matching procedure terminates without returning a valid site adjuster. Note, however, that the provided string is again embedded into a regular expression, in order to improve compatibility to websites which exist under many top-level domains. 
   Regexp-only matching is tolerated if it makes sense, i.e., if the domain exists under many different top-level domains (see Google adjuster as an example).\par
   
   If an array is provided, each element of this array must be another JSON object. This object must have a ''scheme`` property in the format described in point 1, and can furthermore have a ''path``,''prefselector`` and ''preformatter`` property, in the same format as described below in points 3, 4, and 5. In this case, the ''scheme`` string is the string specifying the top-level domain as stated above. 
@@ -265,7 +296,7 @@ THANKS!
 \end{lstlisting}
 \end{center}
 
- \item \textbf{Property:} ''path`` -- \textbf{Format:} \textit{string} or \textit{array} -- \textbf{Required:} no -- \textbf{Description:} State the url path that should be recognized by the URL matching system. If a \textit{string} is provided, the matching is only positive if the \textbf{beginning} of the found path, i.e., the part following the ''/`` after the top-level domain up to some character, is matched by the provided string. If the provided path string does not match, the entire matching procedure terminates without returning a valid site adjuster.
+ \item \textbf{Property:} ''path`` -- \textbf{Type:} \textit{String} or \textit{Array} -- \textbf{Required:} no -- \textbf{Description:} State the URL path that should be recognized by the URL matching system. If a \textit{string} is provided, the matching is only positive if the \textbf{beginning} of the found path, i.e., the part following the ''/`` after the top-level domain up to some character, is matched by the provided string. If the provided path string does not match, the entire matching procedure terminates without returning a valid site adjuster.
  Again, note that the path scheme may is embedded into a regular expression. The rules for contributing are the same as for the ''top`` property.\par
   
   Just as for the ''top`` property, assigning instead an array to ''path`` requires that each element of this array must be another JSON object. This object must have a ''scheme`` property in the format described under point 1, and can furthermore have a ''prefselector`` and ''preformatter`` property, in the same format as described below in points 4 and 5; the ''top`` property is not valid in this case. 
@@ -288,15 +319,16 @@ THANKS!
 \end{lstlisting}
 \end{center}
 
-\item \textbf{Property:} ''prefselector`` -- \textbf{Format:} \textit{string} -- \textbf{Required:} no -- \textbf{Description:} State the name of the prefselector javascript file, relative to
+\item \textbf{Property:} ''prefselector`` -- \textbf{Type:} \textit{String} -- \textbf{Required:} no -- \textbf{Description:} State the name of the prefselector javascript file, relative to
 \pathbox{\plgdir/extractors/prefselectors/}
 and without the ''.js`` file extension.
 
-\item \textbf{Property:} ''preformatter`` -- \textbf{Format:} \textit{string} -- \textbf{Required:} no -- \textbf{Description:} State the name of the preformatter javascript file, relative to
+\item \textbf{Property:} ''preformatter`` -- \textbf{Type:} \textit{String} -- \textbf{Required:} no -- \textbf{Description:} State the name of the preformatter javascript file, relative to
 \pathbox{\plgdir/background/preformatters/}
 and without the ''.js`` file extension.
  \end{enumerate}
-
+ 
+\subsection{Prefselector/Preformatter preference}
  If any JSON object in the list specifies multiple prefselector/preformatter files in different properties, the final one is chosen according to the following preference list (1 = highest, 3 = lowest preference):
  \begin{enumerate}
   \item ''prefselector``/''preformatter`` property of an object in an array assigned to the ''path`` property. This ''path`` property can itself be either from the base object in the adjuster list, or in an object inside an array assigned to the ''top`` property.
@@ -314,32 +346,102 @@ and without the ''.js`` file extension.
  
  \section{Format of prefselectors}\label{app_prefselector}
 
- Even sooner!
- 
-% As pointed out in section 3, the first crucial ingredient of a site adjuster are preferred selectors, prefselectors. They are entered in the following format within the JSON object "prefselectorMsg" in the prefselector script file:
+As pointed out in section 3, the first crucial ingredient of a site adjuster are preferred selectors, prefselectors. They are entered as properties of the JSON object ''prefselectorMsg`` defined in the prefselector file:
+  \begin{center}
+  \lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+  \begin{lstlisting}
+var prefselectorMsg = {
+...
+#BIBFIELD : [#PREFSELECTOR_1, #PREFSELECTOR_2,...],
+...
+}
+\end{lstlisting}
+\end{center}
+where \#BIBFIELD is one of the bibliography fields described in \App{app_bibfields}, and each preferred selector \#PREFSELECTOR$_i$ itself is an array of several required and several optional arguments:
+\begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+[
+ #CSS_SELECTORS , #ATTRIBUTE_TO_READ ,
+ #ALLOW_MULTIPLE_LINES , #MAXIMUM_NUMBER_OF_CHARS , 
+ #ALLOW_HTML_TAGS , #MAXIMUM_NUMBER_OF_HITS
+]
+\end{lstlisting}
+\end{center}
+The following example of a full, valid ''prefselectorMsg`` is taken from the ''APS Journals`` site adjuster (State: February 2018):
+\begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+var prefselectorMsg = { 
+ citation_issn: [ ['p.legal','innerText'] ],
+ citation_download: [ ['a#export-article-link','href'] , 
+		      ['BINURL','']
+		    ],
+ citation_abstract: [ 
+  ['div#article-content section.abstract div.content p',
+  'innerText', true, 20000] , 
+  ['meta[name="description"]','content', true, 20000] 
+		    ],
+ citation_author: [ 
+  ['meta[name="citation_author"]','content'] , 
+  ['div#title h5.authors','innerText'] 
+                  ],
+ citation_keywords: [
+  ['div.physh-tagging a.physh-concept','innerText'] 
+		    ]
+};
+\end{lstlisting}
+\end{center}
+
+\subsection{Prefselector arguments}
+Let us describe the arguments in detail.
+\begin{enumerate}
+ \item \textbf{Argument:} \#CSS\_SELECTORS -- \textbf{Type:} \textit{String} -- \textbf{Required:} yes -- \textbf{Description:} String specifying the \href{https://www.w3schools.com/cssref/css_selectors.asp}{CSS selector(s)} used to select the HTML tag(s) from which the data for the \#BIBFIELD should be obtained. For \#BIBFIELDS from class 1 defined in \App{app_bibfields}, only the first positive, i.e., non-empty result for the \#ATTRIBUTE\_TO\_READ obtained by ANY of the specified selectors will be selected. In class 2, all non-empty results from all selectors will be taken into account. Examples are
+ \begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+'meta[name="citation_author"]'
+'a.citLink'
+'div#title span.titleText'
+\end{lstlisting}
+\end{center}
+
+ \item \textbf{Argument:} \#ATTRIBUTE\_TO\_READ -- \textbf{Type:} \textit{String} -- \textbf{Required:} yes -- \textbf{Description:} Attribute of the selected HTML tag(s) that should be read as the data for the \#BIBFIELD. This attribute could be any standard or non-standard attribute of the selected HTML tag(s). Furthermore, you may set \#ATTRIBUTE\_TO\_READ to either ``innerText'' or ``textContent'' in order to read the content \textbf{IN BETWEEN} the tags,
+ \begin{center}
+\lstset{language=Html,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+ <tag>#content</tag>
+\end{lstlisting}
+\end{center}
+ , via the ``innerText'' or ``textContent'' property. 
+ The difference between the two properties is explained, e.g., \href{https://stackoverflow.com/questions/35213147/difference-between-text-content-vs-inner-text}{at Stack Overflow}. 
+ You can ignore all the warnings about ``innerText'' not being standard, too slow, or not being supported. It is supported for all browsers for which {\plgname} is developed, works more than fast enough for the desired performance of the plugin (=there is no loop over millions of calls of innerText), and has its legitimate purpose. In fact, most site adjusters of {\plgname} use ''innerText``, as it comes closer to what the publisher intends to show on its website. Examples are
+\begin{center}
+\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+\begin{lstlisting}
+'content'
+'href'
+'innerText'
+\end{lstlisting}
+\end{center}
+
+\item \textbf{Argument:} \#ALLOW\_MULTIPLE\_LINES -- \textbf{Type:} \textit{Boolean} -- \textbf{Required:} no -- \textbf{Default:} \textit{false} --  \textbf{Description:} If \textit{false}, any data string retrieved by setting \#CSS\_SELECTORS and \#ATTRIBUTE\_TO\_READ is trimmed after the first occurrence of a newline character, to avoid passing too much data to the parser! If explicitly set to \textit{true}, any newline character is converted to a simple white space character.
+The above given excerpt from the ''APS Journals`` prefselector shows that a typical \#BIBFIELD for which it makes sense to set this argument to \textit{true} is the article's abstract, which may very well contain such newline characters. 
+
+\item \textbf{Argument:} \#MAXIMUM\_NUMBER\_OF\_CHARS -- \textbf{Type:} \textit{Positive Integer} -- \textbf{Required:} no -- \textbf{Default:} $1024$ --  \textbf{Description:} Sets the maximum number of characters of the string retrieved by \#CSS\_SELECTORS and \#ATTRIBUTE\_TO\_READ that should be passed to the parser. By default, this number is set to $1024$, in order to avoid passing too much data to the parser. 
+The above given excerpt from the ''APS Journals`` prefselector shows that a typical \#BIBFIELD for which it makes sense to set a number different from $1024$ is the article's abstract, which may very well contain more characters. 
+
+\item \textbf{Argument:} \#ALLOW\_HTML\_TAGS -- \textbf{Type:} \textit{Boolean} -- \textbf{Required:} no -- \textbf{Default:} \textit{false} --  \textbf{Description:} If \textit{false}, any HTML Tag found in data string retrieved by \#CSS\_SELECTORS and \#ATTRIBUTE\_TO\_READ is removed. Note that reading either the ''innerText`` or ''textContent`` property itself always involves an inbuilt HTML Tag cleanup, regardless of whether \#ALLOW\_HTML\_TAGS is set to \textit{true} or \textit{false}. 
+The cleanup performed by {\plgname} is an independent cleanup that is also applied when reading from attributes other than ''innerText`` or ''textContent``. The purpose of this cleanup is to minimize the risk of websites sneaking in script tags into the formatted citation data which could be malicious if they were parsed using ''eval`` or the ''innerHTML`` property.
+
+\item \textbf{Argument:} \#MAXIMUM\_NUMBER\_OF\_HITS -- \textbf{Type:} \textit{Positive Integer} -- \textbf{Required:} no -- \textbf{Default:} depends on \#BIBFIELD, see \App{app_bibfields} --  \textbf{Description:} Sets the maximum number of non-empty readings passed to the parser for any \#BIBFIELD from class 2. For example, the number of found tags with author information is, by default, capped at $10000$. 
+In general, such upper limits are set to establish a balance between papers having a large set of valid meta information (e.g., hyper authoring with several $1000$ authors) and a protection against (malicious) websites containing too many invisible meta tags. 
+
+\end{enumerate}
+
+% \#ALLOW_MULTIPLE_LINES = Boolean, optional. Default = false.
+% If false, any data string retrieved by setting \#CSS_SELECTORS and \#ATTRIBUTE_TO_READ is trimmed after the first occurence of a newline character! If true, any newline character is converted to a simple white space character.
 % 
-% var prefselectorMsg = {
-% ...
-% #BIBFIELD : [#PREFSELECTOR_1, #PREFSELECTOR_2,...],
-% ...
-% }
-% 
-% where #BIBFIELD is one of the bibliography fields described in APPENDIX X, and each preferred selector #PREFSELECTOR_i is specified by an array containing several required and several optional arguments:
-% 
-% #PREFSELECTOR_i = [#CSS_SELECTORS,#ATTRIBUTE_TO_READ,#ALLOW_MULTIPLE_LINES,#MAXIMUM_NUMBER_OF_CHARS,#ALLOW_HTML_TAGS,#MAXIMUM_NUMBER_OF_HITS]
-% 
-% #CSS_SELECTORS = String, required!
-% CSS-selector(s) selecting the HTML tag(s) from which the data for the #BIBFIELD should be obtained. For #BIBFIELDS from class 1 (see APPENDIX X), only the first positive, i.e., non-empty result for the #ATTRIBUTE_TO_READ obtained by ANY of the specified selectors will be selected. In class 2, all non-empty results from all selectors will be taken into account.
-% Examples: 'meta[name="citation_author"]','a.citLink','div#title span.titleText'
-% 
-% #ATTRIBUTE_TO_READ = String, required!
-% Attribute of the HTML tags selected by #CSS_SELECTORS that should be taken as the data for the #BIBFIELD. This attribute could be any standard or non-standard property possessed by the selected HTML tag(s). Furthermore, you may set the attribute to either "innerText" or "textContent" to read the content IN BETWEEN the tags, <tag>#content</tag>, via the "innerText" or "textContent" property. The difference between the two properties is explained, e.g., at https://stackoverflow.com/questions/35213147/difference-between-text-content-vs-inner-text
-% You can ignore all the warnings about "innerText" not being standard, too slow, or not being supported. It is supported for all browsers for which \plgname is developed, works more than fast enough for the desired performance of the plugin (=there is no loop over millions of calls of innerText), and has its legitimate purpose. In fact, most site adjusters of \plgname use innerText, as it comes closer to what the publisher intends to show on its website.
-% Examples: 'content','href','innerText'
-% 
-% #ALLOW_MULTIPLE_LINES = Boolean, optional. Default = false.
-% If false, any data string retrieved by setting #CSS_SELECTORS and #ATTRIBUTE_TO_READ is trimmed after the first occurence of a newline character! If true, any newline character is converted to a simple white space character.
-% 
-% #MAXIMUM_NUMBER_OF_CHARS = non-negative integer, optional. Default = 1024.
+% \#MAXIMUM_NUMBER_OF_CHARS = non-negative integer, optional. Default = 1024.
 \end{document}
 
