@@ -46,6 +46,7 @@
 	{ "scheme": "ieeexplore\\.ieee" , "top": "org", "path": "(?:document|xpl)" , "prefselector": "ieee" , "preformatter": "ieee" },
 	{ "scheme": "ingentaconnect" , "top": "com" , "prefselector": "ingentaconnect" , "preformatter": "ingentaconnect" },
 	{ "scheme": "iopscience\\.iop" , "top": "org" , "prefselector": "iop" , "preformatter": "iop" },
+	{ "scheme": "jstor" , "top": "org" , "prefselector": "jstor" , "preformatter": "jstor" },
 	{ "scheme": "mdpi" , "top": "com" , "prefselector": "mdpi" , "preformatter": "mdpi" },
 	{ "scheme": "nytimes" , "top": "com" , "prefselector": "nytimes" , "preformatter": "nytimes" },
 	{ "scheme": "ojs\\.darwin\\.edu" , "top": "ar" , "preformatter": "darwiniana" , "prefselector": "darwiniana" },
@@ -96,6 +97,7 @@
 			]
 	},
 	{ "scheme": "washingtonpost" , "top": "com" , "prefselector": "washingtonpost" , "preformatter": "washingtonpost" },
+	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)webofknowledge" , "top": "com" , "prefselector": "webofscience" , "preformatter": "webofscience" },
 	{ 
 		"scheme": "worldscientific" , "top": "com" ,
 		"path":	[

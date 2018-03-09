@@ -44,7 +44,6 @@ var BINPreformatter = ( function () {
 			
 			//replace pp in misc field with "page" if page not already included, remove number of pages in brackets at the end as well, replace "number" by "issue" and let the rest be done by the misc parser
 			misc = misc.replace(/^[^\,]*\,/,"").trim().replace(/pp\./i,"page").replace(/number/i,"issue").replace(/\([^\(\)]*\)$/,"").trim();
-			console.log(misc);
 			metaData["citation_misc"] = misc;
 			
 			//remove volume, issue, page from misc string and send the rest to date

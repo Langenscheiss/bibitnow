@@ -39,9 +39,7 @@ var BINPreformatter = ( function () {
 		}
 		
 		//remove subscript from author names
-		metaData["citation_authors"] = metaData["citation_authors"].replace(/\.[a-z\s]*(?:;|$)/g,". ;");
-		console.log(metaData["citation_authors"]);
-		
+		metaData["citation_authors"] = metaData["citation_authors"].replace(/\.[a-z\s]*(?:;|$)/g,". ;");		
 		
 		//replace in misc field with "page" if page not already included, and let the rest be done by misc parser
 		temp = metaData["citation_misc"];

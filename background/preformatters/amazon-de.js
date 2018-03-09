@@ -27,9 +27,9 @@ var BINPreformatter = ( function () {
 		if (dataPart == null || dataPart.length == 0) dataPart = data.match(/ISBN[:\ 0-9X\-]*/i);
 		if (dataPart != null && dataPart.length > 0) {
 			dataPart = dataPart[0];
-			metaData["citation_issn"] = dataPart.replace(/ISBN[^:]*:/,"").trim();
+			metaData["citation_isbn"] = dataPart.replace(/ISBN[^:]*:/,"").trim();
 		} else {
-			metaData["citation_issn"] = "";
+			metaData["citation_isbn"] = "";
 		}
 		
 		//preformat date
