@@ -27,7 +27,8 @@ var BINPrefselector = ( function () {
 		citation_abstract: [ ['div.abstract','innerText',true,20000 ] , ['div#book-info-drop div.book-description','innerText',true,20000] ],
 		citation_keywords: [ ['div.topics-list.mtl','innerText'] ],
 		citation_download: [ ['li.cite-this-item-button a','href'] ],
-		citation_issn: [ ['meta[name="ST.printIssn"]','content'] , ['meta[name="ST.onlineIssn"]','content'] ]
+		citation_issn: [ ['meta[name="ST.printIssn"]','content'] , ['meta[name="ST.onlineIssn"]','content'] ],
+		citation_isbn: [ ['div#book-info-drop div.book-eisbn','innerText'] ]
 	};
 
 	// finally expose selector message

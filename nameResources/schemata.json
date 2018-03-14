@@ -1,0 +1,44 @@
+[
+	{ 	"schema": "NewsArticle" ,
+		"bibfields":	
+		{
+			"citation_date": 	[ 	
+							{ "baseProperty": ["dateModified"] } ,
+							{ "baseProperty": ["datePublished"] },
+							{ "baseProperty": ["dateCreated"] }
+						],
+			"citation_title": 	[
+							{ "baseProperty": ["headline"] }
+						],
+			"citation_firstpage": 	[
+							{ "baseProperty": ["pageStart"] },
+							{ "baseProperty": ["pagination"] }
+						],
+			"citation_lastpage":	[
+							{ "baseProperty": ["pageEnd"] }
+						],
+			"citation_authors": 	[
+							{ "baseProperty": ["author"] },
+							{ "baseProperty": ["creator"] }
+						],
+			"citation_abstract":	[
+							{ "baseProperty": ["description"] }
+						],
+			"citation_keywords":	[
+							{ "baseProperty": ["keywords"] }
+						],
+			"citation_publisher":	[
+							{ "baseProperty": ["publisher"] }
+						],	
+			"citation_issn":	[
+							{ "baseProperty": ["identifier"] }
+						],
+			"citation_isbn":	[
+							{ "baseProperty": ["identifier"] }
+						],
+			"citation_doi":		[
+							{ "baseProperty": ["identifier"] }
+						]
+		}
+	}
+]

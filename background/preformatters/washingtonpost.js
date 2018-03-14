@@ -10,6 +10,7 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//do nothing, as there is no dynamic citation export being requested
+		//console.log(JSON.parse(metaData["citation_json"]));
 	}
 	
 	//preformatting function
@@ -28,8 +29,16 @@ var BINPreformatter = ( function () {
 			metaData["citation_date"] = date;
 		}
 		
+		//fix date in json
+		let json = metaData["citation_json"];
+		if (json != null && typeof(json) == 'object') {
+			json["citation_date"] = json["citation_date"].replace(/T.*$/i,"");
+		}
+		
 		//add issn (taken from wiki)
 		metaData["citation_issn"] = "0190-8286";
+		
+		metaData["citation_misc"] = "";
 	}
 	
 	// expose preformatting function and raw preformatting function
