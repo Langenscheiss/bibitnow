@@ -105,7 +105,6 @@
 				{ "scheme": "worldscibooks" , "prefselector": "worldscientific-book" , "preformatter": "worldscientific-book"  }
 			]
 	},
-	{ "scheme": "aqpl\\.mc2\\.chalmers" , "top": "se" , "prefselector": "pdsu" , "preformatter": "pdsu"},
 	{ "scheme": "heise" , "top": "de" , "prefselector": "heise" , "preformatter": "heise" },
 	{ "scheme": "indiatimes" , "top": "com" , "prefselector": "indiatimes" , "preformatter": "indiatimes" }
 ]
