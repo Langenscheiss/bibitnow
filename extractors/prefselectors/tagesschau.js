@@ -15,7 +15,8 @@ var BINPrefselector = ( function () {
 	
 	// this json object defines search queries through css selectors
 	var prefselectorMsg = { 
-		citation_json: [ ['script[type="application/ld+json"]','textContent',true,20000] ]
+		citation_author: [ ['div.sectionArticle p.autorenzeile','innerText'] ],
+		citation_abstract: [ ['meta[name="description"]','content',true,20000] ]
 	};
 
 	// finally expose selector message

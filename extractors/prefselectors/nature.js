@@ -27,8 +27,8 @@ var BINPrefselector = ( function () {
 		citation_title: [ ['meta[property="og:title"]','content',true] , ['h2#atl','innerText'] ],
 		citation_firstpage: [ ['ul[data-component="article-info-list"] span[itemprop="pageStart"]','innerText'] ],
 		citation_lastpage: [ ['ul[data-component="article-info-list"] span[itemprop="pageEnd"]','innerText'] ],
-		citation_abstract: [ ['div#abstract-content','innerText', false, 20000] , ['div#Abs1-content','innerText', false, 20000] , ['p.abs.lead','innerText',false,20000] ],
-		citation_download: [ ['a[data-track-source="citation-download"]','href'] , ['li.download-citation a', 'href'] , ['ul.supplementary a', 'href' ] , ['li.export-citation a.export','href'] ]
+		citation_abstract: [ ['div#abstract-content','innerText', true, 20000] , ['div#Abs1-content','innerText', true, 20000] , ['p.abs.lead','innerText',true,20000] ],
+		citation_download: [ ['a[data-track-source="citation-download"]','href'] , ['li.download-citation a', 'href'] , ['ul.supplementary a', 'href' ] , ['li.export-citation a.export','href'] , ['a[data-track-action="download article citation"]','href'] ]
 	};
 
 	// finally expose selector message

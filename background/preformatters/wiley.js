@@ -92,11 +92,16 @@ var BINPreformatter = ( function () {
 		
 		//fix abstract
 		metaData["citation_abstract"] = abstract;
-		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
-			metaData["citation_abstract"] = (abstract != "") ? "" : metaData["citation_abstract"].replace(/(?:Copyright[\s]*)?©.*$/i,"").trim();
+		if ((publisher = metaData["citation_download"]) != null && typeof(publisher) == 'object') {
+			publisher["citation_abstract"] = (abstract != "") ? "" : publisher["citation_abstract"].replace(/(?:Copyright[\s]*)?©.*$/i,"").trim();
 			
 			//clear dynamic misc
-			metaData["citation_misc"] = "";
+			publisher["citation_misc"] = "";
+			
+			//prefer static authors
+			if (metaData["citation_authors"] != "") {
+				publisher["citation_authors"] = "";
+			}
 		}		
 	}
 	

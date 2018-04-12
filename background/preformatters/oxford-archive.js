@@ -85,7 +85,8 @@ var BINPreformatter = ( function () {
 			if (metaData["citation_firstpage"] == "") metaData["citation_firstpage"] = source.replace(/^.*?Page[s]*[\s]*[\:]*[\s]*/,"").replace(/[\s]*(?:Source|Doi|Record|Volume|Journal|Issue|Publi|ISSN|Webs|Identifier|see[\s]+more).*$/,"");
 		}
 		
-		//fix authors for journal article
+		//fix authors
+		metaData["citation_authors"] = metaData["citation_authors"].replace(/[\s]*[\+]+[\s]*/g,"");
 		if (metaData["citation_type"].search(/thesis/i) == -1) {
 			metaData["citation_authors"] = metaData["citation_authors"].replace(/\,[\s]*[A-Z]{2,}[\s]*(?:;|$)/g,
 				function(match, offset, original) {
@@ -99,6 +100,9 @@ var BINPreformatter = ( function () {
 		}
 		
 		//fix abstract
+		if (metaData["query_summary"]["citation_abstract"] == 2) {
+			metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^.*?\.html\('/i,"").replace(/'\);.*$/,"").trim();
+		}
 		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^Abstract[\s\:]*/i,"");
 		
 		//set database

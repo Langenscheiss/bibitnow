@@ -1,11 +1,12 @@
 [
-	{ 	"schema": "NewsArticle" ,
+	{ 	"schema": "(?:NewsArticle|website)" ,
 		"bibfields":	
 		{
 			"citation_date": 	[ 	
 							{ "baseProperty": ["dateModified"] } ,
 							{ "baseProperty": ["datePublished"] },
-							{ "baseProperty": ["dateCreated"] }
+							{ "baseProperty": ["dateCreated"] },
+							{ "baseProperty": ["uploadDate"] }
 						],
 			"citation_title": 	[
 							{ "baseProperty": ["headline"] }

@@ -90,9 +90,9 @@
 	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)sciencemag" , "top": "org" , "prefselector": "science" , "preformatter": "science" },
 	{ "scheme": "tandfonline" , "top": "com" , "prefselector": "taylorandfrancis" , "preformatter": "taylorandfrancis" },
 	{ 
-		"scheme": "onlinelibrary\\.wiley" , "top": "com" ,
+		"scheme": "(?:|[0-9a-z\\-]+[\\.]+)onlinelibrary\\.wiley" , "top": "com" ,
 		"path":	[
-				{ "scheme": "book" , "prefselector": "wiley-book" , "preformatter": "wiley-book"  },
+				{ "scheme": "(?:|doi\\/)book" , "prefselector": "wiley-book" , "preformatter": "wiley-book"  },
 				{ "scheme": "(?:doi|wol1\\/doi)" , "prefselector": "wiley" , "preformatter": "wiley"  }
 			]
 	},
@@ -106,5 +106,5 @@
 			]
 	},
 	{ "scheme": "heise" , "top": "de" , "prefselector": "heise" , "preformatter": "heise" },
-	{ "scheme": "indiatimes" , "top": "com" , "prefselector": "indiatimes" , "preformatter": "indiatimes" }
+	{ "scheme": "tagesschau" , "top": "de" , "prefselector": "tagesschau" , "preformatter": "tagesschau" }
 ]

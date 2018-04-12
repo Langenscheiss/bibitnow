@@ -23,7 +23,7 @@ var BINPrefselector = ( function () {
 		citation_misc: [ ['div.Article.information > div:first-of-type','innerText'] ],
 		citation_author: [ ['div.articleList div.art_authors span.NLM_string_name','innerText'] ],
 		citation_date: [ ['span.publicationContentEpubDate.dates','innerText'] , ['div.recommendCitationVolumeDate > p','innerText'] , ['div.articleList span.year','innerText'] ],
-		citation_abstract: [ ['div.abstractSection.abstractInFull','innerText', false, 20000] ],
+		citation_abstract: [ ['div.abstractSection.abstractInFull','innerText', true, 20000] ],
 		citation_doi: [ ['div.publicationContentDoi a','href'] ],
 		citation_issn: [ ['div.issnFooter span:nth-of-type(2)','innerText'] , ['div.issnFooter span','innerText'] ],
 		citation_download: [ ['form[name="frmCitmgr"] input[name="doi"]','value'] ]

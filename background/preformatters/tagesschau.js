@@ -16,7 +16,12 @@ var BINPreformatter = ( function () {
 	/*preformatting. "metaData" provides read/write access to static citation data obtained from extractor, and with dynamically downloaded data being parsed into a JSON object. "parser" is a reference to some read only resources that the main parser is using. void return*/
 	function preformatData(metaData, parser) {
 		
-		//do nothing
+		//fix author
+		if (metaData["query_summary"]["citation_authors"] == 1) {
+			metaData["citation_authors"] = metaData["citation_authors"].replace(/(?:^[\s]*von[\s]*|[\s]*[\,]+.*$)/gi,"");
+		} else {
+			metaData["citation_authors"] = metaData["citation_authors"].replace(/tagesschau[\.]+[\s]*de/gi,"tagesschau");
+		}
 		
 	}
 	

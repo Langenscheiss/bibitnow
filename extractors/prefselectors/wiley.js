@@ -17,7 +17,10 @@ var BINPrefselector = ( function () {
 		} else if (metaData["query_summary"]["citation_download"] == 2) {
 			link = link.replace(/documentcitationdownload/,"documentcitationdownloadformsubmit").replace(/publicationDoi[^&]+&/,"").replace(/&type=.*$/,"&fileFormat=PLAIN_TEXT&hasAbstract=CITATION_AND_ABSTRACT");
 			metaData["citation_download_method"] = "POST";
-		}  
+		} else if (metaData["query_summary"]["citation_download"] == 3 && (link = metaData["citation_doi"]) != "") {
+			link =  "/action/downloadCitation?doi=" + link + "&include=abs&format=txt&direct=other-type&submit=Download";
+			metaData["citation_download_method"] = "POST";
+		}
 		if (link == "") return "";
 		return (metaData["citation_url_nopath"] + link);		
 	}
@@ -26,10 +29,10 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = { 
 		citation_author: [ ['meta[name="citation_authors"]','content'] ],
 		citation_firstpage: [ ['meta[name="citation_firstpage"]','content'] , ['p.issue-header__description span:last-child','innerText'] ],
-		citation_misc: [ ['meta[name="citation_book_title"]','content'] , ['section#abstract span.mjx-math, section#abstract span.MJX_Assistive_MathML','innerText',true, 1024, true, 1000] ],
+		citation_misc: [ ['meta[name="citation_book_title"]','content'] , ['section#abstract span.mjx-math, section#abstract span.MJX_Assistive_MathML','innerText',true, 1024, true, 1000] , ['section.article-section__abstract span.math, section.article-section__abstract span.MJX_Assistive_MathML','innerText',true, 1024, true, 1000]],
 		citation_publisher: [ ['footer#copyright','innerText'] , ['p#copyright','innerText'] ],
-		citation_download: [ ['a.analytics-view-citation','href'] , ['li.citation a','href' ] ],
-		citation_abstract: [ ['section#abstract','innerText',true,20000] , ['div#abstract','innerText',true,20000] ]
+		citation_download: [ ['a.analytics-view-citation','href'] , ['li.citation a','href' ] , ['a[role="menuitem"]','href'] ],
+		citation_abstract: [ ['section.article-section__abstract','innerText',true,20000] , ['section#abstract','innerText',true,20000] , ['div#abstract','innerText',true,20000] ]
 	};
 
 	// finally expose selector message
