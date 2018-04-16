@@ -20,6 +20,7 @@
 						],
 			"citation_authors": 	[
 							{ "baseProperty": ["author"] },
+							{ "baseProperty": ["authors"] },
 							{ "baseProperty": ["creator"] }
 						],
 			"citation_abstract":	[
