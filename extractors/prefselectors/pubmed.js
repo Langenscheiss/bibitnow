@@ -10,8 +10,6 @@ var BINPrefselector = ( function () {
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
 		
-		console.log(metaData["citation_title"]);
-		
 		//get base url
 		if (metaData["query_summary"]["citation_download"] == 1) {
 			return (metaData["citation_url_nopath"] + "/pubmed/" + link + "?report=xml&format=text");

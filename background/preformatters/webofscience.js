@@ -23,12 +23,22 @@ var BINPreformatter = ( function () {
 		
 		//fix authors
 		fieldValue = metaData["citation_authors"].replace(/\;[\s]+\;.*$/,"");
-		fieldValue = fieldValue.match(/\([^\)]+\)\[/g);
+		length = fieldValue.match(/\([^\)]+\)\[/g);
 		let data = "";
-		if (fieldValue != null) {
+		if (length != null) {
+			fieldValue = length;
 			length = fieldValue.length;
 			for (let i = 0; i<length; ++i) {
 				data += fieldValue[i].replace(/(?:^\(|\)\[)/g,"") + " ; ";
+			}
+		} else {
+			length = fieldValue.match(/\([^\)]+\)[\s]*(?:;|$)/g);
+			if (length != null) {
+				fieldValue = length;
+				length = fieldValue.length;
+				for (let i = 0; i<length; ++i) {
+					data += fieldValue[i].replace(/(?:^\(|\)\[)/g,"") + " ; ";
+				}
 			}
 		}
 		metaData["citation_authors"] = data.replace(/[\s\;]+$/,"");

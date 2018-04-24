@@ -238,10 +238,34 @@ THANKS!
  Regardless of its class, the extracted string of any bibfield is passed in a sanitized form to the parser/preformatting stage, where the bibfield data is available through the \textit{metaData} object, see \Sec{sec_5}. As detailed in \App{app_sanitize} and \App{app_prefselector}, custom prefselectors give limited control over this sanitizing process.
  
  \subsection{List of bibfields}\label{app_bibfields_list} 
- Let us now describe each bibfield. The following list is sorted according to the 4 extraction classes defined in \Sec{app_bibfields_class}:
+ Let us now describe each bibfield. The following list is sorted according to the 4 extraction classes defined in \Sec{app_bibfields_class}. For each bibfield, the \textbf{format} and \textbf{content} both in the raw preformatting (RPF) and preformatting (PF) stage (see Sec.~\ref{sec_5}) are stated. 
+ The format is always the \textbf{expected format before entering the next parsing stage}, which for raw preformatting is the preformatting stage, and for the preformatting stage the final parsing stage. If the information contained in the bibfield, i.e., the data accessible via
+	\begin{center}
+	\lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
+	\begin{lstlisting}
+	metaData["#BIBFIELD"]
+	\end{lstlisting}
+	\end{center}
+ , with \#BIBFIELD being one of the following bibfields, does not follow the format restrictions expected for the next stage, the system will try to reformat it to the best of its abilities -- by, e.g., removing forbidden characters -- but parsing may fail in those cases. One main purpose of preformatting is thus to ensure that citation data is available to the main parser in the standard format. 
  \subsubsection{Class 1}
  \begin{itemize}
-  \item \textbf{Bibfield:} citation\_title -- \textbf{Format:} Single string containing any unicode characters which survive sanitizing -- \textbf{Purpose:} Contains the title of cited work, i.e., title of the book, scientific article, thesis, etc. .
+    \item citation\_publisher \begin{itemize} \item \textbf{Format:} Single string containing any unicode characters which survive sanitizing \item \textbf{Content (RPF, PF):} Publisher of cited work, e. g., ''Wiley`` or ''Elsevier`` \end{itemize}
+   \item citation\_journal\_title \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing any unicode characters which survive sanitizing \item \textbf{Content (RPF, PF):} Title of the journal in which the cited work appears, i.e., ''Science`` or ''Nature``. \end{itemize}
+   \item citation\_journal\_abbrev \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing any unicode characters which survive sanitizing \item \textbf{Content (RPF, PF):} 
+   Abbreviation (as obtained from the source!) of the title of the journal in which the cited work appears, i.e., ''Nat. Comm.`` for ''Nature Communications``. If available, the plugin prefers the abbreviation from its own abbreviation database.\end{itemize}
+   \item citation\_volume \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing any unicode characters which survive sanitizing \item \textbf{Content (RPF, PF):} Volume (number) of cited source. \end{itemize}
+   \item citation\_issue \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing any unicode characters which survive sanitizing \item \textbf{Content (RPF, PF):} Issue (number) of cited source. \end{itemize}
+    \item citation\_date \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing any unicode characters which survive sanitizing \item \textbf{Content (RPF, PF):} String that can unambiguously be parsed to a date. Preferrably, but not necessarily, in YYYY-MM-DD format. \end{itemize}
+   \item citation\_archive\_id \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing any unicode characters which survive sanitizing \item \textbf{Content (RPF, PF):} Citation ID in open access archive (such as arXiv). \end{itemize}
+   \item citation\_abstract \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing any unicode characters which survive sanitizing \item \textbf{Content (RPF, PF):} Abstract of citation. \end{itemize}
+   \item citation\_issn \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing the characters ''0-9``,''X``, and ''-`` \item \textbf{Content (RPF, PF):} ISSN of series in which cited source is published. \end{itemize}
+   \item citation\_isbn \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing the characters ''0-9``,''X``, and ''-`` \item \textbf{Content (RPF, PF):} ISBN of cited book/thesis. \end{itemize}
+   \item citation\_firstpage \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing ASCII characters \item \textbf{Content (RPF, PF):} Indicates first page within the work in which citation is published. \end{itemize}
+   \item citation\_lastpage \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing ASCII characters \item \textbf{Content (RPF, PF):} Indicates last page within the work in which citation is published. \end{itemize}
+   \item citation\_url \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing URI compatible characters \item \textbf{Content (RPF, PF):} URL of citation source website. By default, this is the URL in the address bar. \end{itemize}
+   \item citation\_doi \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing URI compatible characters \item \textbf{Content (RPF, PF):} DOI of citation. \end{itemize}
+   \item citation\_title \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing any unicode characters which survive sanitizing \item \textbf{Content (RPF, PF):} Contains the title of cited work, i.e., title of the book, scientific article, thesis, etc. . \end{itemize}
+  \item citation\_type \begin{itemize} \item \textbf{Format (RPF, PF)} Single string containing any unicode characters which survive sanitizing \item \textbf{Content (RPF, PF):} Contains any keyword that could indicate the type of cited work. After the preformatting stage the system will look for keywords in this bibfield in order to determine whether the source is an article, a book, a thesis, or a generic source (websites etc.). \end{itemize}
  \end{itemize}
 
  TODO CONTINUE
@@ -258,7 +282,7 @@ THANKS!
  
  \subsection{URL List Format}\label{app_matching_list}
  
- The URL list is essentially a single array of JSON objects, each corresponding to a URL scheme that is potentially matched to the URL of the website on which the plugin is launched. Each object contains up to 5 valid properties -- ''scheme``, ''top``, ''path``, ''prefselector`` and ''preformatter`` -- to which either a string or, in some cases, another array of JSON objects can be assigned. An example of such a JSON object that \plgname uses in order to recognize and load site adjusters for the ''Science`` Journals is
+ The URL list is essentially a single array of JSON objects, each corresponding to a URL scheme that is potentially matched to the URL of the website on which the plugin is launched. Each object contains up to 5 valid properties -- ''scheme``, ''top``, ''path``, ''prefselector`` and ''preformatter`` -- to which either a string or, in some cases, another array of JSON objects can be assigned. An example of such a JSON object that {\plgname } uses in order to recognize and load site adjusters for the ''Science`` Journals is
  \begin{center}
 \lstset{language=javascript,showstringspaces=false,backgroundcolor=\color{light-blue}}
 \begin{lstlisting}
@@ -297,7 +321,7 @@ THANKS!
 \end{center}
 
  \item \textbf{Property:} ''path`` -- \textbf{Type:} \textit{String} or \textit{Array} -- \textbf{Required:} no -- \textbf{Description:} State the URL path that should be recognized by the URL matching system. If a \textit{string} is provided, the matching is only positive if the \textbf{beginning} of the found path, i.e., the part following the ''/`` after the top-level domain up to some character, is matched by the provided string. If the provided path string does not match, the entire matching procedure terminates without returning a valid site adjuster.
- Again, note that the path scheme may is embedded into a regular expression. The rules for contributing are the same as for the ''top`` property.\par
+ Again, note that the path scheme may be embedded into a regular expression. The rules for contributing are the same as for the ''scheme`` property.\par
   
   Just as for the ''top`` property, assigning instead an array to ''path`` requires that each element of this array must be another JSON object. This object must have a ''scheme`` property in the format described under point 1, and can furthermore have a ''prefselector`` and ''preformatter`` property, in the same format as described below in points 4 and 5; the ''top`` property is not valid in this case. 
   The ''scheme`` string is the string specifying the path as explained above. If such an array of paths is assigned, a positive match is only obtained if at least one provided path scheme does match in the way described above. After the first positive match, the search stops. If no scheme matches, the matching procedure terminates without return a valid site adjuster.\par
@@ -413,7 +437,7 @@ Let us describe the arguments in detail.
  <tag>#content</tag>
 \end{lstlisting}
 \end{center}
- , via the ``innerText'' or ``textContent'' property. 
+ , via the \textbf{``innerText''} or \textbf{``textContent''} property. 
  The difference between the two properties is explained, e.g., \href{https://stackoverflow.com/questions/35213147/difference-between-text-content-vs-inner-text}{at Stack Overflow}. 
  You can ignore all the warnings about ``innerText'' not being standard, too slow, or not being supported. It is supported for all browsers for which {\plgname} is developed, works more than fast enough for the desired performance of the plugin (=there is no loop over millions of calls of innerText), and has its legitimate purpose. In fact, most site adjusters of {\plgname} use ''innerText``, as it comes closer to what the publisher intends to show on its website. Examples are
 \begin{center}
