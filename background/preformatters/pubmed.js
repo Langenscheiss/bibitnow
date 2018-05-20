@@ -32,9 +32,8 @@ var BINPreformatter = ( function () {
 		
 		
 		//extract data from pubmed xml
-		let dataAll = metaData["citation_download"].replace(/[\n]/g," <> ").replace(/\&lt;/g,"<").replace(/\&gt;/g,">").replace(/<[^>]+?>/g, "");
+		let dataAll = metaData["citation_download"].replace(/[\n]/g," <> ").replace(/\&lt;/g,"<").replace(/\&gt;/g,">");
 		metaData["citation_download"] = "";
-		
 		//extract journal info
 		let parsedString = "", dataPart = extractTag(dataAll,'Journal','',false);
 		let dataField;
