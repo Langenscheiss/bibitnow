@@ -20,7 +20,7 @@ var BINPrefselector = ( function () {
 		citation_misc: [ ['div#infoArticle div:nth-child(3)','innerText'] , ['div#altLayoutPublisherLogo p, div.greybg>div:nth-of-type(1) p:nth-of-type(1)','innerText', true] ],
 		citation_issn: [ ['meta[name="DCTERMS.isPartOf"]','content'] ],
 		citation_abstract: [ ['div#Abst','innerText', true, 20000] ],
-		citation_download: [ ['a[title="EndNote Export"]','href'] ]
+		citation_download: [ ['a[title="EndNote Export"]','href'] , ['a[title="Export reference in EndNote (RIS format)"]','href'] ]
 	};
 
 	// finally expose selector message and link formatter

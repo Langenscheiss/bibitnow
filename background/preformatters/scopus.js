@@ -49,10 +49,16 @@ var BINPreformatter = ( function () {
 		//remove volume, issue, page, article number from misc string and send the rest to date
 		metaData["citation_date"] = temp.replace(/(?:volume|issue|page[s]?|article|number)[^,;]+[,;\ ]*/gi,"").replace(/[\ ]+/g," ").trim();
 		
-		//fix issn
-		temp = metaData["citation_issn"].replace(/[^0-9X\-]/g,"");
+		//fix issn/isbn
+		temp = metaData["citation_issn"].replace(/[\s]*;.*$/,"").replace(/[^0-9X\-]/g,"");
 		if (temp.search(/\-/) == -1 && temp.length == 8) {
 			metaData["citation_issn"] = temp.slice(0,4) + "-" + temp.slice(4);
+		} else {
+			metaData["citation_issn"] = "";
+			let tempTwo = temp.replace(/[\-]+/g,"").length;
+			if (tempTwo == 10 || tempTwo == 13) {
+				metaData["citation_isbn"] = temp;
+			}
 		}
 		
 		//fix abstract
@@ -63,10 +69,16 @@ var BINPreformatter = ( function () {
 			temp["citation_misc"] = "";
 			if (metaData["citation_abstract"] != "") temp["citation_abstract"] = "";
 			
-			//issn
-			temp = temp["citation_issn"].replace(/[^0-9X\-]/g,"");
+			//issn/isbn
+			temp = temp["citation_issn"].replace(/[\s]*;.*$/,"").replace(/[^0-9X\-]/g,"");
 			if (temp.search(/\-/) == -1 && temp.length == 8) {
 				metaData["citation_download"]["citation_issn"] = temp.slice(0,4) + "-" + temp.slice(4);
+			}  else {
+				metaData["citation_download"]["citation_issn"] = "";
+				let tempTwo = temp.replace(/[\-]+/g,"").length;
+				if (tempTwo == 10 || tempTwo == 13) {
+					metaData["citation_download"]["citation_isbn"] = temp;
+				}
 			}
 		}
 		

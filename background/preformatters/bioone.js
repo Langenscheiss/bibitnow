@@ -48,10 +48,10 @@ var BINPreformatter = ( function () {
 		metaData["citation_misc"] = "";
 		
 		//fix abstract, prefer static over dynamic
-		misc = metaData["citation_abstract"].replace(/^Abstract[\s]*/i,"");
+		misc = metaData["citation_abstract"].replace(/^Abstract[\s\.]*/i,"");
 		metaData["citation_abstract"] = misc;
 		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
-			metaData["citation_abstract"] = misc != "" ? "" : metaData["citation_abstract"].replace(/^Abstract[\s]*/i,"");
+			metaData["citation_abstract"] = misc != "" ? "" : metaData["citation_abstract"].replace(/^Abstract[\s\.]*/i,"");
 		}
 		
 		//set database

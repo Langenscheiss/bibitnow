@@ -15,7 +15,7 @@ var BINPreformatter = ( function () {
 		//fix abstract if necessary
 		if (metaData["query_summary"]["citation_download"] == 2) {
 			metaData["citation_download"] = metaData["citation_download"].replace(/AB[\t\ ]+[\-]+[\t\ ]+/,"N2 - ").trim();
-		}
+		}		
 	}
 	
 	//preformatting function

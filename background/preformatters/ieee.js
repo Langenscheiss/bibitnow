@@ -18,12 +18,13 @@ var BINPreformatter = ( function () {
 		//fix date string
 		metaData["citation_date"] = metaData["citation_date"].replace(/(?:publication|of|date)/gi,"");
 		
-		//prefer static keywords if available
-		if (metaData["citation_keywords"] != "" && metaData["citation_download"] != null && typeof(metaData["citation_download"]) == 'object') {
-			metaData["citation_download"]["citation_keywords"] = "";
+		//prefer static keywords and authors if available
+		let download = metaData["citation_download"];
+		if (download != null && typeof(download) == 'object') {
+			if (metaData["citation_keywords"] != "") download["citation_keywords"] = "";
+			if (metaData["citation_authors"] != "") download["citation_authors"] = "";
 		}
-		
-		
+
 		//fix static issn/isbn and type if isbn available
 		let issn = metaData["citation_issn"].replace(/(?:^[^0-9X]*|[^0-9X\-]+.*$)/g,"").replace(/[^0-9X\-]/g,"");
 		if (issn.replace(/[\-]/g,"").length > 8) metaData["citation_type"] = "book";

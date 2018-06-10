@@ -163,7 +163,10 @@ var BINPreformatter = ( function () {
 				metaData["citation_issue"] = temp[1].trim();
 			}
 		}
-			
+		
+		//fix doi
+		metaData["citation_doi"] = metaData["citation_doi"].replace(/^.*DOI[\:\s]*/).trim();
+		
 		//unset misc
 		metaData["citation_misc"] = "";
 		

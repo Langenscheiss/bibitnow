@@ -16,7 +16,7 @@ var BINPrefselector = ( function () {
 		citation_volume: [ ['div.citationTextWrapper span.titleAuthorETC a[title*="issue"]','innerText'] ],
 		citation_misc: [ ['a#downloadPDFLink','href'] , [ 'div.docViewFullCitation div.display_record_indexing_fieldname,div.docViewFullCitation div.display_record_indexing_data', 'innerText' ] ],
 		citation_firstpage: [ ['div.citationTextWrapper span.titleAuthorETC:last-of-type','innerText'] ],
-		citation_doi: [ ['div#documentMetricsPanel div[data-template="proquestplatform"]','data-doi' ] ],
+		citation_doi: [ ['div.citationTextWrapper div.abstract_Text','innerText'] , ['div#documentMetricsPanel div[data-template="proquestplatform"]','data-doi' ] ],
 		citation_abstract: [ ['div.abstract','innerText',true,20000] ]
 	};
 

@@ -10,37 +10,41 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//get and fix title
-		let temp = metaData["citation_title"].replace(/[\s]*[\-]+[\s]*ScienceDirect/,"").trim(), tempTwo = metaData["citation_journal_title"].trim();
-		if (tempTwo != "") tempTwo = " -- " + tempTwo;
-		metaData["citation_title"] = temp + tempTwo;
-		metaData["citation_journal_title"] = "";
+		//completely rewritten
 		
-		
-		//fix authors
-		tempTwo = metaData["citation_authors"].replace(/^[^\:]*\:[\s]*/,"").replace(/(?:[\s]+and[\s]+|[\s]*\,[\s]*)/g," ; ");
-		if (tempTwo.search(/[^\s\;]/) == -1) {
-			tempTwo = "";
-			temp = metaData["citation_misc"].replace(new RegExp("[\s]*" + BINResources.escapeForRegExp(temp) + "[\s]*",""),"").split(/[\s]+by[\s]+/);
-			if (temp != null && temp.length > 1) {
-				tempTwo = temp[1].replace(/[\s]+on[\s]+ScienceDirect.*$/,"").replace(/(?:[\s]+and[\s]+|[\s]*\,[\s]*)/g," ; ");
-			}
-		}
-		metaData["citation_authors"] = tempTwo;
-		
-		//fix date
-		temp = metaData["citation_date"];
-		if (temp != "") {
-			temp = temp.match(/[0-9][0-9][0-9][0-9]/);
-			if (temp != null && temp.length > 0) {
-				metaData["citation_date"] = temp[0];
-			} else {
-				metaData["citation_date"] = "";
-			}
-		}
-		
-		//clean misc
+		//extract some fields from misc
+		let citationData = metaData["citation_misc"]; 
 		metaData["citation_misc"] = "";
+		
+		//get isbn
+		let value = citationData.match(/ISBN[\s]*([^;]*)[\s]*(?:;|$)/);
+		if (value != null && value.length > 1) {
+			metaData["citation_isbn"] = value[1].replace(/[^0-9X\-]+/gi,"");
+		}
+		
+		//get doi
+		value = citationData.match(/DOI[\s]*([^;]*)[\s]*(?:;|$)/);
+		if (value != null && value.length > 1) {
+			metaData["citation_doi"] = value[1].trim();
+		}
+		
+		//get year
+		value = citationData.match(/Published[\s]+([^;]*)[\s]*(?:;|$)/);
+		if (value != null && value.length > 1) {
+			metaData["citation_date"] = value[1].replace(/[^0-9]+/gi,"").trim();
+		}
+		
+		//get publisher
+		value = citationData.match(/Imprint[\s]+([^;]*)[\s]*(?:;|$)/);
+		if (value != null && value.length > 1) {
+			metaData["citation_publisher"] = value[1].trim().replace(/^academic[\s]+press$/i,"Elsevier, Academic Press");
+		}
+		
+		//fix authors if necessary
+		if (metaData["query_summary"]["citation_authors"] == 2) metaData["citation_authors"] = metaData["citation_authors"].replace(/[\s]*(?:,|and)[\s]*/gi," ; ");
+		
+		//fix abstract
+		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^[\s]*(?:description|abstract)[\s\:\.]*/gi,"");
 		
 		//fix type
 		metaData["citation_type"] = "book";

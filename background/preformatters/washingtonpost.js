@@ -10,7 +10,6 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//do nothing, as there is no dynamic citation export being requested
-		//console.log(JSON.parse(metaData["citation_json"]));
 	}
 	
 	//preformatting function

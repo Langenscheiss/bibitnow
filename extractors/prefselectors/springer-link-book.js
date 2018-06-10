@@ -12,7 +12,7 @@ var BINPrefselector = ( function () {
 		citation_title: [ ['div#book-title','innerText'] , ['dd#abstract-about-title','innerText'] ],
 		citation_type: [ ['span#content-type','innerText'] , ['div#enumeration','innerText'] ],
 		citation_publisher: [ ['span#publisher-name','innerText'], ['dd#abstract-about-publisher','innerText'] ],
-		citation_date: [ ['input[name="year"]','value'] , ['dd#abstract-about-book-chapter-copyright-year','innerText'] ],
+		citation_date: [ ['input[name="year"]','value'] , ['dd#abstract-about-book-chapter-copyright-year','innerText'] , ['span#copyright-info','innerText'] ],
 		citation_author: [ ['span.authors__name','innerText'] , ['div.author-list li.author a[itemprop="name"]','innerText'] , ['div.editor-list li.editor a[itemprop="name"]','innerText'] ],
 		citation_isbn: [ ['span#print-isbn','innerText'] , ['dd#abstract-about-book-print-isbn','innerText'] , ['dd#abstract-about-book-online-isbn','innerText'] , ['span#electronic-isbn','innerText'] ],
 		citation_issn: [ ['span#print-issn','innerText'] , ['span#electronic-issn','innerText'] ],

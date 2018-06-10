@@ -9,13 +9,10 @@ var BINPrefselector = ( function () {
 
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = { 
-		citation_issn: [ ['span.pubISBN','innerText'] ],
-		citation_title: [ ['span.pubTitle','innerText'] ],
-		citation_journal_title: [ ['span.pubSubTitle','innerText'] ],
-		citation_misc: [ ['meta[name="description"]','content'] ],
-		citation_abstract: [ ['div#bookDescription','innerText', true, 20000] ],
-		citation_authors: [ ['span.pubEditors','innerText'] ],
-		citation_date: [ ['p.copyright','innerText'] ]
+		citation_title: [ ['div.title-container h1','innerText'] ],
+		citation_abstract: [ ['div#book-description','innerText', true, 20000] ],
+		citation_authors: [ ['div.simple-authors div.author-detail h3','innerText'] , ['div.cover-panel div.author-list p:nth-of-type(2)','innerText'] ],
+		citation_misc: [ ['div.kf-detail-item','innerText',true] ]
 	};
 
 	// finally expose selector message

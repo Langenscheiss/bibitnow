@@ -15,6 +15,15 @@ var BINPreformatter = ( function () {
 			metaData["citation_authors"] = metaData["citation_authors"].replace(/\ [^\ ]*\.[\ ]*\;/g," ;");
 		}
 		
+		//fix date
+		let temp;
+		if (metaData["query_summary"["citation_date"] == 3] && (temp = metaData["citation_date"]) != "") {
+			temp = temp.match(/[0-9]{4}[\s]*$/);
+			if (temp.length > 0) {
+				metaData["citation_date"] = temp[0].trim(); 
+			}
+		}
+		
 		//fix type
 		metaData["citation_type"] = "book";
 		

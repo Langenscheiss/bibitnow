@@ -18,7 +18,7 @@ var BINPreformatter = ( function () {
 		
 		//fix author
 		if (metaData["query_summary"]["citation_authors"] == 1) {
-			metaData["citation_authors"] = metaData["citation_authors"].replace(/(?:^[\s]*von[\s]*|[\s]*[\,]+.*$)/gi,"");
+			metaData["citation_authors"] = metaData["citation_authors"].replace(/^[\s]*ein[\s]+kommentar[\s]*/gi,"").replace(/(?:^[\s]*von[\s]*|[\s]*[\,]+.*$)/gi,"");
 		} else {
 			metaData["citation_authors"] = metaData["citation_authors"].replace(/tagesschau[\.]+[\s]*de/gi,"tagesschau");
 		}

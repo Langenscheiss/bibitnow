@@ -31,7 +31,22 @@ var BINPreformatter = ( function () {
 			metaData["citation_issn"] = "0031-9015";
 		}
 		
-		//fix misc
+		//fix journal
+		if (metaData["query_summary"]["citation_journal_title"] != 0) {
+			metaData["citation_journal_title"] = "JPS Conference Proceedings";
+			metaData["citation_journal_abbrev"] = "JPS Conf. Proc.";
+		}
+		
+		//fix publisher
+		if (metaData["citation_publisher"] == "") {
+			metaData["citation_publisher"] = "The Physical Society of Japan";
+			let temp = metaData["citation_download"];
+			if (temp != null && typeof(temp) == 'object') {
+				temp["citation_publisher"] = "";
+			}
+		}
+		
+		//fix misc		
 		metaData["citation_misc"] = metaData["citation_misc"].replace(/number/i,"issue");
 	}
 	
