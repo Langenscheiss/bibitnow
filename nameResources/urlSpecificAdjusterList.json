@@ -57,6 +57,7 @@
 	{ "scheme": "(?:journals\\.|)jps" , "top": "jp" , "path": "doi" , "preformatter": "jps" , "prefselector": "jps" },
 	{ "scheme": "nature" , "top": "com" , "preformatter": "nature" , "prefselector": "nature" },
 	{ "scheme": "nejm" , "top": "org" , "preformatter": "nejm" , "prefselector": "nejm" },
+	{ "scheme": "researchgate" , "top": "net" , "path": "publication", "preformatter": "researchgate" , "prefselector": "researchgate" },
 	{ 	
 		"scheme": "ncbi\\.nlm\\.nih" , "top": "gov" ,
 		"path": 	[
@@ -84,9 +85,11 @@
 			]
 	},
 	{ "scheme": "pnas" , "top": "org"  , "prefselector": "pnas" , "preformatter": "pnas" },
+	{ "scheme": "spiedigitallibrary" , "top": "org"  , "prefselector": "spie" , "preformatter": "spie" },
 	{ "scheme": "press\\.princeton" , "top": "edu" , "prefselector": "princeton" , "preformatter": "princeton" },
 	{ "scheme": "search\\.proquest" , "top": "com" , "prefselector": "proquest" , "preformatter": "proquest" },
 	{ "scheme": "springer" , "top": "com" , "path": "gp" , "prefselector": "springer-book" , "preformatter": "springer-book" },
+	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)oreilly" , "top": "com" , "path": "product" , "prefselector": "oreilly" , "preformatter": "oreilly" },
 	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)sciencemag" , "top": "org" , "prefselector": "science" , "preformatter": "science" },
 	{ "scheme": "tandfonline" , "top": "com" , "prefselector": "taylorandfrancis" , "preformatter": "taylorandfrancis" },
 	{ 

@@ -17,6 +17,11 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		//fix authors
+		if (metaData["query_summary"]["citation_authors"] == 2) {
+			metaData["citation_authors"] = metaData["citation_authors"].replace(/Search[\s]+for[\s]+articles[\s]+by[\s]+this[\s]+author[\s]+/g,"");
+		}
+		
 		//preformat misc for journal abbrev, issue and pages
 		let temp = metaData["citation_misc"];
 		metaData["citation_misc"] = "";

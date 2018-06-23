@@ -17,6 +17,7 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = { 
 		citation_journal_abbrev: [ ['div.navlink-box li.archive a.navlink','textContent'] ],
 		citation_keywords: [ ['div#maincontent span.kwd-text','innerText'] ],
+		citation_abstract: [ ['meta[property="og:description"]','content', true, 20000] ],
 		citation_download: [ ['div.navlink-box li.accid','textContent'] ]
 	};
 

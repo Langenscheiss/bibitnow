@@ -14,7 +14,7 @@ var BINPreformatter = ( function () {
 	}
 	
 	//preformatting function
-	function preformatData(metaData, parser) {
+	function preformatData(metaData, parser) {		
 		//preformat misc for journal abbrev, issue and pages
 		let temp = metaData["citation_misc"];
 		if (temp != "") {

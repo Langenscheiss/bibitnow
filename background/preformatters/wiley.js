@@ -10,12 +10,21 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix title and journal
-		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JF - ").replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").trim();
+		let temp = metaData["citation_download"];
+		temp = temp.replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JF - ").replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").trim();
+		
+		//fix date
+		if (temp.search(/DA[\t\ ]+[\-]+[\t\ ]+/) != -1) {
+			temp = temp.replace(/Y1[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/DA[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").trim();
+		}
 		
 		//fix abstract if necessary
 		if (metaData["query_summary"]["citation_download"] == 2) {
-			metaData["citation_download"] = metaData["citation_download"].replace(/AB[\t\ ]+[\-]+[\t\ ]+/,"N2 - ").trim();
-		}		
+			temp = temp.replace(/AB[\t\ ]+[\-]+[\t\ ]+/,"N2 - ").trim();
+		}
+		
+		//reassign
+		metaData["citation_download"] = temp;
 	}
 	
 	//preformatting function

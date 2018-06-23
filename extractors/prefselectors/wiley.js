@@ -18,7 +18,7 @@ var BINPrefselector = ( function () {
 			link = link.replace(/documentcitationdownload/,"documentcitationdownloadformsubmit").replace(/publicationDoi[^&]+&/,"").replace(/&type=.*$/,"&fileFormat=PLAIN_TEXT&hasAbstract=CITATION_AND_ABSTRACT");
 			metaData["citation_download_method"] = "POST";
 		} else if (metaData["query_summary"]["citation_download"] == 3 && (link = metaData["citation_doi"]) != "") {
-			link =  "/action/downloadCitation?doi=" + link + "&include=abs&format=txt&direct=other-type&submit=Download";
+			link =  "/action/downloadCitation?doi=" + link + "&include=abs&format=ris&direct=other-type&submit=Download";
 			metaData["citation_download_method"] = "POST";
 		}
 		if (link == "") return "";
@@ -28,6 +28,7 @@ var BINPrefselector = ( function () {
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = { 
 		citation_author: [ ['meta[name="citation_authors"]','content'] ],
+		citation_date: [ ['meta[name="citation_date"]','content'] , ['meta[name="citation_online_date"]','content'], ['div.epub-sections span.epub-date','innerText'] ],
 		citation_firstpage: [ ['meta[name="citation_firstpage"]','content'] , ['p.issue-header__description span:last-child','innerText'] ],
 		citation_misc: [ ['meta[name="citation_book_title"]','content'] , ['section#abstract span.mjx-math, section#abstract span.MJX_Assistive_MathML','innerText',true, 1024, true, 1000] , ['section.article-section__abstract span.math, section.article-section__abstract span.MJX_Assistive_MathML','innerText',true, 1024, true, 1000]],
 		citation_publisher: [ ['footer#copyright','innerText'] , ['p#copyright','innerText'] ],

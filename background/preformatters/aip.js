@@ -22,14 +22,22 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//preformat issn link to extract issn
-		temp = metaData["citation_issn"];
-		if (temp != "") {
-			temp = temp.match(/issn%3D[0-9X\-]{1,9}/i);
+		//preformat issn link to extract issn and endpage
+		let tempTwo = metaData["citation_issn"];
+		if (tempTwo != "") {
+			
+			let temp = tempTwo.match(/issn%3D[0-9X\-]{1,9}/i);
 			if (temp != null && temp.length > 0) {
 				metaData["citation_issn"] = temp[0].replace(/issn%3D/,"").trim();
 			} else {
 				metaData["citation_issn"] = "";
+			}
+			//last page
+			if (metaData["citation_lastpage"] == "") {
+				temp = tempTwo.match(/endPage%3D([^\%]+)(?:\%|$)/i);
+				if (temp != null && temp.length > 1) {
+					metaData["citation_lastpage"] = temp[1].trim();
+				}
 			}
 		}
 		
