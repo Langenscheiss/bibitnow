@@ -16,6 +16,11 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		//get math from misc, and pass volume, issue to misc
+		let mathSymbols = metaData["citation_misc"];
+		metaData["citation_misc"] = metaData["citation_volume"].replace(/vol[\.]+/i,"volume").replace(/no[\.]+/i,"issue");
+		metaData["citation_volume"] = "";
+		
 		//check if first page is available, and reformat if yes. Otherwise, reset first page
 		let temp = metaData["citation_firstpage"].match(/\,[^\(\,]+\(/i)
 		if (temp != null && temp.length > 0) {
@@ -24,12 +29,54 @@ var BINPreformatter = ( function () {
 			metaData["citation_firstpage"] = "";
 		}
 		
-		//fix abstract, prefer static
+		//fix math in abstract, math symbols saved in citation_misc
 		let abstract = metaData["citation_abstract"].replace(/^[\s]*abstract[\:\s]*/i,"");
+		if (abstract != "" && mathSymbols != "" && (mathSymbols = mathSymbols.split(/[\ ]+;[\ ]+/)) != null) {
+			const length = mathSymbols.length;
+			if (length%2 == 0) {
+				//index variable
+				let idx = 0;
+				for (let i = 0; i<length; ++i) {
+				
+					//get match and math symbol from misc
+					let match = mathSymbols[i].trim();
+					i++;
+					let symbol = mathSymbols[i].trim();
+					match += " " + symbol;
+					
+					//continue only if not empty string
+					if (symbol != "") {
+						
+						//search for match in abstract text
+						let nextIdx = abstract.indexOf(match,idx);
+						//if found, replace by math
+						if (nextIdx != -1) {
+							
+							//get index in OLD abstract after match
+							idx = nextIdx + match.length;
+
+							//convert symbol
+							symbol = BINResources.convertSpecialChars(symbol,0,false,true);
+							
+							//replace string in abstract
+							abstract = abstract.slice(0,nextIdx) + "$" + symbol + "$" + abstract.slice(idx);
+							
+							//get index in NEW abstract where to start searching from!
+							idx = nextIdx + symbol.length+2;
+						}
+					}
+				}
+				//reduce white spaces around dollars
+				abstract = abstract.replace(/[\ ]+\$/g, " $").replace(/\$[\ ]+/, "$ ");
+			}
+		}
+		//reassign abstract
+		metaData["citation_abstract"] = abstract;
+		
+		//prefer static abstract
 		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
 			if (abstract != "") metaData["citation_abstract"] = "";
 		}
-		metaData["citation_abstract"] = abstract;
 	}
 	
 	// expose preformatting function and raw preformatting function

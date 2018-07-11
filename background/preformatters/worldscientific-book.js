@@ -7,9 +7,14 @@ var BINPreformatter = ( function () {
 	var window = null;
 	var document = null;
 	
+	//preformat raw data including raw RIS
+	function preformatRawData(metaData, parser) {
+		//fix journal abbreviation
+		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/PB[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").trim();
+	}
+	
 	//preformatting function
 	function preformatData(metaData, parser) {
-			
 		//fix authors
 		let temp = "";
 		if ((temp = metaData["citation_authors"]) != "") {
@@ -33,7 +38,7 @@ var BINPreformatter = ( function () {
 		metaData["citation_date"] = metaData["citation_date"].replace(/^.*pp[\ ]*/,"");
 	}
 	
-	// expose preformatter
-	return { preformatData : preformatData };
+	// expose preformatting function and raw preformatting function
+	return { preformatData : preformatData , preformatRawData: preformatRawData };
 
 }());

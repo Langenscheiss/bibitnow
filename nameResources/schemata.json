@@ -42,5 +42,54 @@
 							{ "baseProperty": ["identifier"] }
 						]
 		}
+	},
+	{ 	"schema": "Product" ,
+		"bibfields":	
+		{
+			"citation_date": 	[ 	
+							{ "baseProperty": ["review","datePublished"] },
+							{ "baseProperty": ["review",0,"datePublished"] },
+							{ "baseProperty": ["datePublished"] }
+						],
+			"citation_title": 	[
+							{ "baseProperty": ["review","name"] },
+							{ "baseProperty": ["review",0,"name"] },
+							{ "baseProperty": ["name"] }
+						],
+			"citation_firstpage": 	[
+							{ "baseProperty": ["review","pageStart"] },
+							{ "baseProperty": ["review",0,"pageStart"] },
+							{ "baseProperty": ["review","pagination"] },
+							{ "baseProperty": ["review",0,"pagination"] }
+						],
+			"citation_lastpage":	[
+							{ "baseProperty": ["review","pageEnd"] },
+							{ "baseProperty": ["review",0,"pageEnd"] }
+						],
+			"citation_authors": 	[
+							{ "baseProperty": ["review","author"] },
+							{ "baseProperty": ["review",0,"author"] },
+							{ "baseProperty": ["review","authors"] },
+							{ "baseProperty": ["review",0,"authors"] },
+							{ "baseProperty": ["review","creator"] },
+							{ "baseProperty": ["review",0,"creator"] }
+						],
+			"citation_abstract":	[
+							{ "baseProperty": ["review","description"] },
+							{ "baseProperty": ["review",0,"description"] },
+							{ "baseProperty": ["description"] }
+						],
+			"citation_keywords":	[
+							{ "baseProperty": ["review","keywords"] },
+							{ "baseProperty": ["review",0,"keywords"] },
+							{ "baseProperty": ["keywords"] }
+						],
+			"citation_publisher":	[
+							{ "baseProperty": ["review","publisher"] },
+							{ "baseProperty": ["review",0,"publisher"] },
+							{ "baseProperty": ["publisher"] }
+						]
+		}
 	}
+	
 ]

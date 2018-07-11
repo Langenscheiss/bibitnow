@@ -36,6 +36,7 @@
 	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)bmj" , "top": "com" , "path": "content" , "prefselector": "bmj" , "preformatter": "bmj" },
 	{ "scheme": "journals\\.aps" , "top": "org" , "prefselector": "aps" , "preformatter": "aps" },
 	{ "scheme": "arxiv" , "top": "org" , "prefselector": "arxiv" , "preformatter": "arxiv" },
+	{ "scheme": "biorxiv" , "top": "org" , "preformatter": "biorxiv" , "prefselector": "biorxiv" },
 	{ "scheme": "bioone" , "top": "org" , "preformatter": "bioone" , "prefselector": "bioone" },
 	{ "scheme": "degruyter" , "top": "com" , "prefselector": "degruyter" , "preformatter": "degruyter" },
 	{ "scheme": "elsevier" , "top": "com" , "path": "books" , "prefselector": "elsevier-book" , "preformatter": "elsevier-book" },

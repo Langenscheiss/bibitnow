@@ -111,7 +111,7 @@ var BINPreformatter = ( function () {
 			if (metaData["citation_authors"] != "") {
 				publisher["citation_authors"] = "";
 			}
-		}		
+		}
 	}
 	
 	// expose preformatting function
