@@ -34,7 +34,7 @@ var BINPreformatter = ( function () {
 		//prefer formatted static title
 		let temp = metaData["citation_title"];
 		if (temp != "") {
-			metaData["citation_title"] = temp.replace(/[\s]*\([^\(\)]*\)$/,"");
+			metaData["citation_title"] = temp.replace(/[\s]*\([\s]*open[\s]*access[\s]*\)$/i,"").replace(/[\s]*\([^\(\)]*\)$/,"");
 			if ((temp = metaData["citation_download"]) != null && typeof(temp) == 'object') temp["citation_title"] = "";
 		}
 		
