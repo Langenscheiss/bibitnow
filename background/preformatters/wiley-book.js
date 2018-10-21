@@ -12,7 +12,7 @@ var BINPreformatter = ( function () {
 		
 		//fix author list
 		metaData["citation_authors"] = metaData["citation_authors"].replace(/^[^\:]*\:[\ ]*/,"").replace(/[\ ]*\,[\ ]*/g," ; ");
-		
+				
 		let misc = metaData["citation_misc"];
 		if (misc == "") {
 		

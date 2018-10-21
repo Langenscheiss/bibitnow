@@ -40,9 +40,15 @@ var BINPreformatter = ( function () {
 			}
 		}
 		
-		//fix date and abstract
+		//fix dynamic title, date and abstract
 		misc = metaData["citation_download"];
 		if (misc != null && typeof(misc) == 'object') {
+			
+			//prefer static title
+			if (metaData["citation_title"] != "") {
+				misc["citation_title"] = "";
+			}
+			
 			misc = misc["citation_date"];
 			if (misc != "") {
 				let date = metaData["citation_date"];

@@ -16,6 +16,13 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		
+		//fix publisher vs. journal for books
+		if (metaData["citation_type"].search(/book/i) != -1 && metaData["citation_publisher"] == "") {
+			metaData["citation_publisher"] = metaData["citation_journal_title"];
+			metaData["citation_journal_title"] = "";
+		}
+		
 		//properly separate volume from issue in misc field
 		metaData["citation_misc"] = metaData["citation_misc"].replace(/issue/i,", issue");
 		

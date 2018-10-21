@@ -21,6 +21,9 @@ var BINPreformatter = ( function () {
 		//helper vars
 		let fieldValue = "", length = 0;
 		
+		//fix type
+		metaData["citation_type"] = metaData["citation_type"].replace(/(?:^.*document[\s]+type:|view[\s]+journal[\s]+impact)/gi,"");
+		
 		//fix authors
 		fieldValue = metaData["citation_authors"].replace(/\;[\s]+\;.*$/,"");
 		length = fieldValue.match(/\([^\)]+\)\[/g);

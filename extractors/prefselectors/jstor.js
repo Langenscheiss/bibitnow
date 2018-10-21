@@ -22,11 +22,11 @@ var BINPrefselector = ( function () {
 		citation_date: [ ['div.published_date','innerText'] ],
 		citation_doi: [ ['input[name="item_doi"]','value'] , ['div#book-info-drop','data-doi'] ],
 		citation_authors: [ ['div.contrib','innerText'] ],
-		citation_misc: [ ['div.src.mbl','innerText'] ],
+		citation_misc: [ ['div.src.mbl','innerText'] , ['div[data-qa="item-src-info" i]','innerText']],
 		citation_url: [ ['link[rel="canonical"]','href'] ],
-		citation_abstract: [ ['div.abstract','innerText',true,20000 ] , ['div#book-info-drop div.book-description','innerText',true,20000] ],
-		citation_keywords: [ ['div.topics-list.mtl','innerText'] ],
-		citation_download: [ ['li.cite-this-item-button a','href'] ],
+		citation_abstract: [ ['div.abstract','innerText',true,20000 ] , ['div#book-info-drop div.book-description','innerText',true,20000] , ['div#metadata_info_tab_contents div.mtl.mbxl','innerText',true,20000]],
+		citation_keywords: [ ['div.topics-list.mtl','innerText'] , ['ol[data-qa="topics-list" i] li','innerText']],
+		citation_download: [ ['li.cite-this-item-button a','href'] , ['a.button.cite-this-item','href']],
 		citation_issn: [ ['meta[name="ST.printIssn"]','content'] , ['meta[name="ST.onlineIssn"]','content'] ],
 		citation_isbn: [ ['div#book-info-drop div.book-eisbn','innerText'] ]
 	};

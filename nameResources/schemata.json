@@ -90,6 +90,36 @@
 							{ "baseProperty": ["publisher"] }
 						]
 		}
+	},
+	{ 	"schema": "Book" ,
+		"bibfields":	
+		{
+			"citation_date": 	[ 	
+							{ "baseProperty": ["dateModified"] } ,
+							{ "baseProperty": ["datePublished"] },
+							{ "baseProperty": ["dateCreated"] }
+						],
+			"citation_title": 	[
+							{ "baseProperty": ["name"] }
+						],
+			"citation_authors": 	[
+							{ "baseProperty": ["author"] },
+							{ "baseProperty": ["authors"] },
+							{ "baseProperty": ["creator"] }
+						],
+			"citation_abstract":	[
+							{ "baseProperty": ["about","description"] },
+							{ "baseProperty": ["description"] }
+						],
+			"citation_keywords":	[
+							{ "baseProperty": ["keywords"] }
+						],
+			"citation_publisher":	[
+							{ "baseProperty": ["publisher"] }
+						],
+			"citation_isbn":	[
+							{ "baseProperty": ["isbn"] }
+						]
+		}
 	}
-	
 ]

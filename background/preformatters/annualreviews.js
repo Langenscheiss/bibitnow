@@ -31,10 +31,10 @@ var BINPreformatter = ( function () {
 		//fix publisher
 		metaData["citation_publisher"] = "Annual Reviews";
 		
-		//preformat issn link to extract issn
+		//preformat rights link to extract issn
 		temp = metaData["citation_issn"];
 		if (temp != "") {
-			temp = temp.match(/issn%3D[0-9X\-]+/i);
+			temp = temp.match(/issn=[0-9X\-]+/i);
 			if (temp != null && temp.length > 0) {
 				metaData["citation_issn"] = temp[0].replace(/issn%3D/,"").trim();
 			} else {

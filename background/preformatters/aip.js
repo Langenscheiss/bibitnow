@@ -32,11 +32,13 @@ var BINPreformatter = ( function () {
 			} else {
 				metaData["citation_issn"] = "";
 			}
+			
 			//last page
-			if (metaData["citation_lastpage"] == "") {
+			if (metaData["citation_firstpage"] != "" && metaData["citation_lastpage"] == "") {
 				temp = tempTwo.match(/endPage%3D([^\%]+)(?:\%|$)/i);
 				if (temp != null && temp.length > 1) {
-					metaData["citation_lastpage"] = temp[1].trim();
+					temp = temp[1].trim();
+					if (temp != "" && temp.length >= metaData["citation_firstpage"].length) metaData["citation_lastpage"] = temp;
 				}
 			}
 		}

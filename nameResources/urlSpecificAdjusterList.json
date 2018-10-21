@@ -44,7 +44,7 @@
 	{ "scheme": "goodreads" , "top": "com" , "prefselector": "goodreads" , "preformatter": "goodreads" },
 	{ "scheme": "books\\.google(?:|\\.co|\\.com)" , "top": "[0-9a-z]+" , "prefselector": "google-book" , "preformatter": "google-book" },
 	{ "scheme": "hindawi" , "top": "com" , "prefselector": "hindawi" , "preformatter": "hindawi" },
-	{ "scheme": "ieeexplore\\.ieee" , "top": "org", "path": "(?:document|xpl)" , "prefselector": "ieee" , "preformatter": "ieee" },
+	{ "scheme": "ieeexplore\\.ieee" , "top": "org", "path": "(?:document|xpl|abstract/document)" , "prefselector": "ieee" , "preformatter": "ieee" },
 	{ "scheme": "ingentaconnect" , "top": "com" , "prefselector": "ingentaconnect" , "preformatter": "ingentaconnect" },
 	{ "scheme": "iopscience\\.iop" , "top": "org" , "prefselector": "iop" , "preformatter": "iop" },
 	{ "scheme": "jstor" , "top": "org" , "prefselector": "jstor" , "preformatter": "jstor" },
@@ -69,7 +69,7 @@
 		
 	},
 	{ "scheme": "research\\.chalmers" , "top": "se" , "prefselector": "cpl" , "preformatter": "cpl" },
-	{ "scheme": "journals\\.sagepub" , "top": "com" , "prefselector": "sagepub" , "preformatter": "sagepub" },
+	{ "scheme": "[^\\.]+\\.sagepub" , "top": "com" , "prefselector": "sagepub" , "preformatter": "sagepub" },
 	{ 	
 		"scheme": "sciencedirect" , "top": "com" ,
 		"path":	[
@@ -100,6 +100,7 @@
 				{ "scheme": "(?:doi|wol1\\/doi)" , "prefselector": "wiley" , "preformatter": "wiley"  }
 			]
 	},
+	{ "scheme": "wiley" , "top": "com" , "prefselector": "wiley-shop" , "preformatter": "wiley-shop"  },
 	{ "scheme": "washingtonpost" , "top": "com" , "prefselector": "washingtonpost" , "preformatter": "washingtonpost" },
 	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)webofknowledge" , "top": "com" , "prefselector": "webofscience" , "preformatter": "webofscience" },
 	{ 
@@ -110,5 +111,6 @@
 			]
 	},
 	{ "scheme": "heise" , "top": "de" , "prefselector": "heise" , "preformatter": "heise" },
-	{ "scheme": "tagesschau" , "top": "de" , "prefselector": "tagesschau" , "preformatter": "tagesschau" }
+	{ "scheme": "tagesschau" , "top": "de" , "prefselector": "tagesschau" , "preformatter": "tagesschau" },
+	{ "scheme": "youtube" , "top": "com" , "prefselector": "youtube" , "preformatter": "youtube" }
 ]

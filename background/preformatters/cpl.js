@@ -33,11 +33,16 @@ var BINPreformatter = ( function () {
 		
 		//database
 		metaData["citation_database"] = "Chalmers Research Database";
-		
+
 		//if thesis, reset publisher
 		if ((temp = metaData["citation_misc"]) != "") {
 			metaData["citation_type"] = "thesis";
 			metaData["citation_publisher"] = temp;
+		} else if (metaData["citation_type"].search(/dissertation/i) != -1) {
+			metaData["citation_type"] = "thesis";
+			metaData["citation_publisher"] = "Chalmers University Of Technology";
+		} else if (metaData["citation_type"].search(/bok/i) != -1) {
+			metaData["citation_type"] = "book";
 		}
 		
 	}

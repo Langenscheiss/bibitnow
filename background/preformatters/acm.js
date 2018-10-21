@@ -46,7 +46,6 @@ var BINPreformatter = ( function () {
 				if (temp.length > 1) metaData["citation_download"]["citation_lastpage"] = temp[1];
 			}
 		}
-		
 		//set database
 		metaData["citation_database"] = "ACM Digital Library";
 	}

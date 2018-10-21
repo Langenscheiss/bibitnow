@@ -24,7 +24,7 @@ var BINPrefselector = ( function () {
 		citation_doi: [ ['dd.blacklight-identifiers__doi','innerText'] ],
 		citation_abstract: [ ['div.abstract_block','innerText', true, 20000] , ['dd.abstract-block script','textContent',true,20000] ],
 		citation_publisher: [ ['div#mpeople','textContent',true] , ['div#infodiv table.infoL.award','innerText',true ] , ['dd.blacklight-degree_institution','innerText'] ],
-		citation_download: [ ['div#metadata a#json','href'] ],
+		citation_download: [ ['div#metadata a#json','href'] , ['a#export_refworks','href'] ],
 		citation_issn: [ ['meta[name="citation_isbn"]','content'] ]
 	};
 

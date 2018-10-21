@@ -22,6 +22,7 @@ var BINPrefselector = ( function () {
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = { 
 		citation_journal_title: [ ['meta[name="citation_journal_title"]','content'] , ['meta[name="citation_inbook_title"]','content'] ],
+		citation_date: [ ['text.DetailDate','innerText'] ],
 		citation_abstract: [ ['meta[name="citation_abstract"]','content', true, 20000] ]
 	};
 

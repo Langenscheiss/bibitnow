@@ -19,7 +19,7 @@ var BINPrefselector = ( function () {
 		citation_misc: [ ['li.permissions a','href' ] , ['li.m-quick-links__item a.rightslink','href'] ],
 		citation_doi: [ ['meta[name="evt-doiPage"]','content'] ],
 		citation_date: [ ['meta[name="evt-dt"]','content'] ],
-		citation_abstract: [ ['dd#abstract','innerText', true, 20000] , ['section#article_abstract','innerText',true, 20000]],
+		citation_abstract: [ ['dd#abstract','innerText', true, 20000] , ['section#article_abstract','innerText',true, 20000] , ['section#article_Abstract','innerText',true, 20000]],
 		citation_download: [ ['li.downloadCitation a','href'] , ['li.m-article-tools__nav-item--more ul.m-article-tools__subnav-list a.js__openPopup.js__getAjaxContent','href'] ]
 	};
 
