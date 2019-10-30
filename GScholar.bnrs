@@ -1,0 +1,1 @@
+[{"name":"GScholar","tooltip":"Find article on Google Scholar","formatString":"{doi\\https://scholar.google.com/scholar_lookup?&doi=\\}{title\\&title=\\}","whiteSpaceReplacement":"+","showAsTooltip":true}]
