@@ -18,11 +18,16 @@ var BINPreformatter = ( function () {
 	// preformatting function
 	function preformatData(metaData, parser) {
 		
-		//fix first page from misc if possible, otherwise fix what is possible to fix
+		
+		//fix first page from misc if possible, otherwise set issue and fix what is possible to fix
 		let bibField = metaData["citation_misc"];
+		bibField = bibField.match(/Article.?number:[\ ]*([^\ \(]+)/i);
+		if (bibField != null && bibField.length > 1) bibField = bibField[1];
 		if (metaData["citation_firstpage"] == "" || metaData["citation_firstpage"].search(/[a-z]/i) != -1) {
-			bibField = bibField.match(/Article.?number:[\ ]*([^\ \(]+)/i);
-			if (bibField != null && bibField.length > 1) metaData["citation_firstpage"] = bibField[1];
+			metaData["citation_firstpage"] = bibField;
+			metaData["citation_lastpage"] = "";
+		} else {
+			metaData["citation_issue"] = bibField;
 		}
 		
 		//clear misc
@@ -43,6 +48,14 @@ var BINPreformatter = ( function () {
 			metaData["citation_volume"] = bibField.replace(/^.*volumeNum=/,"").replace(/[^0-9]+.*$/g,"").trim();
 			if (metaData["citation_issue"] == "") metaData["citation_issue"] = bibField.replace(/^.*issueNum=/,"").replace(/[^0-9]+.*$/g,"").trim();
 			if (metaData["citation_doi"] == "") metaData["citation_doi"] = decodeURIComponent(bibField).replace(/^.*contentID=/,"").replace(/\&.*$/g,"").trim();
+		}
+		
+		//override dynamically obtained first page and issue
+		bibField = metaData["citation_firstpage"];
+		let issue = metaData["citation_issue"];
+		if (bibField != "" && (metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') { 
+			if (bibField != null && typeof(bibField) == 'string' && bibField != "") metaData["citation_firstpage"] = "";
+			if (issue != null && typeof(issue) == 'string' && issue != "") metaData["citation_issue"] = "";
 		}
 	}
 	

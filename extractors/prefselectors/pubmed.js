@@ -25,7 +25,7 @@ var BINPrefselector = ( function () {
 		citation_journal_title: [ ['div.rprt_all div.rprt.abstract div.cit a','title'] ],
 		citation_doi: [ ['div.resc a[ref="aid_type=doi"]','innerText'] ],
 		citation_publisher: [ ['p.copyright','innerText'] , ['div.linkoutlist a[title="Full text at publisher\'s site"]','innerText'] ],
-		citation_misc: [ ['meta[name="description"]','content'] ],
+		citation_misc: [ ['div.cit','innerText'] ],
 		citation_abstract: [ ['div.AbstractText','innerText', true, 20000] , ['div.abstr div','innerText', true, 20000] ],
 		citation_download: [ ['meta[name="ncbi_uidlist"]','content'] , [ 'BINURL' ,'' ] ]
 	};

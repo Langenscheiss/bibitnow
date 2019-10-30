@@ -18,11 +18,12 @@ var BINPreformatter = ( function () {
 		//fix date string
 		metaData["citation_date"] = metaData["citation_date"].replace(/(?:publication|of|date)/gi,"");
 		
-		//prefer static keywords and authors if available
+		//prefer static keywords, date and authors if available
 		let download = metaData["citation_download"];
 		if (download != null && typeof(download) == 'object') {
 			if (metaData["citation_keywords"] != "") download["citation_keywords"] = "";
 			if (metaData["citation_authors"] != "") download["citation_authors"] = "";
+			if (metaData["citation_date"] != "") download["citation_date"] = "";
 		}
 
 		//fix static issn/isbn and type if isbn available

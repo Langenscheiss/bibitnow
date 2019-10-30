@@ -17,7 +17,7 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//fix beginning of abstract
-		let abstract = metaData["citation_abstract"].replace(/^Abstract[\s\:]+/,"");
+		let abstract = metaData["citation_abstract"].replace(/^Abstract[\s\:]+/i,"");
 
 // 		//fix math in abstract, math symbols saved in citation_misc
 // 		let mathSymbols = metaData["citation_misc"];

@@ -18,7 +18,7 @@ var BINPrefselector = ( function () {
 		citation_journal_title: [ ['h1.pageTitleNoRule','innerText'] ],
 		citation_misc: [ ['p.articleRef','innerText'] ],
 		citation_issn: [ ['div#articleInfoBox p','innerText'] ],
-		citation_abstract: [ ['div.abstractSection','innerText', true, 20000] ],
+		citation_abstract: [ ['div.abstractSection','innerText', true, 20000] , ['meta[name="citation_abstract" i]','content', true, 20000] ],
 		citation_download: [ ['meta[property="og:url"]','content'] ]
 	};
 

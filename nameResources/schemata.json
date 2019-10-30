@@ -1,5 +1,5 @@
 [
-	{ 	"schema": "(?:NewsArticle|website|webpage)" ,
+	{ 	"schema": "(?:.*NewsArticle|website|webpage|VideoObject)" ,
 		"bibfields":	
 		{
 			"citation_date": 	[ 	
@@ -9,7 +9,8 @@
 							{ "baseProperty": ["uploadDate"] }
 						],
 			"citation_title": 	[
-							{ "baseProperty": ["headline"] }
+							{ "baseProperty": ["headline"] },
+							{ "baseProperty": ["name"] }
 						],
 			"citation_firstpage": 	[
 							{ "baseProperty": ["pageStart"] },

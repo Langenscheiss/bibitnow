@@ -11,13 +11,13 @@ var BINPreformatter = ( function () {
 	function preformatRawData(metaData, parser) {
 		
 		//function to extract what is in between xml tags
-		function extractTag(input,tag,prop,all) {
+		function extractTag(input,tag,prop,all,closed = false) {
 			
 			//match tags in input
+			let ext = closed ? '>)' : '>?)';
 			prop = (prop != null && prop != "") ? " " + prop : "";
-			prop = '<' + tag + prop + '[^>]*>.*?(?:<\\/' + tag + '>?)';
+			prop = '<' + tag + prop + '[^>]*>.*?(?:<\\/' + tag + ext;
 			input = all ? input.match(new RegExp(prop,"g")) : input.match(new RegExp(prop,""));
-			
 			//if tag not found, return empty input
 			if (input == null || (prop = input.length) == 0) return "";
 		        
@@ -34,8 +34,9 @@ var BINPreformatter = ( function () {
 		//extract data from pubmed xml
 		let dataAll = metaData["citation_download"].replace(/[\n]/g," <> ").replace(/\&lt;/g,"<").replace(/\&gt;/g,">");
 		metaData["citation_download"] = "";
+
 		//extract journal info
-		let parsedString = "", dataPart = extractTag(dataAll,'Journal','',false);
+		let parsedString = "", dataPart = extractTag(dataAll,'Journal','',false,true);
 		let dataField;
 		if (dataPart != null && dataPart != "") {
 			

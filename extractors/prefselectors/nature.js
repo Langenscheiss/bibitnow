@@ -21,7 +21,7 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = {
 		citation_authors: [ ['meta[name="citation_authors"]','content'] , ['li[itemprop="author"] span[itemprop="name"]','innerText'] ],
 		citation_date: [ ['time[itemprop="datePublished"]','datetime'] ],
-		citation_misc: [ ['ul[data-component="article-info-list"]','innerText'] ],
+		citation_misc: [ ['div.c-article-header p.c-article-info-details','innerText',true] , ['ul[data-component="article-info-list"]','innerText'] ],
 		citation_doi: [ ['meta[name="prism.doi"]','content'] , ['div#additional-information-content','innerText'] , ['div[data-type="maestro_mosaic"]','data-doi'] ],
 		citation_volume: [ ['meta[name="citation_volume"]','content'] , ['li.small-space-below a[data-track-source="rights"]','href'] ],
 		citation_title: [ ['meta[property="og:title"]','content',true] , ['h2#atl','innerText'] ],

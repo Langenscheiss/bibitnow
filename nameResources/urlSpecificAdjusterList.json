@@ -52,6 +52,7 @@
 	{ "scheme": "nytimes" , "top": "com" , "prefselector": "nytimes" , "preformatter": "nytimes" },
 	{ "scheme": "ojs\\.darwin\\.edu" , "top": "ar" , "preformatter": "darwiniana" , "prefselector": "darwiniana" },
 	{ "scheme": "global\\.oup" , "top": "com" , "preformatter": "oup" , "prefselector": "oup" },
+	{ "scheme": "github" , "top": "com" , "preformatter": "github" , "prefselector": "github" },
 	{ "scheme": "academic\\.oup" , "top": "com" , "preformatter": "oup-journals" , "prefselector": "oup-journals" },
 	{ "scheme": "ora\\.ox\\.ac" , "top": "uk" , "prefselector": "oxford-archive" , "preformatter": "oxford-archive"  },
 	{ "scheme": "pubs\\.rsc" , "top": "org" , "prefselector": "rsc" , "preformatter": "rsc"  },
@@ -74,6 +75,7 @@
 		"scheme": "sciencedirect" , "top": "com" ,
 		"path":	[
 				{ "scheme": "science\\/book" , "prefselector": "sciencedirect-book" , "preformatter": "sciencedirect-book" },
+				{ "scheme": "book" , "prefselector": "sciencedirect-book" , "preformatter": "sciencedirect-book" },
 				{ "scheme": "science\\/article" , "prefselector": "sciencedirect" , "preformatter": "sciencedirect" }
 			]			
 	},
@@ -85,6 +87,7 @@
 				{ "scheme": "(?:book|referencework)" , "prefselector": "springer-link-book" , "preformatter": "springer-link-book" }
 			]
 	},
+	{ "scheme": "osapublishing" , "top": "org"  , "prefselector": "osa" , "preformatter": "osa" },
 	{ "scheme": "pnas" , "top": "org"  , "prefselector": "pnas" , "preformatter": "pnas" },
 	{ "scheme": "spiedigitallibrary" , "top": "org"  , "prefselector": "spie" , "preformatter": "spie" },
 	{ "scheme": "press\\.princeton" , "top": "edu" , "prefselector": "princeton" , "preformatter": "princeton" },
@@ -112,5 +115,8 @@
 	},
 	{ "scheme": "heise" , "top": "de" , "prefselector": "heise" , "preformatter": "heise" },
 	{ "scheme": "tagesschau" , "top": "de" , "prefselector": "tagesschau" , "preformatter": "tagesschau" },
-	{ "scheme": "youtube" , "top": "com" , "prefselector": "youtube" , "preformatter": "youtube" }
+	{ "scheme": "youtube" , "top": "com" , "prefselector": "youtube" , "preformatter": "youtube" },
+	{ "scheme": "seattletimes" , "top": "com" , "prefselector": "seattletimes" },
+	{ "scheme": "bbc" , "top": "com" , "prefselector": "bbc" },
+	{ "scheme": "bbc\\.co" , "top": "uk" , "prefselector": "bbc" }
 ]

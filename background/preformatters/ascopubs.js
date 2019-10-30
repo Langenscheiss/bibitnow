@@ -82,9 +82,12 @@ var BINPreformatter = ( function () {
 		}
 		
 		//fix abstract, choose static one if available
-		if (metaData["citation_abstract"] != "" && (metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
-			metaData["citation_abstract"] = "";
+		let download = metaData["citation_download"];
+		if (download != null && typeof(download) == 'object') {
+			if (metaData["citation_abstract"] != "" ) download["citation_abstract"] = "";
+			if (metaData["citation_firstpage"] != "" ) download["citation_firstpage"] = "";
 		}
+		
 		
 	}
 	

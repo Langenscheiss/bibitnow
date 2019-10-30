@@ -11,14 +11,15 @@ var BINPrefselector = ( function () {
 	function formatCitationLink(metaData, link) {
 		//return if no valid link
 		if (link == null || link == "") return "";
-		       
 		return (metaData["citation_url_nopath"] + link);
+		
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = {
-		citation_abstract: [ ['meta[name="citation_abstract"]','content', true, 20000] ],
-		citation_download: [ ['div.highwire-citation-formats-links li.ris a','href'] ]
+		citation_abstract: [ ['div#abstract-1','innerText', true, 20000] , ['meta[name="citation_abstract"]','content', true, 20000] ],
+		citation_download: [ ['div.highwire-citation-formats-links li.ris a','href'] ],
+		citation_authors: [ ["meta[name=\"citation_author\" i]","content"] , ["span.cit-auth-list span.cit-auth","innerText",true] ],
 	};
 
 	// finally expose selector message and link formatter

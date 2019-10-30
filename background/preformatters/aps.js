@@ -35,6 +35,12 @@ var BINPreformatter = ( function () {
 		
 		//remove new lines from abstract if obtained from abstract html section and not from meta
 		if (metaData["query_summary"]["citation_abstract"] == 1) metaData["citation_abstract"] = metaData["citation_abstract"].replace(/\n/g,"");
+		       
+		//add "(R)" for rapid communication
+		if (metaData["citation_misc"].search(/rapid[\s]+communication/i) != -1) {
+			metaData["citation_firstpage"] += "(R)";
+			metaData["citation_download"]["citation_firstpage"] += "(R)";
+		}
 	}
 	
 	// expose preformatting function and raw preformatting function

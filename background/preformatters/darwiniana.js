@@ -24,6 +24,9 @@ var BINPreformatter = ( function () {
 				if (page.length > 1) metaData["citation_lastpage"] = page[1];
 			}
 		}
+		
+		//fix abbreviation
+		metaData["citation_journal_abbrev"] = "Darwiniana";
 	}
 	
 	//return preformatting function

@@ -14,28 +14,36 @@ var BINPreformatter = ( function () {
 	}
 	
 	//preformatting function
-	function preformatData(metaData, parser) {		
+	function preformatData(metaData, parser) {	
 		//preformat misc for journal abbrev, issue and pages
 		let temp = metaData["citation_misc"];
 		if (temp != "") {
-			temp = temp.split(",");
+			temp = temp.split(";");
 			if (temp != null && temp.length > 0) {
-				metaData["citation_journal_abbrev"] = temp[0].trim();
-				let page = temp[temp.length-1].replace(/[p\ \.]+/g,"").trim();
-				page = page.split(/[\u002D\uFF0D\uFE63\u207B\u208B\u00AD\u058A\u2010\u2013\u2011\u2043]/);
-				
-				if (page.length > 0 && page[0] != "ArticleASAP" && page[0] != "JustAccetedManuscrit") metaData["citation_firstpage"] = page[0].trim();
-				if (page.length > 1) metaData["citation_lastpage"] = page[1].trim();
+				let val;
+				if (temp.length > 0) {
+					val = temp[0];
+					if (val != null && val.search(/[0-9]/) != -1) metaData["citation_journal_abbrev"] = val;
+				}
 				if (temp.length > 2) {
-					temp = temp[temp.length - 2].match(/\([^\(\)]*\)/);
-					if (temp != null && temp.length > 0) {
-						metaData["citation_issue"] = temp[0].replace(/[\(\)]/g,"").trim();
-					}
+					val = temp[2];
+					if (val != null && val.search(/[0-9]/) != -1) metaData["citation_volume"] = val;
+				}
+				if (temp.length > 3) {
+					val = temp[3];
+					if (val != null && val.search(/[0-9]/) != -1) metaData["citation_issue"] = val;
+				}
+				if (temp.length > 4) {
+					val = temp[4];
+					if (val != null && val.search(/[0-9]/) != -1) metaData["citation_firstpage"] = val;
 				}
 			}
 		}
 		//reset misc
 		metaData["citation_misc"] = "";
+		
+		//fix date
+		metaData["citation_date"] = metaData["citation_date"].replace(/^.*issue[\s]*/i,"");
 		
 		//preformat issn link to extract issn
 		temp = metaData["citation_issn"];
@@ -47,6 +55,8 @@ var BINPreformatter = ( function () {
 				metaData["citation_issn"] = "";
 			}
 		}
+		
+		
 	}
 	
 	// expose preformatting function and raw preformatting function

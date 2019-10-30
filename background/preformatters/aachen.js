@@ -19,7 +19,7 @@ var BINPreformatter = ( function () {
 		//modify if thesis
 		if (metaData["citation_type"].search(/thesis/i) != -1) {
 			metaData["citation_type"] = "thesis";
-			metaData["citation_journal_title"] = metaData["citation_publisher"];
+			metaData["citation_journal_title"] = "RWTH Aachen University";
 			metaData["citation_publisher"] = "RWTH Aachen University";
 			//only one author for thesis
 			metaData["citation_authors"] = metaData["citation_authors"].replace(/[\s]+[\;]+[\s]+.*$/,"");
@@ -39,6 +39,13 @@ var BINPreformatter = ( function () {
 		
 		//clear misc
 		metaData["citation_misc"] = "";
+		
+		//fix title
+		metaData["citation_title"] = metaData["citation_title"].replace(/\$[\s]*([^\s].*[^\s])[\s]*\$/g,
+			function(match, $1, offset, original) {
+				return "$" + $1 + "$";
+			}
+		);
 		
 		//database
 		metaData["citation_database"] = "RWTH Publications";

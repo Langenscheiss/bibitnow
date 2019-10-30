@@ -15,6 +15,7 @@ var BINPreformatter = ( function () {
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
+		
 		//fix date, remove time of day depending on which request was successful
 		if (metaData["query_summary"]["citation_date"] == 1) {
 			//remove time of day
@@ -28,9 +29,15 @@ var BINPreformatter = ( function () {
 			metaData["citation_date"] = date;
 		}
 		
-		//fix date in json
+		//fix date and author names in json
 		let json = metaData["citation_json"];
 		if (json != null && typeof(json) == 'object') {
+			
+			if (metaData["citation_authors"] != "") {
+				json["citation_authors"] = "";
+			} else {
+				json["citation_authors"] = json["citation_authors"].replace(/\,/g," ;");
+			}
 			json["citation_date"] = json["citation_date"].replace(/T.*$/i,"");
 		}
 		

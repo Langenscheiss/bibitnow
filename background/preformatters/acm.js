@@ -40,11 +40,16 @@ var BINPreformatter = ( function () {
 		       
 		//fix pages
 		if ((temp = metaData["citation_download"]) != null && typeof(temp) == 'object') {
+			
+			//prefer static publisher
+			if (metaData["citation_publisher"] != "") temp["citation_publisher"] = "";
+			
 			temp = temp["citation_firstpage"].split(/\-/);
 			if (temp != null && temp.length > 0) {
 				metaData["citation_download"]["citation_firstpage"] = temp[0];
 				if (temp.length > 1) metaData["citation_download"]["citation_lastpage"] = temp[1];
 			}
+			
 		}
 		//set database
 		metaData["citation_database"] = "ACM Digital Library";

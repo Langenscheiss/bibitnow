@@ -30,7 +30,8 @@ var BINPrefselector = ( function () {
 		citation_download: [ ['a#export-article-link','href'] , ['BINURL','']],
 		citation_abstract: [ ['div#article-content section.abstract div.content p','innerText', true, 20000] , ['meta[name="description"]','content', true, 20000] ],
 		citation_author: [ ['meta[name="citation_author"]','content'] , ['div#title h5.authors','innerText'] ],
-		citation_keywords: [ ['div.physh-tagging a.physh-concept','innerText'] ]
+		citation_keywords: [ ['div.physh-tagging a.physh-concept','innerText'] ],
+		citation_misc: [ ['ul.inline-list.labels span.suggestion.label.radius','innerText'] ]
 	};
 
 	// finally expose selector message and link formatter

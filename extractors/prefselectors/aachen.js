@@ -19,7 +19,7 @@ var BINPrefselector = ( function () {
 		citation_abstract: [ ['meta[name="description"]','content',true,20000] ],
 		citation_type: [ ['span.pubtypes','innerText'] ],
 		citation_date: [ ['meta[name="citation_date"]','content'],['div.recordlastmodifiedbox','innerText'] ],
-		citation_authors: [ ['span.refauthor span[itemprop="author"] span[itemprop="name"]','innerText'] ]
+		citation_authors: [ ['p.leftElement span.refauthor span[itemprop="author"] span[itemprop="name"],p.leftElement a.refauthor span[itemprop="name"]','innerText'] ]
 	
 	};
 

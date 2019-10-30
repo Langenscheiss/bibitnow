@@ -63,7 +63,7 @@ var BINPreformatter = ( function () {
 					if (bibField != null && (length = bibField.length) > 1) {
 						let fullName = bibField[0];
 						for (let i = 1; i<length; ++i) {
-							let substr = new RegExp("^"+bibField[i]);
+							let substr = new RegExp("^" + BINResources.escapeForRegExp(bibField[i]));
 							if (fullName.search(substr) != -1) {
 								authorString += bibField[i] + " ";
 								fullName = fullName.replace(substr,"");

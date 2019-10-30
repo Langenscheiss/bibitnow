@@ -21,7 +21,7 @@ var BINPrefselector = ( function () {
 		citation_author: [ ['meta[name="citation_author"]','content'], ['h3.author','innerText'] , ['div#authorInfo strong','innerText'] , ['div#copyrightHolders','innerText'] ],
 		citation_date: [ ['meta[property="article:published_time"]','content'] ],
 		citation_publisher: [ ['div.publisherTextLabel.group','innerText'] ],
-		citation_abstract: [ ['div.articleBody_abstract','innerText', true, 20000] ],
+		citation_abstract: [ ['div.articleBody_transAbstract','innerText', true, 20000] , ['div.articleBody_abstract','innerText', true, 20000] ],
 		citation_issn: [ ['dd#isbn','innerText'] , ['meta[name="citation_ISSN"]','content'] ],
 		citation_download: [ ['li.cite a.ico-cite','href'] ]
 	};

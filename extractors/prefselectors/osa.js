@@ -9,19 +9,23 @@ var BINPrefselector = ( function () {
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		return "";
+		if (link == null || (link = link.trim()) == "") return "";
+		metaData["citation_download_method"] = "POST";
+		let myForm = new FormData();
+		myForm.append('articles',link);
+		myForm.append('ArticleAction',"export_endnote");
+		metaData["citation_download_requestbody"] = myForm;
+		link = (metaData["citation_url_nopath"] + "/custom_tags/IB_Download_Citations.cfm");
+		return link;
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
-	var prefselectorMsg = {
-		citation_author: [ ['p[itemprop="author" i] span[itemprop="name" i]','innerText'], [ 'meta[name="author"]', 'content'] , [ 'span[class^="Byline-bylineAuthor"]','innerText'] , ['p[itemprop="author creator"]','innerText'] ],
-		citation_title: [ ['span.balancedHeadline','innerText'] , ['meta[property="og:title"]', 'content'] ],
-		citation_url: [ ['meta[property="og:url"]','content'] ],
-		citation_abstract: [ ['meta[property="og:description"]','content',true,20000] ],
-		citation_date: [ ['meta[propert="article:modified]','content'],['meta[name="DISPLAYDATE"]', 'content' ] , ['time[itemprop="datePublished"]','content'] , ['meta[itemprop="datePublished"]','content']]
+	var prefselectorMsg = { 
+		citation_download: [ ['input[name="articles"]','value'] ],
+		citation_abstract: [ ['meta[name="dc.description" i]','innerText', true,20000 ] ]
 	};
 
-	// finally expose selector message
+	// finally expose selector message and link formatter
 	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink };
 
 }());

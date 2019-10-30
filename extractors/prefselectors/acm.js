@@ -11,10 +11,11 @@ var BINPrefselector = ( function () {
 	function formatCitationLink(metaData, link) {
 
 		//get id and parent id from url (preferred) or doi (not always working!), and attach to link
-		let idArr = metaData["citation_url"].replace(/^.*id=/,"").split(".")
+		let idArr = metaData["citation_url"].replace(/^.*id=/,"").split(".");
 		if (idArr == null || idArr.length < 2) idArr = metaData["citation_doi"].replace(/^.*org\//,"").replace(/^[^\/]*\//,"").split(".");
-		if (idArr == null) return "";
-		
+		if (idArr == null || idArr.length < 2) idArr = metaData["citation_url"].replace(/^.*id=/,"").replace(/[^0-9]/g,"");
+		if (idArr == null || idArr == "") return "";
+		if (typeof(idArr) == 'string') idArr = [ idArr ];
 		if (idArr.length == 1) {
 			idArr = (metaData["citation_url_nopath"] + "/exportformats.cfm?id=" + idArr[0].trim() + "&expformat=endnotes&include=abs");
 		} else if (idArr.length > 1) {
