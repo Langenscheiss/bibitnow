@@ -118,5 +118,6 @@
 	{ "scheme": "youtube" , "top": "com" , "prefselector": "youtube" , "preformatter": "youtube" },
 	{ "scheme": "seattletimes" , "top": "com" , "prefselector": "seattletimes" },
 	{ "scheme": "bbc" , "top": "com" , "prefselector": "bbc" },
-	{ "scheme": "bbc\\.co" , "top": "uk" , "prefselector": "bbc" }
+	{ "scheme": "bbc\\.co" , "top": "uk" , "prefselector": "bbc" },
+	{ "scheme": "scipost" , "top": "org", "prefselector": "scipost" , "preformatter": "scipost"}
 ]

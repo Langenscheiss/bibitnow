@@ -10,47 +10,73 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		
-		//parse from endnote to ris
-		metaData["citation_download"] = parser.EndnoteToRis(metaData["citation_download"]);
+		//remove everything prior to json
+		let download = metaData["citation_download"].replace(/^.*\"items\"\:\[\{/gi,"");
+		metaData["citation_download"] = "";
+			
+		//parse JSON
+		if (download != "") {
+			//fix authors
+			let temp = download.replace(/^.*\"author\"\:\[\{/gi,"").replace(/\}\].*$/gi,"").replace(/(?:\"family\"\:\"|\"given\"\:\")/gi,"").replace(/\"\}\,\{/gi," ; ").replace(/\"\,/gi,", ").replace(/\"/gi,"");
+			if (temp != "") metaData["citation_authors"] = temp;
+		       
+			//fix type
+			temp = download.replace(/^.*\"author\"\:\"/gi,"").replace(/\".*$/gi,"");
+			if (temp != "") metaData["citation_type"] = temp.toLowerCase();
+		       
+			//fix volume
+			temp = download.replace(/^.*\"volume\"\:\"/gi,"").replace(/\".*$/gi,"");
+			if (temp != "") metaData["citation_volume"] = temp;
+		       
+			//fix issue
+			temp = download.replace(/^.*\"issue\"\:\"/gi,"").replace(/\".*$/gi,"");
+			if (temp != "") metaData["citation_issue"] = temp;
+		       
+			//fix doi
+			temp = download.replace(/^.*\"DOI\"\:\"/gi,"").replace(/\".*$/gi,"");
+			if (temp != "") metaData["citation_doi"] = temp;
+			
+			//fix ISSN
+			temp = download.replace(/^.*\"ISSN\"\:\"/gi,"").replace(/\".*$/gi,"");
+			if (temp != "") metaData["citation_issn"] = temp;
+			
+			//fix title
+			temp = download.replace(/^.*\"title\"\:\"/gi,"").replace(/\".*$/gi,"");
+			if (temp != "") metaData["citation_title"] = temp;
+		       
+			//fix journal abbreviation
+			temp = download.replace(/^.*\"container\-title\"\:\"/gi,"").replace(/\".*$/gi,"");
+			if (temp != "") metaData["citation_journal_abbrev"] = temp;
+		       
+			//fix pages
+			temp = download.replace(/^.*\"page\"\:\"/gi,"").replace(/\".*$/gi,"");
+			if (temp != "") metaData["citation_firstpage"] = temp;
+		       
+			//dummy string in citation_download to suggest successful data retreival
+			metaData["citation_download"] = "TY - JOUR\nER -";
+		       
+		}
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
 		
-		//fix journal title
-		let temp = metaData["citation_journal_title"];
-		let tempTwo = temp.match(/\([^\(\)]*\)$/);
-		if (tempTwo != null && tempTwo.length > 0) metaData["citation_journal_abbrev"] = "ACM " + tempTwo[0].replace(/[\(\)]/gi,"").trim();
-		metaData["citation_journal_title"] = temp.replace(/\([^\(\)]*\)$/,"").trim();
-		
 		//fix author list
 		temp = metaData["citation_authors"];
-		metaData["citation_authors"] = temp != "" ? temp.replace(/;\ /g, " ; ").replace(/\ ;\ $/,"").trim() : "";
-			
-		//fix date format
-		temp = metaData["citation_date"].split("/");
-		if (temp != null && temp.length == 3) metaData["citation_date"] = temp[1] + "/" + temp[0] + "/" + temp[2];
-
+		metaData["citation_authors"] = temp != "" ? temp.replace(/;\ /g, " ; ").replace(/\ ;\ $/,"").trim() : "";			
+		
+		//
+		console.log(metaData["citation_isbn"]);
+		
 		//check if book
-		if (metaData["citation_misc"] != "") {
+		if ((temp = metaData["citation_isbn"]) != "") {
 			metaData["citation_type"] = "book";
-			//clear misc
-			metaData["citation_misc"] = "";
-		}
-		       
-		//fix pages
-		if ((temp = metaData["citation_download"]) != null && typeof(temp) == 'object') {
-			
-			//prefer static publisher
-			if (metaData["citation_publisher"] != "") temp["citation_publisher"] = "";
-			
-			temp = temp["citation_firstpage"].split(/\-/);
-			if (temp != null && temp.length > 0) {
-				metaData["citation_download"]["citation_firstpage"] = temp[0];
-				if (temp.length > 1) metaData["citation_download"]["citation_lastpage"] = temp[1];
+			metaData["citation_isbn"] = temp.replace(/(?:^.*ISBN\:|[\s]*DOI.*$)/gi,"");
+			if (metaData["citation_publisher"] == "") {
+				metaData["citation_publisher"] = temp.replace(/[\s]*ISBN.*$/gi,"");
 			}
-			
 		}
+		
 		//set database
 		metaData["citation_database"] = "ACM Digital Library";
 	}

@@ -38,8 +38,12 @@ var BINPreformatter = ( function () {
 		       
 		//add "(R)" for rapid communication
 		if (metaData["citation_misc"].search(/rapid[\s]+communication/i) != -1) {
-			metaData["citation_firstpage"] += "(R)";
-			metaData["citation_download"]["citation_firstpage"] += "(R)";
+			let addString = "citation_firstpage";
+			if (metaData["citation_lastpage"] != "" || metaData["citation_download"]["citation_lastpage"] != "") {
+				addString = "citation_lastpage";
+			}
+			metaData[addString] += "(R)";
+			metaData["citation_download"][addString] += "(R)";
 		}
 	}
 	
