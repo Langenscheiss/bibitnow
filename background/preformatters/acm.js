@@ -65,9 +65,6 @@ var BINPreformatter = ( function () {
 		temp = metaData["citation_authors"];
 		metaData["citation_authors"] = temp != "" ? temp.replace(/;\ /g, " ; ").replace(/\ ;\ $/,"").trim() : "";			
 		
-		//
-		console.log(metaData["citation_isbn"]);
-		
 		//check if book
 		if ((temp = metaData["citation_isbn"]) != "") {
 			metaData["citation_type"] = "book";
