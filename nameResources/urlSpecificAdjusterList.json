@@ -61,11 +61,11 @@
 	{ "scheme": "nejm" , "top": "org" , "preformatter": "nejm" , "prefselector": "nejm" },
 	{ "scheme": "researchgate" , "top": "net" , "path": "publication", "preformatter": "researchgate" , "prefselector": "researchgate" },
 	{ 	
-		"scheme": "ncbi\\.nlm\\.nih" , "top": "gov" ,
+		"scheme": "(?:pubmed\\.|)ncbi\\.nlm\\.nih" , "top": "gov" ,
 		"path": 	[
-				{ "scheme": "pubmed" , "prefselector": "pubmed" , "preformatter": "pubmed" },
 				{ "scheme": "pmc" , "prefselector": "pmc" , "preformatter": "pmc" },
-				{ "scheme": "books" , "prefselector": "ncbi-book" , "preformatter": "ncbi-book" } 
+				{ "scheme": "books" , "prefselector": "ncbi-book" , "preformatter": "ncbi-book" },
+				{ "scheme": "(?:pubmed|)" , "prefselector": "pubmed" , "preformatter": "pubmed" }
 			]
 		
 	},

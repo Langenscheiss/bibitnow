@@ -190,35 +190,39 @@ var BINPreformatter = ( function () {
 			let authorList = "";
 			data = metaData["citation_authors"];
 			if (data != "") {
-				data = data.split(" ; ");
-				let length = data.length;
-				for(let i = 0; i<length; ++i) {
-					dataPart = data[i];
-					if (dataPart != "") {
-						dataPart = dataPart.split(" ");
-						let idx = dataPart.length-1;
-						let suffix = "";
-						if (idx > 0) {
-							for (let j = 0; j<numSuffixes; ++j) {
-								suffix = new RegExp("[\s]*" + surnameSuffixesSignals[j] + "[\s\.]*$","");
-								if (dataPart[idx].search(suffix) != -1) {
-									suffix = " " + surnameSuffixes[j];
-									idx--;
-									break;
+				if (metaData["query_summary"]["citation_authors"] == 1) {
+					data = data.split(" ; ");
+					let length = data.length;
+					for(let i = 0; i<length; ++i) {
+						dataPart = data[i];
+						if (dataPart != "") {
+							dataPart = dataPart.split(" ");
+							let idx = dataPart.length-1;
+							let suffix = "";
+							if (idx > 0) {
+								for (let j = 0; j<numSuffixes; ++j) {
+									suffix = new RegExp("[\s]*" + surnameSuffixesSignals[j] + "[\s\.]*$","");
+									if (dataPart[idx].search(suffix) != -1) {
+										suffix = " " + surnameSuffixes[j];
+										idx--;
+										break;
+									}
+									suffix = "";
 								}
-								suffix = "";
+								authorList += dataPart[idx].replace(/[^\.\-\ ]/g,
+									function(match, offset, original) {
+										return ("" + match + ". ");
+									}
+								);
 							}
-							authorList += dataPart[idx].replace(/[^\.\-\ ]/g,
-								function(match, offset, original) {
-									return ("" + match + ". ");
-								}
-							);
+							for(let k = 0; k < idx; ++k) {
+								authorList += dataPart[k] + " ";
+							}
+							authorList += suffix + "; ";
 						}
-						for(let k = 0; k < idx; ++k) {
-							authorList += dataPart[k] + " ";
-						}
-						authorList += suffix + "; ";
 					}
+				} else {
+					authorList = data.replace(/[0-9]+[\,]*/gi,"");
 				}
 			}
 			metaData["citation_authors"] = authorList;
@@ -231,11 +235,10 @@ var BINPreformatter = ( function () {
 		data = metaData["query_summary"]["citation_publisher"]; 
 		if(data == -2 || data == -10) metaData["citation_publisher"] = metaData["citation_publisher"].replace(/^©[0-9\ \,]*/,"").replace(/^by/,"").replace(/\.$/,"").trim();
 		
-		
 		//parse misc field to others
 		data = metaData["citation_misc"];
 		metaData["citation_misc"] = "";
-		
+
 		//get journal abbreviation from first part of misc string if not obtained dynamically
 		if (metaData["query_summary"]["citation_journal_abbrev"] != 10) {
 			dataPart = data.match(/^[^\.]+\./i);
@@ -246,7 +249,6 @@ var BINPreformatter = ( function () {
 		}
 		
 		data = data.replace(/[\.\ ]*(doi|pii).*$/,"");
-		
 		//get date string if not obtained dynamically
 		if (metaData["query_summary"]["citation_date"] != 10) {
 			metaData["citation_date"] = data.replace(/[^\ A-Za-z0-9].*$/,"").trim();

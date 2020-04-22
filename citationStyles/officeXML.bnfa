@@ -1,0 +1,25 @@
+[
+	{
+		"name": "OfficeXML",
+		"encoding": "utf8",
+		"extension": "xml",
+		"formatSource": [
+					"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<b:Sources xmlns:b=\"http://schemas.openxmlformats.org/officeDocument/2006/bibliography\" xmlns=\"http://schemas.openxmlformats.org/officeDocument/2006/bibliography\" SelectedStyle=\"\">\n<b:Source>\n",
+					{ "req": false , "bibfields": [ ["year",false,"<b:Year>","</b:Year>\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["volume",false,"<b:Volume>","</b:Volume>\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["type",false,"<b:SourceType>","</b:SourceType>\n",["article","JournalArticle","","book","Book",""] ] ] },
+					{ "req": false , "bibfields": [ ["title",false,"<b:Title>","</b:Title>\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["url",false,"<b:URL>","</b:URL>\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["publisher",false,"<b:Publisher>","</b:Publisher>\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["doi",false,"<b:DOI>","</b:DOI>\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["authors",false,"<b:Author>\n<b:Author>\n<b:NameList>\n","</b:NameList>\n</b:Author>\n</b:Author>\n",[ "([^\\,>]*)\\,([^\\,]*)\\,([^\\,]*)[\\,]*","<b:Person>\n<b:Last>$1</b:Last>\n<b:First>$3</b:First>\n</b:Person>\n","i"] ] ] },
+					{ "req": false , "bibfields": [ ["start_page",false,"<b:Pages>",[ { "req": false , "bibfields": [ ["end_page",false,"-","",[] ] ] } , "</b:Pages>\n" ],[] ] ] },
+					{ "req": false , "bibfields": [ ["month_abbrev",false,"<b:Month>","</b:Month>\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["journal_abbrev",false,"<b:JournalName>","</b:JournalName>\n",[] ] , ["journal",false,"<b:JournalName>","</b:JournalName>\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["issue",false,"<b:Number>","</b:Number>\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["year",false,"<b:Year>","</b:Year>\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["isbn",false,"<b:StandardNumber> ISBN: ", [ { "req": false , "bibfields": [ ["issn",false," ISSN: ","",[] ] ] } , "</b:StandardNumber>\n" ] ,[] ] , ["issn",false,"<b:StandardNumber> ISSN: ","</b:StandardNumber>\n",[] ] ] },
+					"</b:Source>\n</b:Sources>"
+				]
+	}
+]
