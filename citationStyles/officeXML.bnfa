@@ -12,7 +12,7 @@
 					{ "req": false , "bibfields": [ ["url",false,"<b:URL>","</b:URL>\n",[] ] ] },
 					{ "req": false , "bibfields": [ ["publisher",false,"<b:Publisher>","</b:Publisher>\n",[] ] ] },
 					{ "req": false , "bibfields": [ ["doi",false,"<b:DOI>","</b:DOI>\n",[] ] ] },
-					{ "req": false , "bibfields": [ ["authors",false,"<b:Author>\n<b:Author>\n<b:NameList>\n","</b:NameList>\n</b:Author>\n</b:Author>\n",[ "([^\\,>]*)\\,([^\\,]*)\\,([^\\,]*)[\\,]*","<b:Person>\n<b:Last>$1</b:Last>\n<b:First>$3</b:First>\n</b:Person>\n","i"] ] ] },
+					{ "req": false , "bibfields": [ ["authors",false,"<b:Author>\n<b:Author>\n<b:NameList>\n","</b:NameList>\n</b:Author>\n</b:Author>\n",[ "([^\\,>]*)\\,([^\\,]*)\\,([^\\,]*)[\\,]*","<b:Person>\n<b:Last>$1</b:Last>\n<b:First>$3</b:First>\n</b:Person>\n","gi"] ] ] },
 					{ "req": false , "bibfields": [ ["start_page",false,"<b:Pages>",[ { "req": false , "bibfields": [ ["end_page",false,"-","",[] ] ] } , "</b:Pages>\n" ],[] ] ] },
 					{ "req": false , "bibfields": [ ["month_abbrev",false,"<b:Month>","</b:Month>\n",[] ] ] },
 					{ "req": false , "bibfields": [ ["journal_abbrev",false,"<b:JournalName>","</b:JournalName>\n",[] ] , ["journal",false,"<b:JournalName>","</b:JournalName>\n",[] ] ] },
