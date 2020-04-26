@@ -9,16 +9,19 @@ var BINPreformatter = ( function () {
 	
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
-		//fix doi and journal abbreviation, and remove abstract
-		metaData["citation_download"] = metaData["citation_download"].replace(/N2[\t\ ]+[\-]+[\t\ ]+/,"BIT - ").replace(/M3[\t\ ]+[\-]+[\t\ ]+/,"DO - ").replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").trim();
+		//do nothing, as there is no dynamic citation export being requested
 	}
-	
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
-
+		//remove unwanted properties from json
+		if ((metaData = metaData["citation_json"]) != null) {
+			metaData["citation_title"] = "";
+		}
+		//remove journal
+		metaData["citation_journal"] = ""; metaData["citation_publisher"] = "";
 	}
-
+	
 	// expose preformatting function and raw preformatting function
 	return { preformatData : preformatData , preformatRawData: preformatRawData };
 

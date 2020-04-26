@@ -1,0 +1,1 @@
+[{"name":"Arxiv","tooltip":"Search title on arXiv","formatString":"{!title\\https://arxiv.org/search/?query=\\&searchtype=title&abstracts=show&order=-announced_date_first&size=50\\}","whiteSpaceReplacement":"+","showAsTooltip":true}]
