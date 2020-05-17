@@ -1,9 +1,6 @@
 # bibitnow
 Site adjusters for browser plugin "bibitnow"
 
-Download developer version of BibItNow for Chrome/Chromium, Opera, Firefox and Safari
-https://aqpl.mc2.chalmers.se/PDSU/files/BibItNowMultiBrowser.zip
-
 "BibItNow" is a browser plugin that requires only a single click (or even less) to extract bibliographic data from abstract pages of journal articles, books and theses, and to translate this data to the Bibtex,RIS,Endnote or (B)arnold S. format. With another click or button press, this data is then either in the clipboard or accessible as a download, ready to be copied into your bibliography system of choice. The main purpose of this plugin is to separate the task of extracting bibliographic data from the bibliographic library functionality itself, thereby offering the benefit of a simpler and more streamlined export procedure compared to otherwise much more powerful library tools such as JabRef or Zotero. Compared to the latter, particular effort has been spent on a natural and simple integration of the bibtex format.
 
 To achieve its goal, BibItNow relies on a combination of a meta data extractor with a carefully chosen set of standard queries on the one hand, and, on the other hand, on a number of website specific translators (which btw. ARE NOT SIMPLY taken from Zotero). This is exactly where your help is needed. This github allows you to contribute to the development of "BitItNow", by developing and publishing website specific adjusters. These adjusters allow you to do the following:
