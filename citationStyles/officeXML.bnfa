@@ -9,6 +9,8 @@
 					{ "req": false , "bibfields": [ ["volume",false,"<b:Volume>","</b:Volume>\n",[] ] ] },
 					{ "req": false , "bibfields": [ ["type",false,"<b:SourceType>","</b:SourceType>\n",["article","JournalArticle","","book","Book",""] ] ] },
 					{ "req": false , "bibfields": [ ["title",false,"<b:Title>","</b:Title>\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["authors",0,0,false,"<b:Tag>", [ { "req": false , "bibfields": [ ["year",false,"", [  { "req": false , "bibfields": [ ["month_abbrev",false,"","", [] ] ] } ] , [] ] ] } ] , ["[\\s]+","","gi"] ] ] },
+					{ "req": false , "bibfields": [ ["authors",0,0,true,"","</b:Tag>\n",[] ] ] },
 					{ "req": false , "bibfields": [ ["url",false,"<b:URL>","</b:URL>\n",[] ] ] },
 					{ "req": false , "bibfields": [ ["publisher",false,"<b:Publisher>","</b:Publisher>\n",[] ] ] },
 					{ "req": false , "bibfields": [ ["doi",false,"<b:DOI>","</b:DOI>\n",[] ] ] },

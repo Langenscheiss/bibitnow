@@ -285,6 +285,9 @@ var BINPreformatter = ( function () {
 			}
 		}
 		
+		//capitalize journal titles
+		metaData["citation_journal_title"] = BINResources.toTitleCase(metaData["citation_journal_title"]);
+		
 		//set database
 		metaData["citation_database"] = "PubMed";
 	}

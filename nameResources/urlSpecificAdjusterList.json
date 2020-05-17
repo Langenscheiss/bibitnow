@@ -121,5 +121,6 @@
 	{ "scheme": "bbc\\.co" , "top": "uk" , "prefselector": "bbc" },
 	{ "scheme": "scipost" , "top": "org", "prefselector": "scipost" , "preformatter": "scipost"},
 	{ "scheme": "royalsocietypublishing" , "top": "org", "prefselector": "royalsoc" , "preformatter": "royalsoc"},
-	{ "scheme": "^[^\\.]*\\.wikipedia" , "top": "org", "prefselector": "wiki" , "preformatter": "wiki"}
+	{ "scheme": "^[^\\.]*\\.wikipedia" , "top": "org", "prefselector": "wiki" , "preformatter": "wiki"},
+	{ "scheme": "^[^\\.]*\\.cshlp" , "top": "org", "prefselector": "csh", "preformatter": "csh" }
 ]
