@@ -1,0 +1,12 @@
+[
+	{
+		"name": "LatexLink",
+		"extension": "txt",
+		"encoding": "ascii",
+		"formatSource": [
+					"\\href{",
+					{ "req": true, "bibfields": [ ["doi", false,"https://doi.org/","", [] ],["url",false,"","",[] ] ] }, 
+					{ "req": true, "bibfields": [ ["title_latex",false,"}{","}", [] ] ] }
+				]
+	}
+]

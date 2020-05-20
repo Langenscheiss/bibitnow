@@ -1,0 +1,12 @@
+[
+	{
+		"name": "HTMLLink",
+		"extension": "txt",
+		"encoding": "utf8",
+		"formatSource": [
+					"<a href=\"",
+					{ "req": true, "bibfields": [ ["doi", false,"https://doi.org/","", [] ],["url",false,"","",[] ] ] }, 
+					{ "req": true, "bibfields": [ ["title",false,"\">","</a>", [] ] ] }
+				]
+	}
+]
