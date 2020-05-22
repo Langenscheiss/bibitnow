@@ -45,6 +45,10 @@ var BINPreformatter = ( function () {
 		//fix keywords
 		metaData["citation_keywords"] = metaData["citation_keywords"].replace(/^[\s]*topic[s]*[\s\:\.]*/gi,"");
 		
+		//fix DOI
+		metaData["citation_doi"] = metaData["citation_doi"].replace(/10\.2307\/.*/gi,"");
+		
+		
 		//fix dynamic publisher, and prefer static abstract, title, date, issn over dynamic!
 		let download = metaData["citation_download"];
 		if (download != null && typeof(download) == 'object') {
@@ -57,6 +61,9 @@ var BINPreformatter = ( function () {
 			} else {
 				download["citation_issn"] = download["citation_issn"].replace(/[\s]*\,.*$/i,"");
 			}
+			
+			//fix doi
+			download["citation_doi"] = download["citation_doi"].replace(/10\.2307\/.*/gi,"");
 		}
 	}
 	

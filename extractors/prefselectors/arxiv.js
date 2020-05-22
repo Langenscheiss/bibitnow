@@ -11,7 +11,8 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = {
 		citation_abstract: [ [ 'blockquote.abstract','textContent', true, 20000] ],
 		citation_misc: [ ['blockquote.abstract script[type="math/tex"], blockquote.abstract span.MathJax','textContent',true, 1024, true, 1000] ], /*for mathjax detection*/
-		citation_keywords: [ [ 'td.tablecell.subjects','innerText'] ]
+		citation_keywords: [ [ 'td.tablecell.subjects','innerText'] ],
+		citation_url: [ ['meta[property="og:url" i]','content'] ]
 	};
 
 	// finally expose selector message and link formatter
