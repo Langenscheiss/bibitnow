@@ -10,7 +10,13 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix author and journal
-		metaData["citation_download"] = metaData["citation_download"].replace(/A[U1][\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JF - ").trim();
+		let query = metaData["query_summary"]["citation_download"];
+		if (query == 1) {
+			query = metaData["citation_download"].replace(/A[U1][\t\ ]+[\-]+[\t\ ]+/g,"BIT - ");
+		} else if (query == 2) {
+			query = metaData["citation_download"];
+		}
+		metaData["citation_download"] = query.replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JF - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").trim();
 	}
 	
 	
@@ -24,9 +30,42 @@ var BINPreformatter = ( function () {
 		let temp = metaData["citation_misc"];
 		metaData["citation_misc"] = "";
 		if (temp != "") {
-			temp = temp.match(/Publisher[\s\:]+([^\;]+)(?:\;|$)/i);
-			if (temp != null && temp.length > 1) {
-				metaData["citation_publisher"] = temp[1].trim();
+			if (metaData["query_summary"]["citation_misc"] == 1) {
+				temp = temp.match(/Publisher[\s\:]+([^\;]+)(?:\;|$)/i);
+				if (temp != null && temp.length > 1) {
+					metaData["citation_publisher"] = temp[1].trim();
+				}
+			} else {
+				temp = temp.split(/[\s]*;[\s]*/);
+				if (temp != null && temp.length > 0) {
+					
+					//date
+					metaData["citation_date"] = temp[0];
+					
+					if (temp.length > 3) {
+						//journal info or citation_doi
+						
+						if (temp[1].search(/doi\:/i) == -1) {
+						
+							let volIss = temp[1].trim();
+							volIss = volIss.replace(/^.*[\s]+([^\s]+\([^\s]+\).*$)/i,"$1").trim();
+							if (volIss != "") {
+								metaData["citation_volume"] = volIss.replace(/\(.*$/i,"").trim();
+								metaData["citation_issue"] = volIss.replace(/(?:^.*\([\s]*|[\s]*\).*$)/gi,"");
+								metaData["citation_firstpage"] = volIss.replace(/^.*\)[\:\s]*/gi,"");
+							}
+							volIss = temp[1].trim().replace(volIss,"").trim();
+							metaData["citation_journal_title"] = volIss;
+							
+							//DOI
+							if (temp[2].search(/doi/i) != -1) {
+								metaData["citation_doi"] = temp[3].trim();
+							}
+						} else {
+							metaData["citation_doi"] = temp[2].trim();
+						}
+					}
+				}
 			}
 		}
 		
