@@ -9,17 +9,17 @@ var BINPrefselector = ( function () {
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		//return if no valid link
 		if (link == null || link == "") return "";
-		return (metaData["citation_url_nopath"] + link);
-		
+		return (metaData["citation_url_nopath"] + link.replace(/^.*\.eu\//,"/") + "download/ris/");
 	}
 	
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
-	var prefselectorMsg = {
-		citation_abstract: [ ['div#abstract-1','innerText', true, 20000] , ['meta[name="citation_abstract"]','content', true, 20000] , ['meta[name="DC.Description" i]','content', true, 20000] ],
-		citation_download: [ ['div.highwire-citation-formats-links li.ris a','href'] ],
-		citation_authors: [ ["meta[name=\"citation_author\" i]","content"] , ["span.cit-auth-list span.cit-auth","innerText",true] ],
+	var prefselectorMsg = { 
+		citation_download: [ ['meta[property="og:url" i]','content'] ],
+		citation_url: [ ['meta[property="og:url" i]','content'] ],
+		citation_firstpage: [ ['meta[name="eprints.pagerange" i]','content'] ],
+		citation_abstract: [ ['meta[name="description" i]','content',true,20000] ],
+		citation_keywords: [ ['h1#keywords ~ div','innerText'] ]
 	};
 
 	// finally expose selector message and link formatter

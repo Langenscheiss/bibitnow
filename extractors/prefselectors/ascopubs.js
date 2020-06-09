@@ -24,7 +24,7 @@ var BINPrefselector = ( function () {
 		citation_authors: [ ['meta[name="dc.Creator" i]','content'], ['div.publicationContentAuthors span.contribDegrees','innerText'] ],
 		citation_doi: [ ['div.publicationContentDoi a','href'] ],
 		citation_abstract: [ ['div.abstractSection.abstractInFull','innerText', true, 20000] ],
-		citation_misc: [ ['li.rightsLink a.rightslink','href'] , ['a.articleWorksPurchase','href'] ]
+		citation_misc: [ ['li.rightsLink a.rightslink','href',true,20000] , ['a.articleWorksPurchase','href'] ]
 	};
 
 	// finally expose selector message

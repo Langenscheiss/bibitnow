@@ -61,6 +61,9 @@ var BINPreformatter = ( function () {
 		//reassign abstract
 		metaData["citation_abstract"] = abstract;
 		
+		//fix url
+		metaData["citation_url"] = metaData["citation_url"].replace(/^[\s]*doi[\s\:]*/gi,"");
+		
 		//preprint number
 		if ((abstract = metaData["citation_firstpage"]) != "" && metaData["citation_lastpage"] == "") {
 			metaData["citation_archive_id"] = abstract;
@@ -70,7 +73,7 @@ var BINPreformatter = ( function () {
 		//set database
 		metaData["citation_database"] = "bioRxiv Preprint Server";
 		
-		//prefer static abstract and date
+		//prefer static abstract, date, doi and url
 		const download = metaData["citation_download"];
 		if (download != null && typeof(download) == 'object') {
 			if (metaData["citation_abstract"] != "") {
@@ -78,6 +81,12 @@ var BINPreformatter = ( function () {
 			}
 			if (metaData["citation_date"] != "") {
 				download["citation_date"] = "";
+			}
+			if (metaData["citation_doi"] != "") {
+				download["citation_doi"] = "";
+			}
+			if (metaData["citation_url"] != "") {
+				download["citation_url"] = "";
 			}
 			//fix misc
 			download["citation_misc"] = "";

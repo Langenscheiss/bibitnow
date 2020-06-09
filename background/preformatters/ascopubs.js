@@ -71,6 +71,11 @@ var BINPreformatter = ( function () {
 				if ((tempTwo = tempTwo[1]) != "0") metaData["citation_issue"] = tempTwo;
 			}
 			
+			//move issue to volume if no volume
+			if (metaData["citation_volume"] == "" && (tempTwo = metaData["citation_issue"]) != "") {
+				metaData["citation_volume"] = tempTwo; metaData["citation_issue"] = "";
+			}
+			
 			//extract date
 			tempTwo = temp.match(/(?:publicationDate%3D|cover_date=)(.*?)(?:%26|;|&|$)/i);
 			if (tempTwo != null && tempTwo.length == 2) {
@@ -86,6 +91,10 @@ var BINPreformatter = ( function () {
 		if (download != null && typeof(download) == 'object') {
 			if (metaData["citation_abstract"] != "" ) download["citation_abstract"] = "";
 			if (metaData["citation_firstpage"] != "" ) download["citation_firstpage"] = "";
+		       //move issue to volume if no volume
+			if (download["citation_volume"] == "" && (tempTwo = download["citation_issue"]) != "") {
+				download["citation_volume"] = tempTwo; download["citation_issue"] = "";
+			}
 		}
 		
 		

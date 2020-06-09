@@ -17,7 +17,9 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = {
 		citation_date: [ ['meta[name="dc.Date" i]','content'],['meta[property="dc.Date" i]','content'] ],
 		citation_download: [ ['div.highwire-citation-info div.highwire-citation-type-highwire-article','data-node-nid'] ],
-		citation_abstract: [ [ 'div#abstract-1','innerText', true, 20000] ]
+		citation_abstract: [ [ 'div#abstract-1','innerText', true, 20000] ],
+		citation_doi: [ ['div.pub_jnl a','href'] ],
+		citation_url: [ ['span.highwire-cite-metadata-doi','innerText'] ]
 // 		citation_misc: [ ['blockquote.abstract script[type="math/tex"], blockquote.abstract span.MathJax','textContent',true, 1024, true, 1000] ], /*for mathjax detection*/
 // 		citation_keywords: [ [ 'td.tablecell.subjects','innerText'] ]
 	};

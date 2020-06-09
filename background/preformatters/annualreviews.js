@@ -28,6 +28,10 @@ var BINPreformatter = ( function () {
 				}
 			}
 		}
+		
+		//fix abstract
+		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^[^a-zA-Z0-9]+[aA]bstract/,"");
+		
 		//fix publisher
 		metaData["citation_publisher"] = "Annual Reviews";
 		

@@ -24,6 +24,9 @@ var BINPreformatter = ( function () {
 			//only one author for thesis
 			metaData["citation_authors"] = metaData["citation_authors"].replace(/[\s]+[\;]+[\s]+.*$/,"");
 		} else {
+			
+			//title case for journal title
+			metaData["citation_journal_title"] = BINResources.toTitleCase(metaData["citation_journal_title"]);
 			metaData["citation_abstract"] = "";
 		}
 		
