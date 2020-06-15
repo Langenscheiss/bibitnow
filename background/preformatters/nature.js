@@ -23,6 +23,7 @@ var BINPreformatter = ( function () {
 		let bibField = metaData["citation_misc"];
 		bibField = bibField.match(/Article.?number:[\ ]*([^\ \(]+)/i);
 		if (bibField != null && bibField.length > 1) bibField = bibField[1];
+		if (bibField == null) bibField = "";
 		if (metaData["citation_firstpage"] == "" || metaData["citation_firstpage"].search(/[a-z]/i) != -1) {
 			metaData["citation_firstpage"] = bibField;
 			metaData["citation_lastpage"] = "";

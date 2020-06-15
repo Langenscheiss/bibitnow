@@ -21,7 +21,7 @@ var BINPreformatter = ( function () {
 		if(metaData["query_summary"]["citation_authors"] == 2) {
 			metaData["citation_authors"] = metaData["citation_authors"].replace(/(?:[\s]*et[\s]*al[\.\ ]*|\([^\(\)]+\))/gi,"").trim();
 		}
-		
+
 		//fix issn
 		let issn = metaData["citation_issn"].match(/ISSN[0-9X\-\ ]+/);
 		if (issn != null && issn.length > 0) {
@@ -39,11 +39,13 @@ var BINPreformatter = ( function () {
 		//add "(R)" for rapid communication
 		if (metaData["citation_misc"].search(/rapid[\s]+communication/i) != -1) {
 			let addString = "citation_firstpage";
-			if (metaData["citation_lastpage"] != "" || metaData["citation_download"]["citation_lastpage"] != "") {
+			
+			if (metaData["citation_lastpage"] != "" || (metaData["citation_download"] != "" && metaData["citation_download"]["citation_lastpage"] != "")) {
 				addString = "citation_lastpage";
+				metaData["citation_download"][addString] += "(R)";
 			}
 			metaData[addString] += "(R)";
-			metaData["citation_download"][addString] += "(R)";
+			
 		}
 	}
 	
