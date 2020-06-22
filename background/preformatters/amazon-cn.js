@@ -22,11 +22,11 @@ var BINPreformatter = ( function () {
 		if (dataPart != null && dataPart.length > 0) metaData["citation_publisher"] = dataPart[0].replace(/^出版社[\s ]*[:]*/i,"").trim();
 		
 		//extract ISBN
-		dataPart = data.match(/ISBN\-13[:\ 0-9X\-]*/i);
-		if (dataPart == null || dataPart.length == 0) dataPart = data.match(/ISBN[:\ 0-9X\-]*/i);
+		dataPart = data.match(/ISBN\-13[>:\ 0-9X\-]*/i);
+		if (dataPart == null || dataPart.length == 0) dataPart = data.match(/ISBN[>:\ 0-9X\-]*/i);
 		if (dataPart != null && dataPart.length > 0) {
 			dataPart = dataPart[0];
-			metaData["citation_issn"] = dataPart.replace(/ISBN[^:]*:/,"").trim();
+			metaData["citation_issn"] = dataPart.replace(/ISBN[^:]*[:>]/,"").trim();
 		} else {
 			metaData["citation_issn"] = "";
 		}
