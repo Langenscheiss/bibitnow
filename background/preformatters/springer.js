@@ -11,11 +11,12 @@ var BINPreformatter = ( function () {
 	function preformatRawData(metaData, parser) {
 		//fix title, journal title, date, abstract
 		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\--]+[\t\ ]+/,"JF - ").replace(/TI[\t\ ]+[\--]+[\t\ ]+/,"T1 - ").replace(/DA[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").replace(/AB[\t\ ]+[\-]+[\t\ ]+/,"N2 - ").trim();
+		
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
-		
+				
 		//fix math in static title
 		metaData["citation_title"] = metaData["citation_title"].replace(/\$\$[\s]*[^\$]+?[\s]*\$\$/g,"").replace(/[\ ]+/g," ");
 		
