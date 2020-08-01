@@ -10,12 +10,12 @@ var BINPrefselector = ( function () {
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
 		
-		//return empty string if pubmed
-		if (metaData["citation_url_nopath"].search(/https:\/\/pubmed\./i) != -1) return "";
-		
 		//get base url
-		if (metaData["query_summary"]["citation_download"] == 1) {
+		let queryNumber = metaData["query_summary"]["citation_download"];
+		if (queryNumber == 1) {
 			return (metaData["citation_url_nopath"] + "/pubmed/" + link + "?report=xml&format=text");
+		} else if (queryNumber == 2) {
+			return "";
 		} else {
 			return (link.replace(/&format=.*$/,"").replace(/&report=.*$/,"") + "&report=xml&format=text");
 		}
@@ -31,7 +31,8 @@ var BINPrefselector = ( function () {
 		citation_publisher: [  ['p.copyright','innerText'] , ['div.linkoutlist a[title="Full text at publisher\'s site"]','innerText'] , ['div.full-text-links-list a.link-item.dialog-focus','title'] ],
 		citation_misc: [ ['div.cit','innerText'] , ['div.article-source','innerText',true] ],
 		citation_abstract: [ ['div.AbstractText','innerText', true, 20000] , ['div.abstr div','innerText', true, 20000] , ['div#en-abstract','innerText', true, 20000] ],
-		citation_download: [ ['meta[name="ncbi_uidlist"]','content'] , [ 'BINURL' ,'' ] ]
+		citation_download: [ ['meta[name="ncbi_uidlist"]','content'] , ['input[name="csrfmiddlewaretoken" i]','value'] , [ 'BINURL' ,'' ] ],
+		citation_archive_id: [['meta[name="uid" i]','content' ] ]
 	};
 
 	// finally expose selector message

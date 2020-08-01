@@ -9,6 +9,9 @@ var BINPrefselector = ( function () {
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
+		if (metaData["query_summary"]["citation_download"] == 2) {
+			return (metaData["citation_url_nopath"] + "/Citation/Download?resourceId=" + link + "&resourceType=3&citationFormat=0");
+		}
 		return (metaData["citation_url_nopath"] + link.replace(/\?format=.*$/,"?format=ris"));
 	}
 	
@@ -20,7 +23,7 @@ var BINPrefselector = ( function () {
 		citation_abstract: [ ['section.abstract','textContent', true, 20000] ],
 		citation_keywords: [ ['meta[name="citation_keyword"]','content'] , ['div.kwd-group a.kwd-part','innerText'] ],
 		citation_date: [ ['meta[name="citation_publication_date"]','content'] , ['div.citation-date','innerText'] ],
-		citation_download: [ ['div#getCitation ul a','href'] ]
+		citation_download: [ ['div#getCitation ul a','href'] , ['input[name="resourceId" i]','value'] ]
 	};
 
 	// finally expose selector message and link formatter

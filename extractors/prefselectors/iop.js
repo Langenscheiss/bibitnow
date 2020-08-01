@@ -21,10 +21,12 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = { 
 		citation_author: [ ['meta[name="citation_author"]','content'] , ['span[data-authors=""] span[itemprop="author"] span[itemprop="name"]','innerText'] , ['span[itemprop="author"] span[itemprop="name"]','innerText'] ],
 		citation_type: [ ['span#wd-book-print-isbn','innerText'] , ['span#wd-book-online-isbn','innerText'] ],
-		citation_title: [ ['div#wd-pub-name h1[itemref="book"]','innerText'] ],
+		citation_title: [ ['div#wd-pub-name h1[itemref="book"]','innerText'] , ['h1[itemprop="chapterName" i]','innerText'] ],
+		citation_collection_title: [ ['div#wd-pub-name a','innerText'] ],
 		citation_misc: [ ['div#wd-pub-name div.publication-sub-title','innerText'] ],
-		citation_abstract: [ ['div.article-text.wd-jnl-art-abstract','innerText', true, 20000] , ['div#wd-book-page-intro','innerText', true, 20000] ],
-		citation_date: [ ['span#wd-book-pub-date span[itemprop="datePublished"]','innerText'] ],
+		citation_abstract: [ ['div.article-text.wd-jnl-art-abstract','innerText', true, 20000] , ['div#wd-book-page-intro','innerText', true, 20000] , ['div.chapter-text.wd-chapter-abstract','innerText', true, 20000] ],
+		citation_date: [ ['span#wd-book-pub-date span[itemprop="datePublished"]','innerText'] , ['div#wd-bk-pg-about-book-content p[itemprop="datePublished" i]','innerText'] ],
+		citation_firstpage: [ ['div.article-head span.small','innerText',true] ],
  		citation_download: [ ['a.btn.btn-primary.wd-btn-cit-abs-ris','href'] ] // the download citation button on iop seems to be crap! You have to throw away a lot!
 	};
 

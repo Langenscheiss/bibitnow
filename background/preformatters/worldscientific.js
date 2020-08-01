@@ -10,7 +10,7 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix journal abbreviation
-		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").trim();
+		metaData["citation_download"] = metaData["citation_download"].replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JA - ").replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").trim();
 	}
 	
 	//preformatting function
@@ -22,11 +22,16 @@ var BINPreformatter = ( function () {
 		metaData["citation_volume"] = "";
 		
 		//check if first page is available, and reformat if yes. Otherwise, reset first page
-		let temp = metaData["citation_firstpage"].match(/\,[^\(\,]+\(/i)
-		if (temp != null && temp.length > 0) {
-			metaData["citation_firstpage"] = temp[0].replace(/[\ \,\(]/g,"").trim();
-		} else {
-			metaData["citation_firstpage"] = "";
+		let temp;
+		if (metaData["query_summary"]["citation_firstpage"] == 2) {
+			metaData["citation_firstpage"] = metaData["citation_firstpage"].replace(/(^.*,[\s]+|[\s]*\([^\(\)]*\)[\s]*$)/gi,"");
+		} else if (metaData["query_summary"]["citation_firstpage"] == 1) {
+			temp = metaData["citation_firstpage"].match(/\,[^\(\,]+\(/i)
+			if (temp != null && temp.length > 0) {
+				metaData["citation_firstpage"] = temp[0].replace(/[\ \,\(]/g,"").trim();
+			} else {
+				metaData["citation_firstpage"] = "";
+			}
 		}
 		
 		//fix math in abstract, math symbols saved in citation_misc

@@ -12,7 +12,8 @@ var BINPrefselector = ( function () {
 		citation_author: [ ['meta[name="citation_authors"]','content'] ],
 		citation_abstract: [ ['div.art-abstract.in-tab','innerText', true, 20000] ],
 		citation_journal_abbrev: [ ['div.journal-info span a','innerText'] ],
-		citation_misc: [ ['div.art-abstract.in-tab span.MJX_Assistive_MathML, div.art-abstract.in-tab span.math','innerText', true, 1024, true, 1000] ]
+		citation_misc: [ ['div.art-abstract.in-tab span.MJX_Assistive_MathML, div.art-abstract.in-tab span.math','innerText', true, 1024, true, 1000] ],
+		citation_date: [ ['meta[name="prism.publicationDate" i]','content'] , ['meta[name="dc.date" i]','content'] ]
 	};
 
 	// finally expose selector message

@@ -12,12 +12,15 @@ var BINPrefselector = ( function () {
 		citation_issn: [ ['meta[name="citation_isbn"]','content'] ],
 		citation_title: [ ['div.page-head__book-text h1','innerText'] ],
 		citation_authors: [ ['span.page-head__book-authors','innerText'] ],
-		citation_abstract: [ ['article[aria-label="Article abstract"] div.capsule__text','innerText', true, 20000] ]
+		citation_abstract: [ ['article[aria-label="Article abstract"] div.capsule__text','innerText', true, 20000] ],
+		citation_download: [ ['section.layout__content div.autopad--h form[method="post"]','action'] ]
 	};
 	
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		return "";
+		if (link == "") return "";
+		link = metaData["citation_url_nopath"] + link.replace(/getformatedresult\//,"formatedresult?markedids=").replace(/\?downloadtype=/i,"&downloadtype=") + "&managertype=endnote";
+		return link;
 	}
 	
 	// expose selector message and link formatter

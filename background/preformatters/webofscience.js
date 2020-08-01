@@ -87,6 +87,9 @@ var BINPreformatter = ( function () {
 		
 		//fix isbn
 		metaData["citation_isbn"] = fieldValue.replace(/^.*[\s]+ISBN[\s\:]+/,"").replace(/[\s]+.*$/,"");
+		
+		//fix journal title
+		metaData["citation_journal_title"] = BINResources.toTitleCase(metaData["citation_journal_title"].trim(),true);
 	}
 	
 	// expose preformatting function and raw preformatting function

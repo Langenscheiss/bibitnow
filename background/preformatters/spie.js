@@ -18,7 +18,55 @@ var BINPreformatter = ( function () {
 	function preformatData(metaData, parser) {
 		
 		//reset citation_misc
+		let temp = metaData["citation_misc"];
 		metaData["citation_misc"] = "";
+		
+		//extract from misc
+		if (temp != "") {
+			let match = ""
+			//isbn
+			if (metaData["citation_isbn"] == "")  {
+				match = temp.match(/print[\s]+isbn[\s\:]+([0-9\-]+)/i);
+				if (match != null && match.length > 1 && (match = match[1]).length > 0) {
+					metaData["citation_isbn"] = match;
+				} else {
+					match = temp.match(/isbn[\s\:]+([0-9\-]+)/i);
+					if (match != null && match.length > 1 && (match = match[1]).length > 0) metaData["citation_isbn"] = match;
+				}
+			}
+			
+			//doi
+			if (metaData["citation_doi"] == "")  {
+				match = temp.match(/https\:\/\/doi.org\/([^\|]+)/i);
+				if (match != null && match.length > 1 && (match = match[1]).length > 0) {
+					metaData["citation_doi"] = match;
+				}
+			}
+			
+			//authors
+			if (metaData["citation_authors"] == "")  {
+				match = temp.match(/author[\(\)s]*\:([^\|]+)/i);
+				if (match != null && match.length > 1 && (match = match[1]).length > 0) {
+					metaData["citation_authors"] = match;
+				}
+			}
+			
+			//date
+			if (metaData["citation_date"] == "")  {
+				match = temp.match(/published[\s\:]+([^\|]+)/i);
+				if (match != null && match.length > 1 && (match = match[1]).length > 0) {
+					metaData["citation_date"] = match;
+				}
+			}
+			
+			//collection title
+			if (metaData["citation_collection_title"] == "")  {
+				match = temp.match(/\|[\s]+book[\s\:]+([^\|]+)/i);
+				if (match != null && match.length > 1 && (match = match[1]).length > 0) {
+					metaData["citation_collection_title"] = match;
+				}
+			}
+		}
 		
 		//fix database
 		metaData["citation_database"] = "SPIE Digital Library"

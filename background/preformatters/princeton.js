@@ -16,11 +16,11 @@ var BINPreformatter = ( function () {
 			metaData["citation_title"] = metaData["citation_title"] + " -- " + temp;
 		}
 		
+		// fix authors
+		metaData["citation_authors"] = metaData["citation_authors"].replace(/^[\s]*edited[\s]+by[\s]*/i,"").replace(/[\s\,]*and[\s]*/gi," ; ");
+		
 		//clear journal
 		metaData["citation_journal_title"] = "";
-		
-		//fix isbn, include only last
-		metaData["citation_issn"] = metaData["citation_issn"].replace(/^.*,[\ ]*/,"").trim();
 		
 		// clear misc
 		metaData["citation_misc"] = "";

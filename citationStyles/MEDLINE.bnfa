@@ -1,0 +1,27 @@
+[
+	{
+		"name": "MEDLINE",
+		"encoding": "utf8",
+		"extension": "nbib",
+		"formatSource": [
+					{ "req": false , "bibfields": [ ["date_iso",false,"LR  - ","\n",[ "[\\-]+","","gi"] ] ] },
+					{ "req": false , "bibfields": [ ["issn",false,"IS  - ","\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["isbn",false,"ISBN- ","\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["volume",false,"VI  - ","\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["issue",false,"IP  - ","\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["date_iso",false,"DP  - ","\n",["[\\-]+"," ","gi","\\ 01(?:\\ |$)"," Jan ","","\\ 02(?:\\ |$)"," Feb ","","\\ 03(?:\\ |$)"," Mar ","","\\ 04(?:\\ |$)"," Apr ","","\\ 05(?:\\ |$)"," May ","","\\ 06(?:\\ |$)"," Jun ","","\\ 07(?:\\ |$)"," Jul ","","\\ 08(?:\\ |$)"," Aug ","","\\ 09(?:\\ |$)"," Sep ","","\\ 10(?:\\ |$)"," Oct ","","\\ 11(?:\\ |$)"," Nov ","","\\ 12(?:\\ |$)"," Dec ","","[\\s]*$","",""] ] ] },
+					{ "req": false , "bibfields": [ ["title",false,[{ "req": false , "bibfields": [ ["type",false,"","",["book","#","gi","[^#]+","","gi","[#]+","BTI - ","gi"] ] , ["type",false,"","",["book","","gi","[.]+","#","gi","[#]+","TI  - ","gi"] ] ] } ],".\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["start_page",false,"PG  - ",[ { "req": false , "bibfields": [ ["end_page",false,"-","",[] ] ] } , "\n" ],[] ] ] },
+					{ "req": false , "bibfields": [ ["doi",false,"LID - "," [doi]\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["abstract",false,"AB  - ","\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["authors",false,"","",[ "([^\\,>]*)\\,([^\\,]*)\\,([^\\,]*)[\\,]*","FAU - $1, $3 $2\nAU  - $1 $2 #BINModify $3\n","gi","#BINModify(.*?)([^\\s;\\.\\-])(?:[^\\s;\\.\\-]+[\\ \\-\\.]*|[\\ \\-\\.]+)","#BINModify$1$2;;;","gi","#BINModify(.*?)([^\\s;\\.\\-])(?:[^\\s;\\.\\-]+[\\ \\-\\.]*|[\\ \\-\\.]+)","#BINModify$1$2;;;","gi","#BINModify(.*?)([^\\s;\\.\\-])(?:[^\\s;\\.\\-]+[\\ \\-\\.]*|[\\ \\-\\.]+)","#BINModify$1$2;;;","gi","#BINModify(.*?)([^\\s;\\.\\-])(?:[^\\s;\\.\\-]+[\\ \\-\\.]*|[\\ \\-\\.]+)","#BINModify$1$2;;;","gi","#BINModify(.*?)([^\\s;\\.\\-])(?:[^\\s;\\.\\-]+[\\ \\-\\.]*|[\\ \\-\\.]+)","#BINModify$1$2;;;","gi","(?:#BINModify\\ |;;;|\\.)","","gi","(Jr|Sr)[\\ ]([^\\n]*)"," $2 $1","gi","\\ ,\\ ",", ","gi","[\\ ]+\\n","\n","gi","\\ \\ "," ","gi","\\nAU ","\nAU  ","gi"] ] ] },
+					{ "req": false , "bibfields": [ ["lang_iso2t",false,"LA  - ","\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["type",false,"PT  - ","\n",["article","Journal Article","","book","Book",""] ] ] },
+					{ "req": false , "bibfields": [ ["date_iso",false,"DEP - ","\n",[ "[\\-]+","","gi"] ] ] },
+					{ "req": false , "bibfields": [ ["journal_abbrev",false,"TA  - ","\n",["[\\.]+","","gi"] ] ] },
+					{ "req": false , "bibfields": [ ["journal",false,"JT  - ","\n",[] ] ] },
+					{ "req": false , "bibfields": [ ["keywords",false,"OT  - ","\n",["[\\s]*\\,[\\s]*","\nOT  - ","gi"] ] ] },
+					{ "req": false , "bibfields": [ ["doi",false,"AID - "," [doi]\n",[] ] ] }
+				]
+	}
+]

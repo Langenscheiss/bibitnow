@@ -7,6 +7,13 @@ var BINPreformatter = ( function () {
 	var window = null;
 	var document = null;
 	
+	//preformat raw data including raw RIS
+	function preformatRawData(metaData, parser) {
+		//fix title, journal title, date, abstract
+		metaData["citation_download"] = metaData["citation_download"].replace(/DA[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").replace(/AB[\t\ ]+[\-]+[\t\ ]+/,"N2 - ").trim();
+		
+	}
+	
 	//preformatting function
 	function preformatData(metaData, parser) {
 				
@@ -27,9 +34,17 @@ var BINPreformatter = ( function () {
 		//fix type
 		metaData["citation_type"] = "book";
 		
+		//prefer static publisher, date, abstract
+		temp = metaData["citation_download"];
+		if (temp != null && typeof(temp) == 'object') {
+			if (metaData["citation_date"] != "") temp["citation_date"] = "";
+			if (metaData["citation_publisher"] != "") temp["citation_publisher"] = "";
+			if (metaData["citation_abstract"] != "") temp["citation_abstract"] = "";
+		}
+		
 		//set database
 		metaData["citation_database"] = "Springer Link";
-	}
+	}	
 	
 	// expose preformatting function
 	return { preformatData : preformatData };

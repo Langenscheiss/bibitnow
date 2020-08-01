@@ -37,8 +37,9 @@ var BINPrefselector = ( function () {
 		citation_doi: [ ['div[ng-if~="::vm.details.doi"]','innerText'] , ['div.stats-document-abstract-doi','innerText']],
 		citation_publisher: [ ['div.doc-abstract-publisher','innerText'] ],
 		citation_abstract: [ ['div.abstract-text','innerText', true, 20000] , ['a[name="abstract" i]+p','innerText', true, 20000] ,  ['meta[name="citation_abstract"]','content', true, 20000] , ['div.section','innerText', true, 20000] ],
-		citation_misc: [ { query: 'table.book-layout',attribute: 'textContent', allowMultipleLines: true, lineSeparator: " |-| "} ],
+		citation_misc: [ { query: 'table.book-layout',attribute: 'textContent', allowMultipleLines: true, lineSeparator: " |-| "} , { query: 'div.document-abstract',attribute: 'innerText', allowMultipleLines: true, lineSeparator: " |-| "} , { query: 'section.document-abstract',attribute: 'innerText', allowMultipleLines: true, lineSeparator: " |-| ", maximumLength: 20000}],
 		citation_keywords: [ ['div.stats-keywords-container li:first-of-type a','innerText'] ],
+		citation_collection_title: [ ['div.book-chapter-mark-container','innerText'] ],
 		citation_issue: [ ['a.stats-document-abstract-publishedIn-issue','textContent'] ],
 		citation_download: [ ['BINURL','href'] ]
 	};

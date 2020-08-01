@@ -85,14 +85,22 @@ var BINPreformatter = ( function () {
 		let abstract = metaData["citation_abstract"].replace(/^.*?[\s]*(Abstract|Summary)[\s\:]+/i,"");
 		metaData["citation_abstract"] = abstract;
 		
+		//remove journal if equal to collection
+		if (metaData["citation_journal_title"] == metaData["citation_collection_title"]) metaData["citation_journal_title"] = "";
+		
 		//prefer static keywords and abstract
 		bibField = metaData["citation_keywords"];
-		if ((metaData = metaData["citation_download"]) != null && typeof(metaData) == 'object') {
-			if (bibField != "") metaData["citation_keywords"] = "";
+		let download = metaData["citation_download"];
+		if (download != null && typeof(metaData) == 'object') {
+			if (bibField != "") download["citation_keywords"] = "";
 			if (abstract != "") {
-				metaData["citation_abstract"] = "";
+				download["citation_abstract"] = "";
 			} else {
-				metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^.*?[\s]*(Abstract|Summary)[\s\:]+/,"");
+				download["citation_abstract"] = download["citation_abstract"].replace(/^.*?[\s]*(Abstract|Summary)[\s\:]+/,"");
+			}
+			if (metaData["citation_collection_title"] != "") {
+				if (metaData["citation_title"] != "") download["citation_title"] = "";
+				if (download["citation_journal_title"] == metaData["citation_collection_title"]) download["citation_journal_title"] = "";
 			}
 		}
 	}

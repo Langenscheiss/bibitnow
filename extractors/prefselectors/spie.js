@@ -23,7 +23,9 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = { 
 		citation_journal_title: [ ['meta[name="citation_journal_title"]','content'] , ['meta[name="citation_inbook_title"]','content'] ],
 		citation_date: [ ['text.DetailDate','innerText'] ],
-		citation_abstract: [ ['meta[name="citation_abstract"]','content', true, 20000] ]
+		citation_abstract: [ ['meta[name="citation_abstract"]','content', true, 20000] , ['text.ArticleContentText','innerText', true, 20000] ],
+		citation_misc: [ { query: 'div.ProceedingsArticleOpenAccessPanel',attribute: 'innerText', allowMultipleLines: true, lineSeparator: " |-| "} ],
+		citation_type: [ ['div#eBookTOC','id'] ]
 	};
 
 	// finally expose selector message and link formatter

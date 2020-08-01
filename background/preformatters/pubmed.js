@@ -30,151 +30,156 @@ var BINPreformatter = ( function () {
 		       	return input;
 		}
 		
-		
-		//extract data from pubmed xml
-		let dataAll = metaData["citation_download"].replace(/[\n]/g," <> ").replace(/\&lt;/g,"<").replace(/\&gt;/g,">");
-		metaData["citation_download"] = "";
-
-		//extract journal info
-		let parsedString = "", dataPart = extractTag(dataAll,'Journal','',false,true);
-		let dataField;
-		if (dataPart != null && dataPart != "") {
-			
-			//extract journal title
-			parsedString = extractTag(dataPart,'Title','',false);
-			if (parsedString != "") {
-				metaData["citation_journal_title"] = parsedString;
-				metaData["query_summary"]["citation_journal_title"] = 10;
-			}
-			
-			//extract journal abbreviation
-			parsedString = extractTag(dataPart,'ISOAbbreviation','',false);
-			if (parsedString != "") {
-				metaData["citation_journal_abbrev"] = parsedString;
-				metaData["query_summary"]["citation_journal_abbrev"] = 10;
-			}
-			
-			//extract issn
-			parsedString = extractTag(dataPart,'ISSN','',false);
-			if (parsedString != "") {
-				metaData["citation_issn"] = parsedString;
-				metaData["query_summary"]["citation_issn"] = 10;
-			}
-			
-			//extract volume
-			parsedString = extractTag(dataPart,'Volume','',false);
-			if (parsedString != "") {
-				metaData["citation_volume"] = parsedString;
-				metaData["query_summary"]["citation_volume"] = 10;
-			}
-			
-			//extract issue
-			parsedString = extractTag(dataPart,'Issue','',false);
-			if (parsedString != "") {
-				metaData["citation_issue"] = parsedString;
-				metaData["query_summary"]["citation_issue"] = 10;
-			}
-			
-			//extract publication date, choose best tag for it
-			dataField = extractTag(dataAll,'ArticleDate','',false)
-			if (dataPart.search(/year/i) == -1) {
-				if (dataField.search(/year/i) != -1 || (dataPart.search(/month/i) == -1 && dataField.search(/month/i) != -1)) dataPart = dataField;
-			} else if (dataPart.search(/month/i) == -1 && dataField.search(/month/i) != -1) {
-				dataPart = dataField;
-			}
-			parsedString = extractTag(dataPart,'Year','',false).replace(/[^0-9]/g,"");
-			if ((dataField = extractTag(dataPart,'Month','',false).replace(/\&lt;[\/]*Month\&gt;/g,"")) != "") parsedString += "-" + dataField;
-			if ((dataField = extractTag(dataPart,'Day','',false).replace(/[^0-9]/g,"")) != "") parsedString += "-" + dataField;
-			if (parsedString != "") {
-				metaData["citation_date"] = parsedString;
-				metaData["query_summary"]["citation_date"] = 10;
-			}
-		}
-		
-		//extract pages
-		parsedString = extractTag(dataAll,'MedlinePgn','',false);
-		if (parsedString != null && parsedString != "") {
-			parsedString = parsedString.replace(/[-]+/,"--");
-			if (parsedString.search("--") != -1) {
-				parsedString = parsedString.replace(/[^0-9\-]/g,"").replace(/[\.]*$/,"");
-				
-				//check if last page number has less digits than first page number. If yes, fix it
-				parsedString = parsedString.split("--");
-				let length = parsedString[0].length - parsedString[1].length
-				if (length > 0) parsedString[1] = parsedString[0].slice(0,length) + parsedString[1];
-				parsedString = "" + parsedString[0] + "--" + parsedString[1];
-			}
-			metaData["citation_firstpage"] = parsedString;
-			metaData["query_summary"]["citation_firstpage"] = 10;
-		}
-		
-		//extract doi
-		parsedString = extractTag(dataAll,'ELocationID','EIdType=\"doi\"',false);
-		if (parsedString != null && parsedString != "") {
-			metaData["citation_doi"] = parsedString;
-			metaData["query_summary"]["citation_doi"] = 10;
+		//if nbib format, simply parse to ris, otherwise assume xml
+		if (metaData["query_summary"]["citation_download"] == 2) {
+			return;
 		} else {
-			parsedString = extractTag(dataAll,'ELocationID','',false);
+		
+			//extract data from pubmed xml
+			let dataAll = metaData["citation_download"].replace(/[\n]/g," <> ").replace(/\&lt;/g,"<").replace(/\&gt;/g,">");
+			metaData["citation_download"] = "";
+
+			//extract journal info
+			let parsedString = "", dataPart = extractTag(dataAll,'Journal','',false,true);
+			let dataField;
+			if (dataPart != null && dataPart != "") {
+				
+				//extract journal title
+				parsedString = extractTag(dataPart,'Title','',false);
+				if (parsedString != "") {
+					metaData["citation_journal_title"] = parsedString;
+					metaData["query_summary"]["citation_journal_title"] = 10;
+				}
+				
+				//extract journal abbreviation
+				parsedString = extractTag(dataPart,'ISOAbbreviation','',false);
+				if (parsedString != "") {
+					metaData["citation_journal_abbrev"] = parsedString;
+					metaData["query_summary"]["citation_journal_abbrev"] = 10;
+				}
+				
+				//extract issn
+				parsedString = extractTag(dataPart,'ISSN','',false);
+				if (parsedString != "") {
+					metaData["citation_issn"] = parsedString;
+					metaData["query_summary"]["citation_issn"] = 10;
+				}
+				
+				//extract volume
+				parsedString = extractTag(dataPart,'Volume','',false);
+				if (parsedString != "") {
+					metaData["citation_volume"] = parsedString;
+					metaData["query_summary"]["citation_volume"] = 10;
+				}
+				
+				//extract issue
+				parsedString = extractTag(dataPart,'Issue','',false);
+				if (parsedString != "") {
+					metaData["citation_issue"] = parsedString;
+					metaData["query_summary"]["citation_issue"] = 10;
+				}
+				
+				//extract publication date, choose best tag for it
+				dataField = extractTag(dataAll,'ArticleDate','',false)
+				if (dataPart.search(/year/i) == -1) {
+					if (dataField.search(/year/i) != -1 || (dataPart.search(/month/i) == -1 && dataField.search(/month/i) != -1)) dataPart = dataField;
+				} else if (dataPart.search(/month/i) == -1 && dataField.search(/month/i) != -1) {
+					dataPart = dataField;
+				}
+				parsedString = extractTag(dataPart,'Year','',false).replace(/[^0-9]/g,"");
+				if ((dataField = extractTag(dataPart,'Month','',false).replace(/\&lt;[\/]*Month\&gt;/g,"")) != "") parsedString += "-" + dataField;
+				if ((dataField = extractTag(dataPart,'Day','',false).replace(/[^0-9]/g,"")) != "") parsedString += "-" + dataField;
+				if (parsedString != "") {
+					metaData["citation_date"] = parsedString;
+					metaData["query_summary"]["citation_date"] = 10;
+				}
+			}
+			
+			//extract pages
+			parsedString = extractTag(dataAll,'MedlinePgn','',false);
+			if (parsedString != null && parsedString != "") {
+				parsedString = parsedString.replace(/[-]+/,"--");
+				if (parsedString.search("--") != -1) {
+					parsedString = parsedString.replace(/[^0-9\-]/g,"").replace(/[\.]*$/,"");
+					
+					//check if last page number has less digits than first page number. If yes, fix it
+					parsedString = parsedString.split("--");
+					let length = parsedString[0].length - parsedString[1].length
+					if (length > 0) parsedString[1] = parsedString[0].slice(0,length) + parsedString[1];
+					parsedString = "" + parsedString[0] + "--" + parsedString[1];
+				}
+				metaData["citation_firstpage"] = parsedString;
+				metaData["query_summary"]["citation_firstpage"] = 10;
+			}
+			
+			//extract doi
+			parsedString = extractTag(dataAll,'ELocationID','EIdType=\"doi\"',false);
 			if (parsedString != null && parsedString != "") {
 				metaData["citation_doi"] = parsedString;
 				metaData["query_summary"]["citation_doi"] = 10;
-			}
-		}
-		
-		//extract publisher
-		parsedString = extractTag(dataAll,'CopyrightInformation','',false);
-		if (parsedString != null && parsedString != "") {
-			metaData["citation_publisher"] = parsedString;
-			metaData["query_summary"]["citation_publisher"] = 10;
-		}
-		
-		//extract article title
-		parsedString = extractTag(dataAll,'ArticleTitle','',false);
-		if (parsedString != null && parsedString != "") {
-			metaData["citation_title"] = parsedString;
-			metaData["query_summary"]["citation_title"] = 10;
-		}
-		
-		//extract authors
-		dataPart = extractTag(dataAll,'AuthorList','',false);
-		parsedString = "";
-		if (dataPart != null && dataPart != "") {
-			dataPart = extractTag(dataPart,'Author','',true);
-			let length;
-			if (dataPart != null && (length = dataPart.length) > 0) {
-			
-				let lengthTwo;
-				//extract authors names
-				for (let i = 0; i<length; ++i) {
-					
-					//extract all surnames
-					dataField = extractTag(dataPart[i],'LastName','',true);
-					if (dataField != null && (lengthTwo = dataField.length) > 0) {
-						for (let j = 0; j<lengthTwo; ++j) {
-							parsedString += dataField[j] + " ";
-						}
-					}
-					parsedString += ", ";
-					
-					//extract all forenames
-					dataField = extractTag(dataPart[i],'ForeName','',true);
-					if (dataField != null && (lengthTwo = dataField.length) > 0) {
-						for (let j = 0; j<lengthTwo; ++j) {
-							parsedString += dataField[j] + " ";
-						}
-					}
-					parsedString += "; ";
+			} else {
+				parsedString = extractTag(dataAll,'ELocationID','',false);
+				if (parsedString != null && parsedString != "") {
+					metaData["citation_doi"] = parsedString;
+					metaData["query_summary"]["citation_doi"] = 10;
 				}
-				parsedString = parsedString.replace(/[\;\ \,]*$/,"");
 			}
+			
+			//extract publisher
+			parsedString = extractTag(dataAll,'CopyrightInformation','',false);
+			if (parsedString != null && parsedString != "") {
+				metaData["citation_publisher"] = parsedString;
+				metaData["query_summary"]["citation_publisher"] = 10;
+			}
+			
+			//extract article title
+			parsedString = extractTag(dataAll,'ArticleTitle','',false);
+			if (parsedString != null && parsedString != "") {
+				metaData["citation_title"] = parsedString;
+				metaData["query_summary"]["citation_title"] = 10;
+			}
+			
+			//extract authors
+			dataPart = extractTag(dataAll,'AuthorList','',false);
+			parsedString = "";
+			if (dataPart != null && dataPart != "") {
+				dataPart = extractTag(dataPart,'Author','',true);
+				let length;
+				if (dataPart != null && (length = dataPart.length) > 0) {
+				
+					let lengthTwo;
+					//extract authors names
+					for (let i = 0; i<length; ++i) {
+						
+						//extract all surnames
+						dataField = extractTag(dataPart[i],'LastName','',true);
+						if (dataField != null && (lengthTwo = dataField.length) > 0) {
+							for (let j = 0; j<lengthTwo; ++j) {
+								parsedString += dataField[j] + " ";
+							}
+						}
+						parsedString += ", ";
+						
+						//extract all forenames
+						dataField = extractTag(dataPart[i],'ForeName','',true);
+						if (dataField != null && (lengthTwo = dataField.length) > 0) {
+							for (let j = 0; j<lengthTwo; ++j) {
+								parsedString += dataField[j] + " ";
+							}
+						}
+						parsedString += "; ";
+					}
+					parsedString = parsedString.replace(/[\;\ \,]*$/,"");
+				}
+			}
+			if (parsedString != "") {
+				metaData["citation_authors"] = parsedString;
+				metaData["query_summary"]["citation_authors"] = 10;
+			}
+			
+			//dummy string in citation_download to suggest successful data retreival
+			metaData["citation_download"] = "TY - JOUR\nER -";
 		}
-		if (parsedString != "") {
-			metaData["citation_authors"] = parsedString;
-			metaData["query_summary"]["citation_authors"] = 10;
-		}
-		
-		//dummy string in citation_download to suggest successful data retreival
-		metaData["citation_download"] = "TY - JOUR\nER -";
 	}
 	
 	//preformatting function

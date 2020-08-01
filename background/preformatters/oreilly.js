@@ -24,6 +24,11 @@ var BINPreformatter = ( function () {
 		if ((temp = temp.match(/97[89]\-[0-9X\-]+\-[0-9X]/)) != null) {
 			metaData["citation_isbn"] = temp[0];
 		}
+		
+		//fix type
+		if (metaData["citation_isbn"] != "") {
+			metaData["citation_type"] = "book";
+		}
 	}
 	
 	// expose preformatter

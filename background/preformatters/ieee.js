@@ -36,6 +36,9 @@ var BINPreformatter = ( function () {
 			metaData["citation_issn"] = "";
 		}
 		
+		//fix collection title
+		metaData["citation_collection_title"] = metaData["citation_collection_title"].replace(/^[\s]*is[\s]+part[\s]+of[\:\s]+/i,"");
+		
 		//abstract
 		metaData["citation_abstract"] = metaData["citation_abstract"].replace(/^[\s]*abstract[\s]*/i,"");
 		
@@ -78,38 +81,98 @@ var BINPreformatter = ( function () {
 		//fix the rest by misc
 		download = metaData["citation_misc"];
 		if (download != "") {
-			if (metaData["citation_authors"] == "") {
-				issn = download.match(/author(?:\(s\)|)[\s]*:[\s]*([^\|]+)\|\-\|/i);
-				if (issn != null && issn.length > 1) {
-					metaData["citation_authors"] = issn[1].trim();
+			let queryNumber = metaData["query_summary"]["citation_misc"];
+			if (queryNumber == 1) {
+				if (metaData["citation_authors"] == "") {
+					issn = download.match(/author(?:\(s\)|)[\s]*:[\s]*([^\|]+)\|\-\|/i);
+					if (issn != null && issn.length > 1) {
+						metaData["citation_authors"] = issn[1].trim();
+					}
 				}
-			}
-			
-			if (metaData["citation_date"] == "") {
-				issn = download.match(/year[\s]*:[\s]*(.+?)\|\-\|/i);
-				if (issn != null && issn.length > 1) {
-					metaData["citation_date"] = issn[1].trim();
+				
+				if (metaData["citation_date"] == "") {
+					issn = download.match(/year[\s]*:[\s]*(.+?)\|\-\|/i);
+					if (issn != null && issn.length > 1) {
+						metaData["citation_date"] = issn[1].trim();
+					}
 				}
-			}
-			
-			if (metaData["citation_publisher"] == "") {
-				issn = download.match(/book[\s]+type[\s]*:[\s]*(.+?)\|\-\|/i);
-				if (issn != null && issn.length > 1) {
-					metaData["citation_publisher"] = issn[1].trim();
+				
+				if (metaData["citation_publisher"] == "") {
+					issn = download.match(/book[\s]+type[\s]*:[\s]*(.+?)\|\-\|/i);
+					if (issn != null && issn.length > 1) {
+						metaData["citation_publisher"] = issn[1].trim();
+					}
 				}
-			}
-			
-			if (metaData["citation_type"] == "") {
-				issn = download.match(/content[\s]+type[\s]*:[\s]*(.+?)\|\-\|/i);
-				if (issn != null && issn.length > 1) {
-					metaData["citation_type"] = issn[1].trim();
+				
+				if (metaData["citation_type"] == "") {
+					issn = download.match(/content[\s]+type[\s]*:[\s]*(.+?)\|\-\|/i);
+					if (issn != null && issn.length > 1) {
+						metaData["citation_type"] = issn[1].trim();
+					}
 				}
-			}
+				
+				if (metaData["citation_keywords"] == "") {
+					issn = download.match(/content[\s]+topic[s]*[\s]*:[\s]*(?:\|\-\||)[\s](.+?)(?:\|\-\||$)/i);
+					if (issn != null && issn.length > 1) {
+						metaData["citation_keywords"] = issn[1].trim();
+					}
+				}
+			} else if (queryNumber == 2 || queryNumber == 3) {
+				
+				//reset misc
+				metaData["citation_misc"] = "";
+				
+				//get abstract
+				metaData["citation_abstract"] = download.replace(/^.*?Abstract[\:]?\ \|\-\|\ /,"").replace(/(|view\ more)\ \|\-\|\ .*$/i,"");
+				
+				//get date
+				if (metaData["citation_date"] == "") {
+					issn = download.match(/year[\s]*:[\s]*([^\|]+)\|\-\|/i);
+					if (issn != null && issn.length > 1) {
+						metaData["citation_date"] = issn[1].trim();
+					}
+				}
+				
+				//get type
+				if (metaData["citation_type"] == "") {
+					issn = download.match(/content\ type[\s]*:[\s]*([^\|]+)\|\-\|/i);
+					if (issn != null && issn.length > 1) {
+						metaData["citation_type"] = issn[1].trim();
+					}
+				}
+				if (metaData["citation_type"] == "" && download.search(/book\ abstract/i) != -1) {
+					metaData["citation_type"] = "book";
+				}
+				
+				
+				//get pages if not book
+				if (metaData["citation_firstpage"] == "") {
+					issn = download.match(/page(?:|\(s\))[\s]*:[\s]*([^\|]+)\|\-\|/i);
+					if (issn != null && issn.length > 1) {
+						metaData["citation_firstpage"] = issn[1].trim();
+					}
+				}
+				
+				//get isbn
+				if (metaData["citation_isbn"] == "") {
+					issn = download.match(/ISBN[\s]*:[\s]*([^\|]+)\|\-\|/);
+					if (issn != null && issn.length > 1) {
+						metaData["citation_isbn"] = issn[1].trim();
+					}
+				}
+				
+				//get publisher
+				if (metaData["citation_publisher"] == "") {
+					issn = download.match(/book\ type[\s]*:[\s]*([^\|]+)\|\-\|/i);
+					if (issn != null && issn.length > 1) {
+						metaData["citation_publisher"] = issn[1].trim();
+					}
+				}
 			
-			if (metaData["citation_keywords"] == "") {
-				issn = download.match(/content[\s]+topic[s]*[\s]*:[\s]*(?:\|\-\||)[\s](.+?)(?:\|\-\||$)/i);
-				if (issn != null && issn.length > 1) {
-					metaData["citation_keywords"] = issn[1].trim();
+				
+				//prefer static publisher
+				if (metaData["citation_publisher"] != "") {
+					metaData["citation_download"]["citation_publisher"] = "";
 				}
 			}
 		}

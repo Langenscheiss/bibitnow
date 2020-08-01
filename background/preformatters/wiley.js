@@ -9,6 +9,7 @@ var BINPreformatter = ( function () {
 	
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
+		
 		//fix title and journal
 		let temp = metaData["citation_download"];
 		temp = temp.replace(/JO[\t\ ]+[\-]+[\t\ ]+/,"JF - ").replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").trim();
@@ -23,6 +24,10 @@ var BINPreformatter = ( function () {
 			temp = temp.replace(/AB[\t\ ]+[\-]+[\t\ ]+/,"N2 - ").trim();
 		}
 		
+		//fix type if collection title available
+		if (metaData["citation_collection_title"] != "" && temp.search(/(?:^|\n)TY[\t\ ]+[\-]+[\t\ ]+/) == -1) {
+			temp = "TY - CHAP\n" + temp + "\nER -";
+		}
 		//reassign
 		metaData["citation_download"] = temp;
 	}
@@ -111,7 +116,13 @@ var BINPreformatter = ( function () {
 			if (metaData["citation_authors"] != "") {
 				publisher["citation_authors"] = "";
 			}
+			
+			//fix pages
+			if (metaData["citation_lastpage"] != "" && metaData["citation_firstpage"] != "" && publisher["citation_lastpage"] == "") {
+				publisher["citation_firstpage"] = "";
+			}
 		}
+		
 	}
 	
 	// expose preformatting function

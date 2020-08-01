@@ -18,11 +18,12 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = { 
 		citation_misc: [ ['div.abstractSection span.math, div.abstractSection span.MJX_Assistive_MathML','innerText',true, 1024, true, 1000]],
 		citation_journal_abbrev: [ ['div.articleMeta i','innerText'] ],
-		citation_firstpage: [ ['meta[property="og:description"]','content'] ],
+		citation_firstpage: [ ['meta[property="og:description"]','content'] , ['div.citation span.article__breadcrumbs','innerText']  ],
 		citation_download: [ ['div.articleMeta i','innerText'] , ['BINURL',''] ],
 		citation_abstract: [ ['div.abstractSection','innerText',true,20000] ],
 		citation_volume: [ ['div.cover-meta-wrap div.meta','innerText'] ],
-		citation_issn: [ ['div#smallIssueCover + div','innerText'] ]
+		citation_issn: [ ['div#smallIssueCover + div','innerText'] ],
+		citation_title: [ ['div.citation h1.citation__title','innerText'] ]
 	};
 
 	// finally expose selector message

@@ -9,8 +9,10 @@ var BINPreformatter = ( function () {
 	
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
-		//fix title, year, pages and journal abbreviation
-		metaData["citation_download"] = metaData["citation_download"].replace(/J2[\t\ ]+[\--]+[\t\ ]+/,"JA - ").replace(/TI[\t\ ]+[\--]+[\t\ ]+/,"T1 - ").replace(/T2[\t\ ]+[\-]+[\t\ ]+/,"JF - ").trim();
+		//fix title, year, pages and journal abbreviation if not book chapter
+		if (metaData["citation_download"].search(/(^|\n)TY[\t\ ]+[\-]+[\t\ ]+CHAP/i) == -1) {
+			metaData["citation_download"] = metaData["citation_download"].replace(/J2[\t\ ]+[\--]+[\t\ ]+/,"JA - ").replace(/TI[\t\ ]+[\--]+[\t\ ]+/,"T1 - ").replace(/T2[\t\ ]+[\-]+[\t\ ]+/,"JF - ").trim();
+		}
 	}
 	
 	//preformatting function
@@ -26,7 +28,10 @@ var BINPreformatter = ( function () {
 				download["citation_journal_title"] = "";
 				download["citation_journal_abbrev"] = "";
 			}
+			//remove collection title if chapter not found
+			if (metaData["citation_type"].search(/chapter/i) == -1) metaData["citation_collection_title"] = "";
 		} else {
+			metaData["citation_collection_title"] = "";
 			metaData["citation_type"] = "";
 		}
 		
@@ -39,7 +44,7 @@ var BINPreformatter = ( function () {
 		}
 		
 		//remove subscript from author names
-		metaData["citation_authors"] = metaData["citation_authors"].replace(/\.[a-z\s]*(?:;|$)/g,". ;");		
+		metaData["citation_authors"] = metaData["citation_authors"].replace(/\.[a-z\s\,]*(?:;|$)/g,". ;");
 		
 		//replace in misc field with "page" if page not already included, and let the rest be done by misc parser
 		temp = metaData["citation_misc"];

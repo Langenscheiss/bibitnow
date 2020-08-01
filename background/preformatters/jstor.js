@@ -10,7 +10,9 @@ var BINPreformatter = ( function () {
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//fix abstract, author title and date
-		metaData["citation_download"] = metaData["citation_download"].replace(/AB[\t\ ]+[\-]+[\t\ ]+/,"N2 - ").replace(/A[0-9][\t\ ]+[\-]+[\t\ ]+/g,"AU - ").replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").trim();
+		let downloadData = metaData["citation_download"];
+		if (metaData["query_summary"]["citation_download"] == 3) downloadData =  downloadData.replace(/A2[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ");
+		metaData["citation_download"] = downloadData.replace(/AB[\t\ ]+[\-]+[\t\ ]+/,"N2 - ").replace(/A[0-9][\t\ ]+[\-]+[\t\ ]+/g,"AU - ").replace(/TI[\t\ ]+[\-]+[\t\ ]+/,"T1 - ").replace(/PY[\t\ ]+[\-]+[\t\ ]+/,"Y1 - ").trim();
 	}
 	
 	//preformatting function
@@ -32,7 +34,7 @@ var BINPreformatter = ( function () {
 		);
 		if (metaData["query_summary"]["citation_date"] == 1 && date == "") {
 			metaData["citation_date"] = metaData["citation_date"].replace(/^[^0-9]*date\:[\s]*/i,"");
-		} else {
+		} else if (metaData["query_summary"]["citation_date"] != 2) {
 			metaData["citation_date"] = date;
 		}
 		
@@ -48,12 +50,16 @@ var BINPreformatter = ( function () {
 		//fix DOI
 		metaData["citation_doi"] = metaData["citation_doi"].replace(/10\.2307\/.*/gi,"");
 		
+		//fix pages
+		if (metaData["query_summary"]["citation_firstpage"] == 1) {
+			metaData["citation_firstpage"] = metaData["citation_firstpage"].replace(/\([^\(\)]+\)[\s]*$/i,"");
+		}
 		
 		//fix dynamic publisher, and prefer static abstract, title, date, issn over dynamic!
 		let download = metaData["citation_download"];
 		if (download != null && typeof(download) == 'object') {
 			download["citation_publisher"] = download["citation_publisher"].trim().replace(/(?:^[\[]+|[\]]+$)/g,"").trim();
-			if (metaData["citation_abstract"] != "") download["citation_abstract"] = "";
+			if (metaData["citation_abstract"] != "" && metaData["query_summary"]["citation_abstract"] > 0) download["citation_abstract"] = "";
 			if (metaData["citation_title"] != "") download["citation_title"] = "";
 			if (metaData["citation_date"] != "") download["citation_date"] = "";
 			if (metaData["citation_issn"] != "") {

@@ -70,6 +70,9 @@ var BINPreformatter = ( function () {
 			metaData["citation_firstpage"] = "";
 		}
 		
+		//fix authors
+		metaData["citation_authors"] = BINResources.htmlDecode(metaData["citation_authors"]).replace(/\,[^\;]*(?:|;)/gi," ; ");
+		
 		//set database
 		metaData["citation_database"] = "bioRxiv Preprint Server";
 		
@@ -88,6 +91,10 @@ var BINPreformatter = ( function () {
 			if (metaData["citation_url"] != "") {
 				download["citation_url"] = "";
 			}
+			
+			//fix authors
+			download["citation_authors"] = BINResources.htmlDecode(download["citation_authors"]).replace(/\,[^\;]+\,/gi,",");
+			
 			//fix misc
 			download["citation_misc"] = "";
 		}

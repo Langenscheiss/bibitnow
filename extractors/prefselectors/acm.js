@@ -30,7 +30,8 @@ var BINPrefselector = ( function () {
 		citation_keywords: [ ['meta[name="dc.Subject" i]','content'] ],
 		citation_issn: [ ['div.pill-information__content div.cover-image__details-extra div.flex-container span.space', 'innerText'] ],
 		citation_misc: [ ['a.vol-issue.simple-tooltip__inline--r','data-title'] ],
-		citation_date: [ ['span.dot-separator.date','innerText'] ]
+		citation_date: [ ['span.dot-separator.date','innerText'] ],
+		citation_firstpage: [ ['span.epub-section__pagerange','innerText'] ]
 	};
 
 	// finally expose selector message and link formatter

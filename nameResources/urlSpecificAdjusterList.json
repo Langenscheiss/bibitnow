@@ -37,6 +37,7 @@
 	{ "scheme": "journals\\.aps" , "top": "org" , "prefselector": "aps" , "preformatter": "aps" },
 	{ "scheme": "arxiv" , "top": "org" , "prefselector": "arxiv" , "preformatter": "arxiv" },
 	{ "scheme": "biorxiv" , "top": "org" , "preformatter": "biorxiv" , "prefselector": "biorxiv" },
+	{ "scheme": "medrxiv" , "top": "org" , "preformatter": "biorxiv" , "prefselector": "biorxiv" },
 	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)bioone" , "top": "org" , "preformatter": "bioone" , "prefselector": "bioone" },
 	{ "scheme": "degruyter" , "top": "com" , "prefselector": "degruyter" , "preformatter": "degruyter" },
 	{ "scheme": "elsevier" , "top": "com" , "path": "books" , "prefselector": "elsevier-book" , "preformatter": "elsevier-book" },
@@ -44,7 +45,7 @@
 	{ "scheme": "goodreads" , "top": "com" , "prefselector": "goodreads" , "preformatter": "goodreads" },
 	{ "scheme": "books\\.google(?:|\\.co|\\.com)" , "top": "[0-9a-z]+" , "prefselector": "google-book" , "preformatter": "google-book" },
 	{ "scheme": "hindawi" , "top": "com" , "prefselector": "hindawi" , "preformatter": "hindawi" },
-	{ "scheme": "ieeexplore\\.ieee" , "top": "org", "path": "(?:document|xpl|abstract/document)" , "prefselector": "ieee" , "preformatter": "ieee" },
+	{ "scheme": "ieeexplore\\.ieee" , "top": "org", "path": "(?:document|xpl|abstract/document|book)" , "prefselector": "ieee" , "preformatter": "ieee" },
 	{ "scheme": "ingentaconnect" , "top": "com" , "prefselector": "ingentaconnect" , "preformatter": "ingentaconnect" },
 	{ "scheme": "iopscience\\.iop" , "top": "org" , "prefselector": "iop" , "preformatter": "iop" },
 	{ "scheme": "jstor" , "top": "org" , "prefselector": "jstor" , "preformatter": "jstor" },
@@ -86,7 +87,7 @@
 		"scheme": "link\\.springer" , "top": "com" , 
 		"path":	[
 				{ "scheme": "(?:article|protocol)" , "prefselector": "springer" , "preformatter": "springer" },
-				{ "scheme": "(?:book|referencework)" , "prefselector": "springer-link-book" , "preformatter": "springer-link-book" }
+				{ "scheme": "(?:book|referencework|chapter)" , "prefselector": "springer-link-book" , "preformatter": "springer-link-book" }
 			]
 	},
 	{ "scheme": "osapublishing" , "top": "org"  , "prefselector": "osa" , "preformatter": "osa" },
@@ -95,7 +96,9 @@
 	{ "scheme": "press\\.princeton" , "top": "edu" , "prefselector": "princeton" , "preformatter": "princeton" },
 	{ "scheme": "search\\.proquest" , "top": "com" , "prefselector": "proquest" , "preformatter": "proquest" },
 	{ "scheme": "springer" , "top": "com" , "path": "gp" , "prefselector": "springer-book" , "preformatter": "springer-book" },
-	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)oreilly" , "top": "com" , "path": "product" , "prefselector": "oreilly" , "preformatter": "oreilly" },
+	{ 	"scheme": "(?:|[0-9a-z\\-]+[\\.]+)oreilly" , "top": "com" , 
+		"path": [ { "scheme": "(?:product|library\\/view)" , "prefselector": "oreilly" , "preformatter": "oreilly" } ]
+	},
 	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)sciencemag" , "top": "org" , "prefselector": "science" , "preformatter": "science" },
 	{ "scheme": "tandfonline" , "top": "com" , "prefselector": "taylorandfrancis" , "preformatter": "taylorandfrancis" },
 	{ 

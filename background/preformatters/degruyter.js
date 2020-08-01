@@ -9,13 +9,16 @@ var BINPreformatter = ( function () {
 	
 	// preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
-
+				
 		//fix issn if journal
 		if (metaData["query_summary"]["citation_issn"] == 2) metaData["citation_download"] = metaData["citation_download"].replace(/SN[\t\ ]+[\-]+[\t\ ]+/g,"BIT - ").trim();
 	}
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
+		
+		//if book type found, remove inbook title
+		if (metaData["citation_type"] == "book") metaData["citation_collection_title"] = "";
 		
 		//fix type and authors for books
 		if (metaData["citation_journal_title"] == "") {
