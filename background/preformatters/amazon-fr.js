@@ -18,7 +18,6 @@ var BINPreformatter = ( function () {
 
 		//preformat publisher
 		let data = metaData["citation_misc"];
-    console.log(data);
 		let dataPart = data.replace(/\([^\(\)]*\)[\ ]*$/,"").match(/(?:Verlag|Herausgeber|Uitgever|出版社|Publisher|Editor[a]?|Editore|Éditeur|Editor)[^;\(]*/i);
 		if (dataPart != null && dataPart.length > 0) metaData["citation_publisher"] = dataPart[0].replace(/^(?:Verlag|Herausgeber|Uitgever|出版社|Publisher|Editor[a]?|Editore|Éditeur|Editor)[\s ]*[:]*/i,"").trim();
 
