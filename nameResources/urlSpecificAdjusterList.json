@@ -95,7 +95,7 @@
 	{ "scheme": "spiedigitallibrary" , "top": "org"  , "prefselector": "spie" , "preformatter": "spie" },
 	{ "scheme": "press\\.princeton" , "top": "edu" , "prefselector": "princeton" , "preformatter": "princeton" },
 	{ "scheme": "search\\.proquest" , "top": "com" , "prefselector": "proquest" , "preformatter": "proquest" },
-	{ "scheme": "springer" , "top": "com" , "path": "gp" , "prefselector": "springer-book" , "preformatter": "springer-book" },
+	{ "scheme": "(?:palgrave|springer)" , "top": "com" , "path": "(?:gp|de)" , "prefselector": "springer-book" , "preformatter": "springer-book" },
 	{ 	"scheme": "(?:|[0-9a-z\\-]+[\\.]+)oreilly" , "top": "com" , 
 		"path": [ { "scheme": "(?:product|library\\/view)" , "prefselector": "oreilly" , "preformatter": "oreilly" } ]
 	},
@@ -127,5 +127,6 @@
 	{ "scheme": "scipost" , "top": "org", "prefselector": "scipost" , "preformatter": "scipost"},
 	{ "scheme": "royalsocietypublishing" , "top": "org", "prefselector": "royalsoc" , "preformatter": "royalsoc"},
 	{ "scheme": "^[^\\.]*\\.wikipedia" , "top": "org", "prefselector": "wiki" , "preformatter": "wiki"},
-	{ "scheme": "^[^\\.]*\\.cshlp" , "top": "org", "prefselector": "csh", "preformatter": "csh" }
+	{ "scheme": "^[^\\.]*\\.cshlp" , "top": "org", "prefselector": "csh", "preformatter": "csh" },
+	{ "scheme": "bookdepository" , "top": "com", "prefselector": "bookdepository", "preformatter": "bookdepository" }
 ]

@@ -41,6 +41,19 @@ var BINPreformatter = ( function () {
 		//fix author list (if necessary, depends on Wiley journal)
 		metaData["citation_authors"] = metaData["citation_authors"].replace(/[\s]*;/g, ' ;');
 		
+		//if collection title available, further format author list
+		if (metaData["citation_collection_title"] != "") {
+			//fix author list
+			let authors = metaData["citation_authors"].replace(/^[^\:]*\:[\ ]*/,"").replace(/[\ ]*\,[\ ]*/g," ; ");
+			let authorsTemp = authors;
+			while (authorsTemp.search(/(?:^|[\s\,\;\.\-\/\:]+)(?:Prof\.|Dr\.|Professor|PhD)(?:[\s\,\;\.\-\/\:]+|$)/i) != -1 || authorsTemp.search(/(?:^|[\s\,\;\.\-\/\:]+)(?:[A-Z]{2,})(?:[\s\,\;\.\-\/\:]+|$)/) != -1) {
+				authorsTemp = authorsTemp.replace(/(^|[\s\,\;\.\-\/\:]+)(?:Prof\.|Dr\.|Professor|PhD)([\s\,\;\.\-\/\:]+|$)/gi,"$1 $2").replace(/(^|[\s\,\;\.\/\:\-]+)(?:[A-Z]{2,})([\s\,\;\.\/\:\-]+|$)/g,"$1 $2");
+			}
+			authorsTemp = authorsTemp.replace(/[\s\,\;\.\-\/\:]*\;[\s\,\;\.\-\/\:]*/g, " ; ");
+			if (authorsTemp.replace(/[\s\,\;\.]/gi,"") != "") authors = authorsTemp;
+			metaData["citation_authors"] = authors;
+		}
+		
 		//fix journal title for Cochrane
 		if (metaData["citation_journal_title"] == "" && metaData["citation_misc"].search(/cochrane/i) != -1) {
 			metaData["citation_journal_title"] = "Cochrane Database of Systematic Reviews";
@@ -50,9 +63,29 @@ var BINPreformatter = ( function () {
 		//fix publisher
 		let publisher = metaData["citation_publisher"];
 		if (publisher == "") {
-			metaData["citation_publisher"] = "Wiley";
+			metaData["citation_publisher"] = "John Wiley & Sons, Ltd.";
 		} else if (metaData["query_summary"]["citation_publisher"] >= 1) {
-			metaData["citation_publisher"] = publisher.replace(/^[^0-9]*[0-9]+\ /,"");
+			
+			//remove copyright symbol
+			publisher = publisher.replace(/^[^0-9]*[0-9]+\ /,"").trim();
+			
+			//check that copyright line does not include authors and includes keywords "Wiley" or "Blackwell"
+			let matchUpper = publisher.toUpperCase();
+			let authors = metaData["citation_authors"].split(" ; ");
+			let length = 0;
+			if (authors != null && (length = authors.length) > 0) {
+				for (let i = 0; i<length; ++i) {
+					if (matchUpper.search(authors[i].toUpperCase()) != -1) {
+						length = 0;
+						break;
+					}
+				}
+			}
+			if (BINResources.asciiPunctuation(publisher,2).search(/(?:^|[\s\,\.\-])(?:Blackwell|Wiley)(?:$|[\s\,\.\-])/i) == -1) length = 0;
+			
+			//assign to publisher only if valid publisher, otherwise set standard
+			if (length == 0) publisher = "John Wiley & Sons, Ltd."
+			metaData["citation_publisher"] = publisher;
 		}
 		
 		//fix abstract, prefer static

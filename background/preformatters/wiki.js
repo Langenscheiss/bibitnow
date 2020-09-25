@@ -14,9 +14,12 @@ var BINPreformatter = ( function () {
 	
 	//preformatting function
 	function preformatData(metaData, parser) {
+		
 		//remove unwanted properties from json
+		metaData["citation_authors"] += " #BINCorpAuthor ";
 		if ((metaData = metaData["citation_json"]) != null) {
 			metaData["citation_title"] = "";
+			metaData["citation_authors"] += " #BINCorpAuthor ";
 		}
 		//remove journal
 		metaData["citation_journal"] = ""; metaData["citation_publisher"] = "";

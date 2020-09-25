@@ -11,7 +11,8 @@ var BINPrefselector = ( function () {
 	var prefselectorMsg = { 
 		citation_issn: [ ['span[itemprop="isbn"]','innerText'] ],
 		citation_date: [ ['spin[itemprop="datePublished" i]','innerText'] ],
-		citation_abstract: [ ['div[itemprop="description"]','innerText',true,20000] ]
+		citation_abstract: [ ['div[itemprop="description"]','innerText',true,20000] ],
+		citation_publisher_address: [ ['div.meta-content div.half_rhythm','innerText'] ]
 	};
 
 	// finally expose selector message

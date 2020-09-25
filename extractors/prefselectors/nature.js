@@ -6,21 +6,21 @@ var BINPrefselector = ( function () {
 	var BINParser =  null;
 	var window = null;
 	var document = null;
-	
+
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
 
 		//return if link invalid
 		if (link == null || link == "") return "";
-		
+
 		//get final url
 		return (metaData["citation_url_nopath"] + link.replace(/^[^\/]*\/\/[^\/]*/i,""));
 	}
-	
+
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = {
 		citation_authors: [ ['meta[name="citation_authors"]','content'] , ['li[itemprop="author"] span[itemprop="name"]','innerText'] ],
-		citation_date: [ ['time[itemprop="datePublished"]','datetime'] ],
+		citation_date: [ ['meta[name="citation_publication_date" i]','content'],['meta[property="citation_publication_date" i]','content'] , ['time[itemprop="datePublished"]','datetime'] ],
 		citation_misc: [ ['div.c-article-header p.c-article-info-details','innerText',true] , ['ul[data-component="article-info-list"]','innerText'] ],
 		citation_doi: [ ['meta[name="prism.doi"]','content'] , ['div#additional-information-content','innerText'] , ['div[data-type="maestro_mosaic"]','data-doi'] ],
 		citation_volume: [ ['meta[name="citation_volume"]','content'] , ['li.small-space-below a[data-track-source="rights"]','href'] ],

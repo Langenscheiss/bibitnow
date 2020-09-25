@@ -22,11 +22,23 @@ var BINPreformatter = ( function () {
 		
 		//fix publisher and date
 		let bibField;
-		if ((bibField = metaData["citation_publisher"]) != "") {
+		
+		if (isValid) {
+			if (metaData["citation_publisher"] == "") {
+				metaData["citation_publisher"] = downloaded["citation_publisher"];
+			} else {
+				//if publishers are completely different, prefer static publisher. Otherwise take download
+				bibField = "(?:" + downloaded["citation_publisher"].replace(new RegExp("[^" + BINResources.getAllLetters() + "]+","gi"),"|").replace(/(?:^[\|\s]+|[\|\s]+$)/gi,"") + ")";
+				if (metaData["citation_publisher"].search(new RegExp(bibField,"gi")) != -1 || metaData["citation_publisher"].search(/springer\ science\ \&\ business/i) != -1) {
+					metaData["citation_publisher"] = downloaded["citation_publisher"];
+				} else {
+					metaData["citation_publisher"] = metaData["citation_publisher"].replace(/\,.*$/,"");
+				}
+			}
+		} else if ((bibField = metaData["citation_publisher"]) != "") {
 			metaData["citation_publisher"] = bibField.replace(/\,.*$/,"");
-		} else if (isValid) {
-			metaData["citation_publisher"] = downloaded["citation_publisher"];
 		}
+		
 		if ((bibField = metaData["citation_date"]) != "") {
 			metaData["citation_date"] = bibField.replace(/^[^\,]*\,[\s]*/,"").replace(/[\s]*\-.*$/,"");
 		} else if (isValid) {

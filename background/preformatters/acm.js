@@ -22,7 +22,11 @@ var BINPreformatter = ( function () {
 				temp = download.replace(/^.*\"author\"\:\[\{/gi,"").replace(/\}\].*$/gi,"").replace(/(?:\"family\"\:\"|\"given\"\:\")/gi,"").replace(/\"\}\,\{/gi," ; ").replace(/\"\,/gi,", ").replace(/([^\\])\"/gi,"$1").replace(/\\\"/gi,"\"");
 				if (temp != "") metaData["citation_authors"] = temp;
 			}
-		       
+		        
+		        //fix publisher place
+		        temp = download.replace(/^.*\"publisher\-place\"\:\"/gi,"").replace(/\".*$/gi,"");
+			if (temp != "") metaData["citation_publisher_address"] = temp;
+		        
 			//fix type
 			temp = download.replace(/^.*\"type\"\:\"/gi,"").replace(/\".*$/gi,"");
 			if (temp != "") metaData["citation_type"] = temp.toLowerCase();
@@ -80,7 +84,7 @@ var BINPreformatter = ( function () {
 			metaData["citation_type"] = "book";
 			metaData["citation_isbn"] = temp.replace(/(?:^.*ISBN\:|[\s]*DOI.*$)/gi,"");
 			if (metaData["citation_publisher"] == "") {
-				metaData["citation_publisher"] = temp.replace(/[\s]*ISBN.*$/gi,"");
+				metaData["citation_publisher"] = temp.replace(/[\s]*ISBN.*$/gi,"").replace(/\ \|\-\|\ /gi, ", ");
 			}
 		}
 		

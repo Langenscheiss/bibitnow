@@ -17,7 +17,7 @@ var BINPreformatter = ( function () {
 		}
 		
 		// fix authors
-		metaData["citation_authors"] = metaData["citation_authors"].replace(/^[\s]*edited[\s]+by[\s]*/i,"").replace(/[\s\,]*and[\s]*/gi," ; ");
+		metaData["citation_authors"] = metaData["citation_authors"].replace(/^[\s]*edited[\s]+by[\s]*/i,"").replace(/(?:[\s\,]*and[\s]*|[\s]*\,[\s]*)/gi," ; ");
 		
 		//clear journal
 		metaData["citation_journal_title"] = "";
@@ -38,6 +38,9 @@ var BINPreformatter = ( function () {
 				);
 			}
 		}
+		
+		//fix publisher
+		if (metaData["citation_publisher"] == "") metaData["citation_publisher"] = "Princeton University Press";
 		
 	}
 	

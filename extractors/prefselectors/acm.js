@@ -19,9 +19,10 @@ var BINPrefselector = ( function () {
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = {
 		citation_title: [ ['h1.citation__title','innerText'] , ['div.item-meta div.left-bordered-title span','innerText'] ],
-		citation_publisher: [ ['p.publisher__name','innerText'] , ['div.publisher-info li','innerText'] ],
+		citation_publisher: [ ['p.publisher__name','innerText'] , ['div.publisher-info li','innerText'] , ['div.published-info li','innerText'] ],
+		citation_publisher_address: [ ['div.published-info','innerText'] ],
 		citation_author: [ ['div.pill-all-authors a.author-name','title'] , ['div.citation div.author-data span.loa__author-name','innerText'] , ['meta[name="citation_authors"]','content'] , ['div.contrib-metrics-bibliometrics li.accordion-tabbed__tab.accordion__closed.grid-item div.box-item__title-holder a','textContent'] ],
-		citation_isbn: [ ['div.published-info','innerText',true] ],
+		citation_isbn: [ { query: 'div.published-info',attribute: 'innerText', allowMultipleLines: true, lineSeparator: " |-| "} ],
 		citation_journal_title: [ ['span.epub-section__title','innerText'] , ['meta[name="citation_journal_title"]','content'] ],
 		citation_url: [ ['meta[name="citation_abstract_html_url"]','content'] ],
 		citation_abstract: [ ['div.article__section.article__abstract','innerText',true,20000] , ['meta[name="dc.Description"]','content',true,20000], ['div#abstract','innerText',true,20000] , ['div.abstractSection','innerText',true,20000]],
