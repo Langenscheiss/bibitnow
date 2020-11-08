@@ -6,7 +6,7 @@ var BINPrefselector = ( function () {
 	var BINParser =  null;
 	var window = null;
 	var document = null;
-	
+
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = {
 		citation_abstract: [ [ 'blockquote.abstract','textContent', true, 20000] ],
@@ -15,7 +15,12 @@ var BINPrefselector = ( function () {
 		citation_url: [ ['meta[property="og:url" i]','content'] ]
 	};
 
+  //function to obtain fallback url in case a pdf is loaded
+  function getFallbackURL(url) {
+    return url.replace(/\/pdf\//i,"/abs/");
+  }
+
 	// finally expose selector message and link formatter
-	return { prefselectorMsg: prefselectorMsg };
+	return { prefselectorMsg: prefselectorMsg , getFallbackURL: getFallbackURL };
 
 }());

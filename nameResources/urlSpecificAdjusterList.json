@@ -16,6 +16,7 @@
 				{ "scheme": "es" , "preformatter": "amazon-es" },
 				{ "scheme": "nl" , "preformatter": "amazon-nl" },
 				{ "scheme": "in" , "preformatter": "amazon-com" },
+				{ "scheme": "ca" , "preformatter": "amazon-com" },
 				{ "scheme": "cn" , "preformatter": "amazon-cn" }
 			]
 	},
@@ -63,28 +64,28 @@
 	{ "scheme": "nature" , "top": "com" , "preformatter": "nature" , "prefselector": "nature" },
 	{ "scheme": "nejm" , "top": "org" , "preformatter": "nejm" , "prefselector": "nejm" },
 	{ "scheme": "researchgate" , "top": "net" , "path": "publication", "preformatter": "researchgate" , "prefselector": "researchgate" },
-	{ 	
+	{
 		"scheme": "(?:pubmed\\.|)ncbi\\.nlm\\.nih" , "top": "gov" ,
 		"path": 	[
 				{ "scheme": "pmc" , "prefselector": "pmc" , "preformatter": "pmc" },
 				{ "scheme": "books" , "prefselector": "ncbi-book" , "preformatter": "ncbi-book" },
 				{ "scheme": "(?:pubmed|)" , "prefselector": "pubmed" , "preformatter": "pubmed" }
 			]
-		
+
 	},
 	{ "scheme": "research\\.chalmers" , "top": "se" , "prefselector": "cpl" , "preformatter": "cpl" },
 	{ "scheme": "[^\\.]+\\.sagepub" , "top": "com" , "prefselector": "sagepub" , "preformatter": "sagepub" },
-	{ 	
+	{
 		"scheme": "sciencedirect" , "top": "com" ,
 		"path":	[
 				{ "scheme": "science\\/book" , "prefselector": "sciencedirect-book" , "preformatter": "sciencedirect-book" },
 				{ "scheme": "book" , "prefselector": "sciencedirect-book" , "preformatter": "sciencedirect-book" },
 				{ "scheme": "science\\/article" , "prefselector": "sciencedirect" , "preformatter": "sciencedirect" }
-			]			
+			]
 	},
 	{ "scheme": "scopus" , "top": "com" , "prefselector": "scopus" , "preformatter": "scopus" },
-	{ 	
-		"scheme": "link\\.springer" , "top": "com" , 
+	{
+		"scheme": "link\\.springer" , "top": "com" ,
 		"path":	[
 				{ "scheme": "(?:article|protocol)" , "prefselector": "springer" , "preformatter": "springer" },
 				{ "scheme": "(?:book|referencework|chapter)" , "prefselector": "springer-link-book" , "preformatter": "springer-link-book" }
@@ -96,12 +97,12 @@
 	{ "scheme": "press\\.princeton" , "top": "edu" , "prefselector": "princeton" , "preformatter": "princeton" },
 	{ "scheme": "search\\.proquest" , "top": "com" , "prefselector": "proquest" , "preformatter": "proquest" },
 	{ "scheme": "(?:palgrave|springer)" , "top": "com" , "path": "(?:gp|de)" , "prefselector": "springer-book" , "preformatter": "springer-book" },
-	{ 	"scheme": "(?:|[0-9a-z\\-]+[\\.]+)oreilly" , "top": "com" , 
+	{ 	"scheme": "(?:|[0-9a-z\\-]+[\\.]+)oreilly" , "top": "com" ,
 		"path": [ { "scheme": "(?:product|library\\/view)" , "prefselector": "oreilly" , "preformatter": "oreilly" } ]
 	},
 	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)sciencemag" , "top": "org" , "prefselector": "science" , "preformatter": "science" },
 	{ "scheme": "tandfonline" , "top": "com" , "prefselector": "taylorandfrancis" , "preformatter": "taylorandfrancis" },
-	{ 
+	{
 		"scheme": "(?:|[0-9a-z\\-]+[\\.]+)onlinelibrary\\.wiley" , "top": "com" ,
 		"path":	[
 				{ "scheme": "(?:|doi\\/)book" , "prefselector": "wiley-book" , "preformatter": "wiley-book"  },
@@ -111,7 +112,7 @@
 	{ "scheme": "wiley" , "top": "com" , "prefselector": "wiley-shop" , "preformatter": "wiley-shop"  },
 	{ "scheme": "washingtonpost" , "top": "com" , "prefselector": "washingtonpost" , "preformatter": "washingtonpost" },
 	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)webofknowledge" , "top": "com" , "prefselector": "webofscience" , "preformatter": "webofscience" },
-	{ 
+	{
 		"scheme": "worldscientific" , "top": "com" ,
 		"path":	[
 				{ "scheme": "doi" , "prefselector": "worldscientific" , "preformatter": "worldscientific"  },
