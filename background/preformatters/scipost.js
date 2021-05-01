@@ -6,17 +6,23 @@ var BINPreformatter = ( function () {
 	var BINParser =  null;
 	var window = null;
 	var document = null;
-	
+
 	//preformat raw data including raw RIS
 	function preformatRawData(metaData, parser) {
 		//do nothing
 	}
-	
-	
+
+
 	//preformatting function
 	function preformatData(metaData, parser) {
 		//extract journal abbreviation from misc
 		metaData["citation_journal_abbrev"] = metaData["citation_misc"].replace(/^.*;[\s]+JA[\s\-]+/gi,"").replace(/[\s]+;.*$/gi,"");
+
+    //extract abstract from misc
+    let abstract = metaData["citation_misc"].replace(/^.*;[\s]+AB[\s\-]+/gi,"").replace(/[\s]+;.*$/gi,"");
+    if (abstract != null && abstract != "") metaData["citation_abstract"] = abstract;
+
+    //fix misc
 		metaData["citation_misc"] = "";
 	}
 

@@ -6,19 +6,23 @@ var BINPrefselector = ( function () {
 	var BINParser =  null;
 	var window = null;
 	var document = null;
-	
+
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		
+
 		//return if link invalid
 		if (link == null || link == "") return "";
-		
+
 		//return link with correct base url
 		return (metaData["citation_url_nopath"] + link);
 	}
-	
+
+	function getFallbackURL(url) {
+    return (url.search(/\/pdf$/i) != -1) ?  url.replace(/\/pdf$/i,"") : null;
+  }
+
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
-	var prefselectorMsg = { 
+	var prefselectorMsg = {
 		citation_author: [ ['meta[name="citation_author"]','content'] , ['span[data-authors=""] span[itemprop="author"] span[itemprop="name"]','innerText'] , ['span[itemprop="author"] span[itemprop="name"]','innerText'] ],
 		citation_type: [ ['span#wd-book-print-isbn','innerText'] , ['span#wd-book-online-isbn','innerText'] ],
 		citation_title: [ ['div#wd-pub-name h1[itemref="book"]','innerText'] , ['h1[itemprop="chapterName" i]','innerText'] ],
@@ -31,6 +35,6 @@ var BINPrefselector = ( function () {
 	};
 
 	// finally expose selector message and link formatter
-	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink };
+	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink , getFallbackURL: getFallbackURL };
 
 }());

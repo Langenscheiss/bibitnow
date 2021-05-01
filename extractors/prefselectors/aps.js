@@ -6,10 +6,10 @@ var BINPrefselector = ( function () {
 	var BINParser =  null;
 	var window = null;
 	var document = null;
-	
+
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
-		let returnString = metaData["citation_download"]; 
+		let returnString = metaData["citation_download"];
 		//if download link found, use it. Otherwise, make an educated guess for aps
 		if (metaData["query_summary"]["citation_download"] == 1) {
 			returnString = metaData["citation_url_nopath"] + returnString + '?type=ris&download=false';
@@ -23,9 +23,14 @@ var BINPrefselector = ( function () {
 		}
 		return returnString;
 	}
-	
+
+	//function to obtain fallback url in case a pdf is loaded
+  function getFallbackURL(url) {
+    return (url.search(/\/pdf\//i) != -1) ?  url.replace(/\/pdf\//i,"/abstract/") : null;
+  }
+
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
-	var prefselectorMsg = { 
+	var prefselectorMsg = {
 		citation_issn: [ ['p.legal','innerText'] ],
 		citation_download: [ ['a#export-article-link','href'] , ['BINURL','']],
 		citation_abstract: [ ['div#article-content section.abstract div.content p','innerText', true, 20000] , ['meta[name="description"]','content', true, 20000] ],
@@ -36,6 +41,6 @@ var BINPrefselector = ( function () {
 	};
 
 	// finally expose selector message and link formatter
-	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink };
+	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink , getFallbackURL: getFallbackURL };
 
 }());

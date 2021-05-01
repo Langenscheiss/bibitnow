@@ -46,12 +46,13 @@
 	{ "scheme": "goodreads" , "top": "com" , "prefselector": "goodreads" , "preformatter": "goodreads" },
 	{ "scheme": "books\\.google(?:|\\.co|\\.com)" , "top": "[0-9a-z]+" , "prefselector": "google-book" , "preformatter": "google-book" },
 	{ "scheme": "hindawi" , "top": "com" , "prefselector": "hindawi" , "preformatter": "hindawi" },
-	{ "scheme": "ieeexplore\\.ieee" , "top": "org", "path": "(?:document|xpl|abstract/document|book)" , "prefselector": "ieee" , "preformatter": "ieee" },
+	{ "scheme": "ieeexplore\\.ieee" , "top": "org", "path": "(?:document|xpl|abstract/document|book|stamp)" , "prefselector": "ieee" , "preformatter": "ieee" },
 	{ "scheme": "ingentaconnect" , "top": "com" , "prefselector": "ingentaconnect" , "preformatter": "ingentaconnect" },
 	{ "scheme": "iopscience\\.iop" , "top": "org" , "prefselector": "iop" , "preformatter": "iop" },
 	{ "scheme": "jstor" , "top": "org" , "prefselector": "jstor" , "preformatter": "jstor" },
 	{ "scheme": "journalofeuropeanlandscapes" , "top": "eu" , "prefselector": "jeulan" , "preformatter": "jeulan" },
 	{ "scheme": "liebertpub" , "top": "com" , "prefselector": "liebert" , "preformatter": "liebert" },
+	{ "scheme": "journals\\.lww" , "top": "com" , "prefselector": "lww" , "preformatter": "lww" },
 	{ "scheme": "mdpi" , "top": "com" , "prefselector": "mdpi" , "preformatter": "mdpi" },
 	{ "scheme": "nytimes" , "top": "com" , "prefselector": "nytimes" , "preformatter": "nytimes" },
 	{ "scheme": "ojs\\.darwin\\.edu" , "top": "ar" , "preformatter": "darwiniana" , "prefselector": "darwiniana" },
@@ -87,7 +88,7 @@
 	{
 		"scheme": "link\\.springer" , "top": "com" ,
 		"path":	[
-				{ "scheme": "(?:article|protocol)" , "prefselector": "springer" , "preformatter": "springer" },
+				{ "scheme": "(?:article|protocol|content\/pdf\/)" , "prefselector": "springer" , "preformatter": "springer" },
 				{ "scheme": "(?:book|referencework|chapter)" , "prefselector": "springer-link-book" , "preformatter": "springer-link-book" }
 			]
 	},

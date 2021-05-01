@@ -6,13 +6,17 @@ var BINPrefselector = ( function () {
 	var BINParser =  null;
 	var window = null;
 	var document = null;
-	
+
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
 		if (link == null || link == "") return "";
 		return (metaData["citation_url_nopath"] + "/highwire/citation/" + link.trim() + "/ris");
 	}
-	
+
+	function getFallbackURL(url) {
+    return (url.search(/\.full\.pdf$/i) != -1) ?  url.replace(/\.full\.pdf$/i,"") : null;
+  }
+
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = {
 		citation_date: [ ['meta[name="dc.Date" i]','content'],['meta[property="dc.Date" i]','content'] ],
@@ -25,6 +29,6 @@ var BINPrefselector = ( function () {
 	};
 
 	// finally expose selector message and link formatter
-	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink };
+	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink , getFallbackURL: getFallbackURL };
 
 }());

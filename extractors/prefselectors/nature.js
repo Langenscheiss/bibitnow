@@ -14,8 +14,16 @@ var BINPrefselector = ( function () {
 		if (link == null || link == "") return "";
 
 		//get final url
-		return (metaData["citation_url_nopath"] + link.replace(/^[^\/]*\/\/[^\/]*/i,""));
+    if (link.search(/^http/) == -1) {
+      return (metaData["citation_url_nopath"] + link.replace(/^[^\/]*\:\/\/[^\/]*/i,""));
+    } else {
+      return link;
+    }
 	}
+
+  function getFallbackURL(url) {
+    return (url.search(/.*\.[\s]*pdf[\s]*$/i) != -1 && url.search(/\.com\/articles\//i) != -1) ?  url.replace(/[\s]*\.[\s]*pdf[\s]*$/gi,"") : null;
+  }
 
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = {
@@ -32,6 +40,6 @@ var BINPrefselector = ( function () {
 	};
 
 	// finally expose selector message
-	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink };
+	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink, getFallbackURL: getFallbackURL };
 
 }());

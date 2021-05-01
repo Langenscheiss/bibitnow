@@ -6,7 +6,7 @@ var BINPrefselector = ( function () {
 	var BINParser =  null;
 	var window = null;
 	var document = null;
-	
+
 	// this function is called by the background script in order to return a properly formatted citation download link
 	function formatCitationLink(metaData, link) {
 		link = link.trim();
@@ -22,11 +22,11 @@ var BINPrefselector = ( function () {
 			metaData["citation_download_method"] = "POST";
 		}
 		if (link == "") return "";
-		return (metaData["citation_url_nopath"] + link);		
+		return (metaData["citation_url_nopath"] + link);
 	}
-	
+
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
-	var prefselectorMsg = { 
+	var prefselectorMsg = {
 		citation_author: [ ['meta[name="citation_authors"]','content'] , ['meta[name="citation_author"]','content'] , ['div.loa-wrapper.loa-authors a.author-name','innerText'] ],
 		citation_date: [ ['meta[name="citation_date"]','content'] , ['meta[name="citation_online_date"]','content'], ['div.epub-sections span.epub-date','innerText'] ],
 		citation_firstpage: [ ['meta[name="citation_firstpage"]','content'] , ['p.issue-header__description span:last-child','innerText'] ],
@@ -37,7 +37,12 @@ var BINPrefselector = ( function () {
 		citation_collection_title: [ ['meta[name="citation_book_title"]','content'] ]
 	};
 
+  //function to obtain fallback url in case a pdf is loaded
+  function getFallbackURL(url) {
+    return (url.search(/\/doi\/epdf\//i) != -1) ?  url.replace(/\/doi\/epdf\//i,"/doi/abs/") : null;
+  }
+
 	// finally expose selector message
-	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink };
+	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink , getFallbackURL: getFallbackURL };
 
 }());

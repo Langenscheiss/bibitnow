@@ -11,7 +11,11 @@ var BINPrefselector = ( function () {
 	function formatCitationLink(metaData, link) {
 		return (metaData["citation_url"].replace(/\/content.*$/,"") + "/highwire/citation/" + link.trim() + "/mendeley");
 	}
-	
+
+  function getFallbackURL(url) {
+    return (url.search(/.*\.pdf[\s]*$/i) != -1) ?  url.replace(/\/content\/bmj\//i,"/content/").replace(/[\s]*\.[\s]*full[\s]*\.[\s]*pdf[\s]*$/i,"") : null;
+  }
+
 	// these are the preferred selectors used, and may be modified. The format is "bibfield: [ [css-selector,attribute], ...],", where "attribute" can be any html tag attribute or "innerText" to get the text between <tag> and </tag>
 	var prefselectorMsg = {
 		citation_abstract: [ [ 'meta[name="DC.Description"]','content', true, 20000] ],
@@ -19,6 +23,6 @@ var BINPrefselector = ( function () {
 	};
 
 	// finally expose selector message and link formatter
-	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink };
+	return { prefselectorMsg: prefselectorMsg , formatCitationLink: formatCitationLink , getFallbackURL: getFallbackURL };
 
 }());
