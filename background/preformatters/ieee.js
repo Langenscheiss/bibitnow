@@ -15,6 +15,7 @@ var BINPreformatter = ( function () {
 
 	//preformatting function
 	function preformatData(metaData, parser) {
+
 		//fix date string
 		metaData["citation_date"] = metaData["citation_date"].replace(/(?:publication|of|date)/gi,"");
 
@@ -86,6 +87,7 @@ var BINPreformatter = ( function () {
 		download = metaData["citation_misc"];
 		if (download != "") {
 			let queryNumber = metaData["query_summary"]["citation_misc"];
+
 			if (queryNumber == 1) {
 				if (metaData["citation_authors"] == "") {
 					issn = download.match(/author(?:\(s\)|)[\s]*:[\s]*([^\|]+)\|\-\|/i);
@@ -124,10 +126,13 @@ var BINPreformatter = ( function () {
 			} else if (queryNumber == 2 || queryNumber == 3) {
 
 				//reset misc
-				metaData["citation_misc"] = "";
+        metaData["citation_misc"] = "";
 
 				//get abstract
-				metaData["citation_abstract"] = download.replace(/^.*?Abstract[\:]?\ \|\-\|\ /,"").replace(/(|view\ more)\ \|\-\|\ .*$/i,"");
+
+//         if (metaData["citation_abstract"] == "") {
+          metaData["citation_abstract"] = download.replace(/^.*?Abstract[\:]?\ \|\-\|\ /,"").replace(/(|view\ more)\ \|\-\|\ .*$/i,"");
+//         }
 
 				//get date
 				if (metaData["citation_date"] == "") {

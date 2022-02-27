@@ -1,8 +1,8 @@
 [
 	{ 	"schema": "(?:.*NewsArticle|website|webpage|VideoObject|Article)" ,
-		"bibfields":	
+		"bibfields":
 		{
-			"citation_date": 	[ 	
+			"citation_date": 	[
 							{ "baseProperty": ["dateModified"] } ,
 							{ "baseProperty": ["datePublished"] },
 							{ "baseProperty": ["dateCreated"] },
@@ -32,7 +32,7 @@
 						],
 			"citation_publisher":	[
 							{ "baseProperty": ["publisher"] }
-						],	
+						],
 			"citation_issn":	[
 							{ "baseProperty": ["identifier"] }
 						],
@@ -45,9 +45,9 @@
 		}
 	},
 	{ 	"schema": "Product" ,
-		"bibfields":	
+		"bibfields":
 		{
-			"citation_date": 	[ 	
+			"citation_date": 	[
 							{ "baseProperty": ["review","datePublished"] },
 							{ "baseProperty": ["review",0,"datePublished"] },
 							{ "baseProperty": ["datePublished"] }
@@ -73,7 +73,8 @@
 							{ "baseProperty": ["review","authors"] },
 							{ "baseProperty": ["review",0,"authors"] },
 							{ "baseProperty": ["review","creator"] },
-							{ "baseProperty": ["review",0,"creator"] }
+							{ "baseProperty": ["review",0,"creator"] },
+							{ "baseProperty": ["author"] }
 						],
 			"citation_abstract":	[
 							{ "baseProperty": ["review","description"] },
@@ -89,13 +90,16 @@
 							{ "baseProperty": ["review","publisher"] },
 							{ "baseProperty": ["review",0,"publisher"] },
 							{ "baseProperty": ["publisher"] }
+						],
+      "citation_isbn":	[
+							{ "baseProperty": ["isbn"] }
 						]
 		}
 	},
 	{ 	"schema": "Book" ,
-		"bibfields":	
+		"bibfields":
 		{
-			"citation_date": 	[ 	
+			"citation_date": 	[
 							{ "baseProperty": ["dateModified"] } ,
 							{ "baseProperty": ["datePublished"] },
 							{ "baseProperty": ["dateCreated"] }

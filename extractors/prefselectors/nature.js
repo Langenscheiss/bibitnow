@@ -32,7 +32,7 @@ var BINPrefselector = ( function () {
 		citation_misc: [ ['div.c-article-header p.c-article-info-details','innerText',true] , ['ul[data-component="article-info-list"]','innerText'] ],
 		citation_doi: [ ['meta[name="prism.doi"]','content'] , ['div#additional-information-content','innerText'] , ['div[data-type="maestro_mosaic"]','data-doi'] ],
 		citation_volume: [ ['meta[name="citation_volume"]','content'] , ['li.small-space-below a[data-track-source="rights"]','href'] ],
-		citation_title: [ ['meta[property="og:title"]','content',true] , ['h2#atl','innerText'] ],
+		citation_title: [ { query: 'meta[name="citation_title"]', attribute: 'content', allowMultipleLines: true } , ['meta[property="og:title"]','content',true] , ['h2#atl','innerText'] ],
 		citation_firstpage: [ ['ul[data-component="article-info-list"] span[itemprop="pageStart"]','innerText'] ],
 		citation_lastpage: [ ['ul[data-component="article-info-list"] span[itemprop="pageEnd"]','innerText'] ],
 		citation_abstract: [ ['div#abstract-content','innerText', true, 20000] , ['div#Abs1-content','innerText', true, 20000] , ['p.abs.lead','innerText',true,20000] ],

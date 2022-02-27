@@ -19,12 +19,7 @@ var BINPrefselector = ( function () {
     } else if (queryNumber == 2) {
       let uid = metaData["citation_archive_id"];
       if (uid == "") return "";
-//       metaData["citation_download_method"] = "POST";
-//       metaData["citation_download_request_json"] = true;
-//       let form = new FormData();
-//       form.append("csrfmiddlewaretoken",link);
-//       metaData["citation_download_requestbody"] = form;
-      return "";//(metaData["citation_url_nopath"] + "/" + uid + "/export/");
+      return "";
 		} else {
 			return (link.replace(/&format=.*$/,"").replace(/&report=.*$/,"") + "&report=xml&format=text");
 		}

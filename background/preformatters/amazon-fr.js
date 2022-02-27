@@ -14,16 +14,16 @@ var BINPreformatter = ( function () {
 		if (metaData["citation_type"] == "digital-text") metaData["citation_type"] = "book";
 
 		//fix authors on amazon
-		metaData["citation_authors"] = metaData["citation_authors"].replace(/[\ ;]*(?:Entdecken|Suchergebnisse|Erfahren|検索結果|著者セントラルはこちら|Visit|Search|Learn|Visita|Resultados|Consulter|résultats|Infos)\ [^;]*/gi,"");
+		metaData["citation_authors"] = metaData["citation_authors"].replace(/[\s\;\u200F\u200E]*(?:Entdecken|Suchergebnisse|Erfahren|検索結果|著者セントラルはこちら|Visit|Search|Learn|Visita|Resultados|Consulter|résultats|Infos)[\s\u200F\u200E][^;]*/gi,"");
 
 		//preformat publisher
 		let data = metaData["citation_misc"];
-		let dataPart = data.replace(/\([^\(\)]*\)[\ ]*$/,"").match(/(?:Verlag|Herausgeber|Uitgever|出版社|Publisher|Editor[a]?|Editore|Éditeur|Editor)[^;\(]*/i);
-		if (dataPart != null && dataPart.length > 0) metaData["citation_publisher"] = dataPart[0].replace(/^(?:Verlag|Herausgeber|Uitgever|出版社|Publisher|Editor[a]?|Editore|Éditeur|Editor)[\s ]*[:]*/i,"").trim();
+		let dataPart = data.replace(/\([^\(\)]*\)[\s\u200F\u200E]*$/,"").match(/(?:Verlag|Herausgeber|Uitgever|出版社|Publisher|Editor[a]?|Editore|Éditeur|Editor)[^;\(]*/i);
+		if (dataPart != null && dataPart.length > 0) metaData["citation_publisher"] = dataPart[0].replace(/^(?:Verlag|Herausgeber|Uitgever|出版社|Publisher|Editor[a]?|Editore|Éditeur|Editor)[\s\u200F\u200E]*[:]*[\s\u200F\u200E]*/i,"").trim();
 
 		//extract ISBN
-		dataPart = data.match(/ISBN\-13[:\ 0-9X\-]*/i);
-		if (dataPart == null || dataPart.length == 0) dataPart = data.match(/ISBN[:\ 0-9X\-]*/i);
+		dataPart = data.match(/ISBN\-13[^;]*(?:;|$)/i)
+		if (dataPart == null || dataPart.length == 0) dataPart = data.match(/ISBN[^;]*(?:;|$)/i);
 		if (dataPart != null && dataPart.length > 0) {
 			dataPart = dataPart[0];
 			metaData["citation_issn"] = dataPart.replace(/ISBN[^:]*:/,"").trim();
@@ -33,7 +33,7 @@ var BINPreformatter = ( function () {
 
 		//preformat date
 		data = data.replace(/^.*?(?:Verlag|Herausgeber|Uitgever|出版社|Publisher|Editor[a]?|Editore|Éditeur|Editor)[^;\(]*/i,"");
-		dataPart = data.match(/\([^\(\)]*\)\ ;\ /);
+		dataPart = data.match(/\([^\(\)]*\)[\s\u200F\u200E];[\s\u200F\u200E]/);
 		if (dataPart != null && dataPart.length > 0) {
 			data = dataPart[0];
 		} else {

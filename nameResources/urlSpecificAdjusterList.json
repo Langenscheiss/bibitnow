@@ -2,10 +2,12 @@
 	{ "scheme": "publications\\.rwth-aachen" , "top": "de" , "prefselector": "aachen" , "preformatter": "aachen" },
 	{ "scheme": "pubs\\.acs" , "top": "org" , "prefselector": "acs" , "preformatter": "acs" },
 	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)aappublications" , "top": "org" , "prefselector": "aap" , "preformatter": "aap" },
+	{ "scheme": "publications\\.aap" , "top": "org" , "prefselector": "aap" , "preformatter": "aap" },
 	{ "scheme": "dl\\.acm" , "top": "org" , "prefselector": "acm" , "preformatter": "acm" },
 	{ "scheme": "aip\\.scitation" , "top": "org" , "prefselector": "aip" , "preformatter": "aip" },
 	{ "scheme": "agris\\.fao" , "top": "org" , "prefselector": "agris" },
 	{ "scheme": "ajas" , "top": "info" , "prefselector": "ajas" , "preformatter": "ajas" },
+	{ "scheme": "animbiosci" , "top": "org" , "prefselector": "ajas" , "preformatter": "ajas" },
 	{ "scheme": "ascopubs" , "top": "org" , "prefselector": "ascopubs" , "preformatter": "ascopubs" },
 	{ 	"scheme": "amazon" , "prefselector": "amazon" ,
 		"top": 	[
@@ -101,7 +103,7 @@
 	{ 	"scheme": "(?:|[0-9a-z\\-]+[\\.]+)oreilly" , "top": "com" ,
 		"path": [ { "scheme": "(?:product|library\\/view)" , "prefselector": "oreilly" , "preformatter": "oreilly" } ]
 	},
-	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)sciencemag" , "top": "org" , "prefselector": "science" , "preformatter": "science" },
+	{ "scheme": "(?:|[0-9a-z\\-]+[\\.]+)science(?:|mag)" , "top": "org" , "prefselector": "science" , "preformatter": "science" },
 	{ "scheme": "tandfonline" , "top": "com" , "prefselector": "taylorandfrancis" , "preformatter": "taylorandfrancis" },
 	{
 		"scheme": "(?:|[0-9a-z\\-]+[\\.]+)onlinelibrary\\.wiley" , "top": "com" ,
